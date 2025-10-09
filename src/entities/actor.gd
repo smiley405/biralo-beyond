@@ -1,0 +1,146 @@
+class_name Actor
+extends CharacterBody2D
+
+
+var health: int = 1
+var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
+var gravity: float = default_gravity
+var jump_gravity: float = 400
+var speed: Vector2 = Vector2(45, 0)
+var friction: Vector2 = Vector2(0.3, 0)
+var acceleration: Vector2 = Vector2(0.3, 0)
+var jump_force: float = 120.0
+var dead: bool = false
+var moving: bool = false
+var grounded: bool = false
+var falling: bool = false
+var jumping: bool = false
+var attacking: bool = false
+var type: String = "actor"
+
+# Use a Dictionary as a String Enum
+# Because it is Debug-Friendly
+#const Action: Dictionary[String, String] = {
+#    "RUN": "RUN",
+#    "IDLE": "IDLE",
+#    "JUMP": "JUMP"
+#}
+var current_state: String = "" # Dictionary enum
+
+var alpha: float = 1.0:
+	set = set_alpha,
+	get = get_alpha
+
+var flip_h: bool = false:
+	set = set_flip_h,
+	get = get_flip_h
+
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+func _physics_process(delta):
+	update_animated_sprite()
+	update_velocity(delta)
+
+
+func update_velocity(delta: float) -> void:
+	velocity.y += gravity * delta
+	move_and_slide()
+	
+	if !grounded and velocity.y > 0:
+		falling = true
+		
+	if grounded and falling:
+		on_landed()
+		falling = false
+	
+	grounded = is_on_floor()
+
+
+func update_animated_sprite() -> void:
+	if _animated_sprite:
+		_animated_sprite.flip_h = flip_h
+
+
+func change_state(new_state: String) -> void:
+	current_state = new_state
+
+
+func add_fx() -> void:
+	# extract from pool
+	pass
+
+
+func receive_damage(amount: int, from: Node2D) -> void:
+	if dead:
+		return
+	
+	health -= amount
+	on_damage()
+	
+	if health <= 0:
+		health = 0
+		kill()
+
+
+func kill() -> void:
+	dead = true
+
+
+func reset() -> void:
+	health = 1
+	flip_h = false
+	dead = false
+	moving = false
+	grounded = false
+	jumping = false
+	falling = false
+	attacking = false
+	velocity = Vector2.ZERO
+	gravity = default_gravity
+
+
+func reset_velocity_x() -> void:
+	velocity.x = 0
+
+
+func reset_velocity_y() -> void:
+	velocity.y = 0
+
+
+func zero_gravity() -> void:
+	gravity = 0
+
+
+func set_alpha(value: float) -> void:
+	alpha = value
+	modulate.a = value
+
+
+func get_alpha() -> float:
+	return alpha
+
+
+func set_flip_h(value: bool) -> void:
+	flip_h = value
+
+
+func get_flip_h() -> bool:
+	return flip_h
+
+
+func get_direction() -> int:
+	return -1 if flip_h else 1
+
+
+func on_damage() -> void:
+	pass
+
+
+func on_landed() -> void:
+	pass

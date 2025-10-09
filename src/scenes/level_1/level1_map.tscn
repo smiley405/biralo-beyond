@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhajo3j21gugd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6k78o"]
+size = Vector2(111, 16.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egpny"]
+size = Vector2(16.5, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_336do"]
+size = Vector2(16.25, 97)
+
+[node name="Level1Map" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 97)
+shape = SubResource("RectangleShape2D_6k78o")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-7.75, 48)
+shape = SubResource("RectangleShape2D_egpny")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(100, 49)
+shape = SubResource("RectangleShape2D_336do")
