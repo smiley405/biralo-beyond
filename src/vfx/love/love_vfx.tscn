@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cttv2jqyyeyj6"]
+
+[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/base_vfx.gd" id="1_rcfqq"]
+[ext_resource type="Texture2D" uid="uid://brn6vs0piovve" path="res://assets/art/misc/love,w8,h8,s2.png" id="2_68w1b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v1dl"]
+atlas = ExtResource("2_68w1b")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogonl"]
+atlas = ExtResource("2_68w1b")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1y5m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v1dl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogonl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="LoveVfx" type="Node2D"]
+script = ExtResource("1_rcfqq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v1y5m")

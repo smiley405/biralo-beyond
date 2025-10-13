@@ -13,13 +13,14 @@ const PlayerState: Dictionary[String, String] = {
 
 var _jump_attacked: bool = false
 var _attack_area_offsets: Array[Vector2] = []
+var _loved: bool = false
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 @onready var _attack_aread_2d: Area2D = $AttackArea2D
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	super()
 	type = "player"
 	do_idle()
@@ -33,8 +34,14 @@ func _ready():
 			_attack_area_offsets.append(Vector2(shape.position.x, shape.position.y))
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	super(delta)
+	
+	if _locked_movement():
+		reset_velocity()
+		zero_gravity()
+		do_idle()
+		return
 	
 	moving = false
 	
@@ -54,11 +61,19 @@ func _physics_process(delta):
 		jumping = false
 		_jump_attacked = false
 	
-	update_movement()
+	update_inputs()
+	
+	if falling and not attacking:
+		change_state("FALL")
+	
+	if attacking:
+		reset_velocity()
+		zero_gravity()
+	
 	#control_camera()
 
 
-func update_movement() -> void:
+func update_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
 		if not attacking:
 			change_state("RUN")
@@ -68,15 +83,7 @@ func update_movement() -> void:
 	else:
 		if grounded and not attacking:
 			change_state("IDLE")
-	
-	if falling and not attacking:
-		change_state("FALL")
-	
-	if attacking:
-		reset_velocity_x()
-		reset_velocity_y()
-		zero_gravity()
-		
+			
 	if Input.is_action_just_pressed("jump"):
 		on_jump()
 	
@@ -162,16 +169,30 @@ func do_attack() -> void:
 	_animation_player.play("attack_logic")
 
 
+func do_love() -> void:
+	if _loved:
+		return
+	_loved = true
+	GameState.game_won = true
+	
+	var love_vfx = vfx_pool.get_vfx("love")
+	if love_vfx and not love_vfx.visible:
+		love_vfx.play()
+		love_vfx.position.x = _hitbox.global_position.x
+		love_vfx.position.y = _hitbox.global_position.y - _hitbox.shape.get_rect().size.y - 4
+
+
 func reset() -> void:
 	super.reset()
 	_jump_attacked = false
+	_loved = false
 
 
 func kill() -> void:
 	super.kill()
 	# player logics here
 	# sound > blast
-	# fx > blast
+	# vfx > blast
 
 
 func reset_attack_state() -> void:
@@ -179,9 +200,12 @@ func reset_attack_state() -> void:
 	gravity = jump_gravity if jumping else default_gravity
 
 
+func _locked_movement() -> bool:
+	return _loved
+
+
 func on_landed() -> void:
-	pass
-	# fx
+	add_vfx("impact_dusts")
 	# sounds
 	# player logics here
 

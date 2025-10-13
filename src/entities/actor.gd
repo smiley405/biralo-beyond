@@ -26,6 +26,8 @@ var type: String = "actor"
 #    "JUMP": "JUMP"
 #}
 var current_state: String = "" # Dictionary enum
+# Will be set from root level
+var vfx_pool:VfxPool
 
 var alpha: float = 1.0:
 	set = set_alpha,
@@ -36,14 +38,15 @@ var flip_h: bool = false:
 	get = get_flip_h
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _hitbox: CollisionShape2D = $CollisionShape2D
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func _ready() -> void:
+	add_to_group("vfx_targets")
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	update_animated_sprite()
 	update_velocity(delta)
 
@@ -71,9 +74,13 @@ func change_state(new_state: String) -> void:
 	current_state = new_state
 
 
-func add_fx() -> void:
-	# extract from pool
-	pass
+func add_vfx(vfx_type: String, x: float = 0.0, y: float = 0.0) -> void:
+	var vfx = vfx_pool.get_vfx(vfx_type)
+	
+	if vfx and not vfx.visible:
+		vfx.play()
+		vfx.position.x = x if x else _hitbox.global_position.x
+		vfx.position.y = y if y else _hitbox.global_position.y - _hitbox.shape.get_rect().size.y
 
 
 func receive_damage(amount: int, from: Node2D) -> void:
@@ -101,8 +108,12 @@ func reset() -> void:
 	jumping = false
 	falling = false
 	attacking = false
+	reset_velocity()
+	reset_gravity()
+
+
+func reset_velocity() -> void:
 	velocity = Vector2.ZERO
-	gravity = default_gravity
 
 
 func reset_velocity_x() -> void:
@@ -115,6 +126,10 @@ func reset_velocity_y() -> void:
 
 func zero_gravity() -> void:
 	gravity = 0
+
+
+func reset_gravity() -> void:
+	gravity = default_gravity
 
 
 func set_alpha(value: float) -> void:

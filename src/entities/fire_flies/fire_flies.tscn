@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://c5rbjho3deq1f"]
+
+[ext_resource type="Script" uid="uid://cyycxughpqe8o" path="res://src/entities/fire_flies/fire_flies.gd" id="1_ap2qp"]
+[ext_resource type="Texture2D" uid="uid://dd60exg4614gr" path="res://assets/art/misc/fireflies,w24,h24,s4.png" id="1_ll10s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap2qp"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1a25"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jybt8"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23h5d"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydy4q"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1uau"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1suey"]
+atlas = ExtResource("1_ll10s")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o74dr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap2qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1a25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jybt8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23h5d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydy4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1uau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1suey")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="FireFlies" type="Node2D"]
+script = ExtResource("1_ap2qp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o74dr")

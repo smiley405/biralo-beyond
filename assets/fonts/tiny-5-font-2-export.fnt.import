@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://btilrusv6gxp1"
+path="res://.godot/imported/tiny-5-font-2-export.fnt-e2ca2971234e92d778e574f8140de9bc.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/tiny-5-font-2-export.fnt"
+dest_files=["res://.godot/imported/tiny-5-font-2-export.fnt-e2ca2971234e92d778e574f8140de9bc.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

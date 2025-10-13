@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://di2fb0tqnei1s"
-path="res://.godot/imported/impact_dusts,w16,h16,s10.png-b8ffa4643e7701344208de36b090cd31.ctex"
+path="res://.godot/imported/impact_dusts,w16,h16,s10.png-9808407a1d2456670bf2c3a963c65ac1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/fx/impact_dusts,w16,h16,s10.png"
-dest_files=["res://.godot/imported/impact_dusts,w16,h16,s10.png-b8ffa4643e7701344208de36b090cd31.ctex"]
+source_file="res://assets/art/vfx/impact_dusts,w16,h16,s10.png"
+dest_files=["res://.godot/imported/impact_dusts,w16,h16,s10.png-9808407a1d2456670bf2c3a963c65ac1.ctex"]
 
 [params]
 
