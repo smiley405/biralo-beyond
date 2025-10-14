@@ -1,3 +1,4 @@
+class_name FallingTiles
 extends Area2D
 
 
@@ -14,6 +15,6 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if _collapsed:
 		return
-	
+
 	_collapsed = true
 	_animated_sprite.play("fall")

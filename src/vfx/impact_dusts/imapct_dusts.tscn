@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dl2syu157o1o0"]
 
 [ext_resource type="Texture2D" uid="uid://di2fb0tqnei1s" path="res://assets/art/vfx/impact_dusts,w16,h16,s10.png" id="1_n826q"]
-[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/base_vfx.gd" id="1_qxt28"]
+[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/vfx/base_vfx.gd" id="1_qxt28"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qxt28"]
 atlas = ExtResource("1_n826q")

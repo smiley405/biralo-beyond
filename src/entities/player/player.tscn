@@ -237,11 +237,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oih67"]
 size = Vector2(12, 6)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 4
 script = ExtResource("1_4m8ck")
-metadata/_edit_horizontal_guides_ = [3.0, -5.0]
-metadata/_edit_vertical_guides_ = [-4.0, 4.0]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
@@ -259,9 +257,11 @@ libraries = {
 [node name="AttackArea2D" type="Area2D" parent="."]
 visible = false
 collision_layer = 16
-collision_mask = 0
+collision_mask = 2
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
 position = Vector2(10, -1)
 shape = SubResource("RectangleShape2D_oih67")
+
+[connection signal="body_entered" from="AttackArea2D" to="." method="_on_attack_area_2d_body_entered"]

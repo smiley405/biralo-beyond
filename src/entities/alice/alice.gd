@@ -1,3 +1,4 @@
+class_name Alice
 extends Node
 
 
@@ -11,11 +12,11 @@ func _ready() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if _loved_cat or not body.type == "player":
+	if _loved_cat or not body.is_in_group("player"):
 		return
-	
+
 	var player: Player = body as Player
 	player.do_love()
-	
+
 	_loved_cat = true
 	_animated_sprite.play("love")

@@ -1,3 +1,4 @@
+class_name FireFiles
 extends Node2D
 
 

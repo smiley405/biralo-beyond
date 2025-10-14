@@ -10,7 +10,15 @@ var _vfx_scenes: Dictionary[String, Dictionary] = {
 	"impact_dusts": {
 		"total": 3,
 		"scene": preload("res://src/vfx/impact_dusts/imapct_dusts.tscn")
-	}
+	},
+	"fire_ball_impact": {
+		"total": 10,
+		"scene": preload("res://src/vfx/fire_ball_impact/fire_ball_impact.tscn")
+	},
+	"blast": {
+		"total": 8,
+		"scene": preload("res://src/vfx/blast/blast.tscn")
+	},
 }
 
 ## Dictionary[String, Array[PackedScene]]
@@ -23,12 +31,13 @@ func _ready() -> void:
 		var data: Dictionary = _vfx_scenes[key] as Dictionary
 		var total: int = data.total as int
 		var scene: PackedScene = data.scene as PackedScene
-		
+
 		for i in range(data.total):
 			var vfx: BaseVfx = scene.instantiate() as BaseVfx
 			vfx.type = key
-			vfx.visible = false
 			add_child(vfx)
+			# after adding child
+			vfx.deactivate()
 			_pool[key].append(vfx)
 
 

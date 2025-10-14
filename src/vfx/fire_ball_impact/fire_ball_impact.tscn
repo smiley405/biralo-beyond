@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cr2nk6a50n3k6"]
+
+[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/vfx/base_vfx.gd" id="1_o3x21"]
+[ext_resource type="Texture2D" uid="uid://cgfr7q87ffg4y" path="res://assets/art/vfx/fire_ball_impact,w8,h8,s12.png" id="2_s3krl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryo4g"]
+atlas = ExtResource("2_s3krl")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oioi"]
+atlas = ExtResource("2_s3krl")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suxdy"]
+atlas = ExtResource("2_s3krl")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3x47"]
+atlas = ExtResource("2_s3krl")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwnbu"]
+atlas = ExtResource("2_s3krl")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryo4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oioi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suxdy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3x47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwnbu")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="FireBallImpact" type="Node2D"]
+script = ExtResource("1_o3x21")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")
+frame = 4
+frame_progress = 1.0

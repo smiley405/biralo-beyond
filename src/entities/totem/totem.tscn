@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://bb850yglcd6q7"]
+
+[ext_resource type="Script" uid="uid://cg3m8n28autus" path="res://src/entities/totem/totem.gd" id="1_flk4c"]
+[ext_resource type="Texture2D" uid="uid://bnx3ncqafrwt5" path="res://assets/art/misc/totem_attack,w24,h24,s8.png" id="2_y61fl"]
+[ext_resource type="Texture2D" uid="uid://b0narjhbcmctf" path="res://assets/art/misc/totem_idle,w24,h24,s8.png" id="3_ioy5q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqrr5"]
+atlas = ExtResource("2_y61fl")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nalha"]
+atlas = ExtResource("2_y61fl")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbw77"]
+atlas = ExtResource("2_y61fl")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyhpc"]
+atlas = ExtResource("2_y61fl")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dh0g"]
+atlas = ExtResource("2_y61fl")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ld2pb"]
+atlas = ExtResource("3_ioy5q")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wr2d3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqrr5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nalha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbw77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyhpc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dh0g")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ld2pb")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y61fl"]
+size = Vector2(8, 17)
+
+[node name="Totem" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 20
+script = ExtResource("1_flk4c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_wr2d3")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_y61fl")
+
+[node name="SwitchAttackTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SwitchAttackTimer" to="." method="_on_switch_attack_timer_timeout"]

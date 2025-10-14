@@ -1,7 +1,7 @@
 extends Node
 
 
-var scene_index: int = 0
+var scene_index: int = 1
 var game_won: bool = false
 var checkpoint: Vector2 = Vector2.ZERO
 

@@ -4,9 +4,11 @@ extends CharacterBody2D
 
 var health: int = 1
 var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
+var default_speed: Vector2 = Vector2(45, 0)
 var gravity: float = default_gravity
 var jump_gravity: float = 400
-var speed: Vector2 = Vector2(45, 0)
+var jump_speed: Vector2 = Vector2(35, 0)
+var speed: Vector2 = default_speed
 var friction: Vector2 = Vector2(0.3, 0)
 var acceleration: Vector2 = Vector2(0.3, 0)
 var jump_force: float = 120.0
@@ -27,13 +29,14 @@ var type: String = "actor"
 #}
 var current_state: String = "" # Dictionary enum
 # Will be set from root level
-var vfx_pool:VfxPool
+var vfx_pool: VfxPool
+var projectile_pool: ProjectilePool
 
 var alpha: float = 1.0:
 	set = set_alpha,
 	get = get_alpha
 
-var flip_h: bool = false:
+@export var flip_h: bool = false:
 	set = set_flip_h,
 	get = get_flip_h
 
@@ -44,6 +47,7 @@ var flip_h: bool = false:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("vfx_targets")
+	add_to_group("projectile_targets")
 
 
 func _physics_process(delta) -> void:
@@ -54,14 +58,14 @@ func _physics_process(delta) -> void:
 func update_velocity(delta: float) -> void:
 	velocity.y += gravity * delta
 	move_and_slide()
-	
+
 	if !grounded and velocity.y > 0:
 		falling = true
-		
+
 	if grounded and falling:
 		on_landed()
 		falling = false
-	
+
 	grounded = is_on_floor()
 
 
@@ -76,20 +80,20 @@ func change_state(new_state: String) -> void:
 
 func add_vfx(vfx_type: String, x: float = 0.0, y: float = 0.0) -> void:
 	var vfx = vfx_pool.get_vfx(vfx_type)
-	
+
 	if vfx and not vfx.visible:
-		vfx.play()
+		vfx.activate()
 		vfx.position.x = x if x else _hitbox.global_position.x
-		vfx.position.y = y if y else _hitbox.global_position.y - _hitbox.shape.get_rect().size.y
+		vfx.position.y = y if y else _hitbox.global_position.y
 
 
 func receive_damage(amount: int, from: Node2D) -> void:
 	if dead:
 		return
-	
+
 	health -= amount
 	on_damage()
-	
+
 	if health <= 0:
 		health = 0
 		kill()
@@ -97,6 +101,7 @@ func receive_damage(amount: int, from: Node2D) -> void:
 
 func kill() -> void:
 	dead = true
+	print("dead ", type)
 
 
 func reset() -> void:
@@ -110,6 +115,16 @@ func reset() -> void:
 	attacking = false
 	reset_velocity()
 	reset_gravity()
+	reset_speed()
+
+
+func detach() -> void:
+	reset()
+	queue_free()
+
+
+func reset_speed() -> void:
+	speed = default_speed
 
 
 func reset_velocity() -> void:

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dticdkxbj0if6"]
+
+[ext_resource type="Script" uid="uid://ddm0penjk2upq" path="res://src/entities/hurt/hurt.gd" id="1_i7kqm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mq3c"]
+size = Vector2(8, 8)
+
+[node name="Hurt" type="Node2D"]
+script = ExtResource("1_i7kqm")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7mq3c")
+debug_color = Color(0.89411765, 0.19215687, 0.078431375, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
