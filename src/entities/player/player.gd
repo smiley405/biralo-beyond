@@ -9,11 +9,14 @@ const PlayerState: Dictionary[String, String] = {
 	"ATTACT": "ATTACK",
 	"HURT": "HURT",
 	"JUMP": "JUMP",
+	"SWING": "SWING",
 }
 
 var _jump_attacked: bool = false
 var _attack_area_offsets: Array[Vector2] = []
 var _loved: bool = false
+var _is_swinging: bool = false
+var _swing_speed: Vector2 = Vector2(45, 0)
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 @onready var _attack_aread_2d: Area2D = $AttackArea2D
@@ -60,9 +63,13 @@ func _physics_process(delta) -> void:
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction.x)
 
+	if _is_swinging:
+		velocity.x = get_direction() * _swing_speed.x
+
 	if grounded:
 		jumping = false
 		_jump_attacked = false
+		_is_swinging = false
 
 	update_inputs()
 
@@ -118,7 +125,7 @@ func control_camera() -> void:
 
 
 func change_state(new_state) -> void:
-	current_state = new_state
+	super.change_state(new_state)
 	match new_state:
 		"IDLE":
 			do_idle()
@@ -130,6 +137,8 @@ func change_state(new_state) -> void:
 			do_fall()
 		"ATTACK":
 			do_attack()
+		"SWING":
+			do_swing()
 
 
 func do_idle() -> void:
@@ -150,7 +159,7 @@ func do_jump(force = jump_force) -> void:
 	velocity.y -= force
 	speed = jump_speed
 
-	if not moving:
+	if not moving and not _is_swinging:
 		_animated_sprite.play("jump")
 
 
@@ -180,10 +189,20 @@ func do_love() -> void:
 		love_vfx.position.y = _hitbox.global_position.y - _hitbox.shape.get_rect().size.y - 4
 
 
+func do_swing() -> void:
+	if _is_swinging:
+		return
+	await Utils.delay(0.2)
+	reset_attack_state()
+	_is_swinging = true
+	do_jump(118.0)
+
+
 func reset() -> void:
 	super.reset()
 	_jump_attacked = false
 	_loved = false
+	_is_swinging = false
 
 
 func kill() -> void:
@@ -208,6 +227,8 @@ func _locked_movement() -> bool:
 
 
 func on_landed() -> void:
+	if dead:
+		return
 	reset_speed()
 	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y)
 	# sounds
@@ -247,3 +268,12 @@ func _on_KillTimer_timeout():
 func _on_attack_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
 		body.receive_damage(1, self)
+
+
+func _on_swing_timer_timeout() -> void:
+	_is_swinging = false
+
+
+func _on_attack_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("torch"):
+		change_state("SWING")

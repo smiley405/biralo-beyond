@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bwb28frirv50r"]
+[gd_scene load_steps=12 format=4 uid="uid://bwb28frirv50r"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_db0v0"]
 [ext_resource type="PackedScene" uid="uid://bb850yglcd6q7" path="res://src/entities/totem/totem.tscn" id="2_3c5hx"]
@@ -45,19 +45,16 @@ tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_egpny")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6k78o"]
-size = Vector2(40, 40.0625)
+size = Vector2(41, 40.0625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egpny"]
 size = Vector2(16.5, 61)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s2xnm"]
-size = Vector2(8.5, 32)
+size = Vector2(20.25, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_klfaq"]
 size = Vector2(43.25, 14)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3c5hx"]
-size = Vector2(34.25, 10)
 
 [node name="Level2Contents" type="Node2D"]
 
@@ -70,7 +67,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(12, 59.96875)
+position = Vector2(12.5, 59.96875)
 shape = SubResource("RectangleShape2D_6k78o")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
@@ -78,16 +75,12 @@ position = Vector2(-8, 27.5)
 shape = SubResource("RectangleShape2D_egpny")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(92, 64)
+position = Vector2(97.875, 64)
 shape = SubResource("RectangleShape2D_s2xnm")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(69.375, 71)
 shape = SubResource("RectangleShape2D_klfaq")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(40.875, 77)
-shape = SubResource("RectangleShape2D_3c5hx")
 
 [node name="Totem" parent="." instance=ExtResource("2_3c5hx")]
 position = Vector2(82, 54)

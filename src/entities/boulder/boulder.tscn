@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://dea3y30fjbcne"]
+
+[ext_resource type="Script" uid="uid://cw02bthp8muvg" path="res://src/entities/boulder/boulder.gd" id="1_3l58v"]
+[ext_resource type="Texture2D" uid="uid://do3uhqjio1xwm" path="res://assets/art/misc/boulder,w16,h16,s6.png" id="2_erbgm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nc51o"]
+atlas = ExtResource("2_erbgm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1f7p3"]
+atlas = ExtResource("2_erbgm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpkab"]
+atlas = ExtResource("2_erbgm")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wr2d3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc51o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f7p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpkab")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y61fl"]
+size = Vector2(11, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erbgm"]
+size = Vector2(11, 11)
+
+[node name="Boulder" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_3l58v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_wr2d3")
+animation = &"roll"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_y61fl")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_erbgm")
+
+[node name="LeftRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(-15, 0)
+collision_mask = 4
+
+[node name="RightRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(15, 0)
+collision_mask = 4
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

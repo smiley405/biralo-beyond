@@ -254,14 +254,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_oih67")
 }
 
-[node name="AttackArea2D" type="Area2D" parent="."]
+[node name="AttackArea2D" type="Area2D" parent="." groups=["player_attack"]]
 visible = false
 collision_layer = 16
-collision_mask = 2
+collision_mask = 10
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
 position = Vector2(10, -1)
 shape = SubResource("RectangleShape2D_oih67")
 
+[node name="SwingTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="AttackArea2D" to="." method="_on_attack_area_2d_area_entered"]
 [connection signal="body_entered" from="AttackArea2D" to="." method="_on_attack_area_2d_body_entered"]
+[connection signal="timeout" from="SwingTimer" to="." method="_on_swing_timer_timeout"]

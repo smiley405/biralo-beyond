@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_gp84r"]
 [ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="3_lft2e"]
+[ext_resource type="PackedScene" uid="uid://cnty6nke2mhk2" path="res://src/entities/torch/torch.tscn" id="4_1rh1d"]
 [ext_resource type="PackedScene" uid="uid://dticdkxbj0if6" path="res://src/entities/hurt/hurt.tscn" id="4_x7q2r"]
 [ext_resource type="FontFile" uid="uid://btilrusv6gxp1" path="res://assets/fonts/tiny-5-font-2-export.fnt" id="5_ciqwj"]
 
@@ -44,33 +45,30 @@ tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_egpny")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6k78o"]
-size = Vector2(40, 40.0625)
+size = Vector2(33, 40.0625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egpny"]
 size = Vector2(16.5, 61)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s2xnm"]
-size = Vector2(8.5, 32)
+size = Vector2(19.25, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_klfaq"]
-size = Vector2(43.25, 14)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3c5hx"]
-size = Vector2(34.25, 10)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4ey6"]
+size = Vector2(17, 8)
 
 [node name="Level3Contents" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAAAAQADAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAIAAAAEAAAAAQAEAAIAAAAFAAAAAQAAAAIAAAAGAAAAAQACAAIAAAAHAAAAAQAAAAIAAAAIAAAAAQAAAAIAAAAJAAAAAQAAAAIAAAAKAAAAAQABAAIAAAALAAAAAQAAAAIAAAALAAEAAQABAAIAAAAKAAEAAQADAAIAAAAJAAEAAQAAAAIAAAAIAAEAAQAEAAQAAAAHAAEAAQADAAAAAAAGAAEAAQABAAQAAAADAAEAAQAEAAAAAAACAAEAAQAEAAAAAAABAAEAAQAEAAAAAAAEAAEAAQABAAAAAAAFAAEAAQABAAAAAAAHAAIAAQADAAAAAAAAAAUAAQAAAAMAAAABAAUAAQAAAAMAAAACAAUAAQAEAAMAAAADAAUAAQAEAAMAAAAAAAQAAQADAAEAAAAKAAIAAQAAAAQAAAAIAAIAAQAEAAAAAAAEAAIAAQAEAAAAAAABAAYAAQAEAAQAAAADAAYAAQAAAAIAAAADAAIAAQACAAAAAAAKAAMAAQACAAAAAAAJAAIAAQAEAAAAAAACAAYAAQABAAQAAAAAAAYAAQAAAAIAAAAAAAcAAQABAAIAAAABAAcAAQADAAAAAAACAAcAAQACAAAAAAADAAcAAQAAAAIAAAALAAIAAQACAAAAAAADAAgAAQADAAIAAAADAAQAAQADAAEAAAACAAQAAQACAAEAAAAAAAgAAQADAAAAAAACAAgAAQACAAAAAAADAAkAAQAFAAMAAAAEAAkAAQAFAAIAAAAFAAkAAQAFAAMAAAAGAAkAAQAFAAMAAAAFAAgAAQAFAAAAAAAEAAgAAQAFAAEAAAAGAAgAAQADAAMAAAAHAAgAAQADAAMAAAAIAAgAAQADAAMAAAAJAAgAAQADAAMAAAAHAAcAAQAEAAEAAAAKAAgAAQAAAAIAAAALAAgAAQABAAIAAAALAAcAAQAAAAIAAAALAAYAAQADAAIAAAALAAkAAQAAAAIAAAAIAAkAAQADAAQAAAAHAAkAAQADAAAAAAAJAAkAAQAAAAAAAAAKAAkAAQAAAAAAAAALAAoAAQAEAAAAAAAKAAoAAQAEAAAAAAAJAAoAAQACAAAAAAAGAAQAAQAEAAAAAAAGAAUAAQACAAAAAAAHAAUAAQAEAAAAAAAFAAUAAQACAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAQABAAIAAAABAAAAAQABAAIAAAACAAAAAQAAAAIAAAADAAAAAQAAAAIAAAAEAAAAAQAEAAIAAAAFAAAAAQAAAAIAAAAGAAAAAQAAAAIAAAAHAAAAAQAAAAIAAAAIAAAAAQABAAIAAAAJAAAAAQABAAIAAAAKAAAAAQACAAIAAAALAAAAAQAAAAIAAAALAAEAAQAEAAIAAAAKAAEAAQAAAAIAAAAJAAEAAQAEAAIAAAAIAAEAAQAAAAIAAAAHAAEAAQAAAAIAAAAGAAEAAQAAAAIAAAADAAEAAQABAAIAAAACAAEAAQAAAAIAAAABAAEAAQADAAIAAAAEAAEAAQAAAAIAAAAFAAEAAQAEAAIAAAAAAAUAAQAAAAMAAAABAAUAAQAAAAMAAAACAAUAAQAEAAMAAAAAAAYAAQABAAIAAAAAAAcAAQAEAAIAAAABAAcAAQADAAAAAAACAAcAAQACAAAAAAADAAgAAQAFAAMAAAAAAAgAAQACAAAAAAAFAAgAAQAFAAMAAAAEAAgAAQAFAAMAAAAGAAgAAQAFAAIAAAAHAAgAAQAFAAIAAAAIAAgAAQAFAAMAAAAJAAgAAQAFAAIAAAAKAAgAAQAFAAMAAAALAAgAAQABAAIAAAALAAcAAQAAAAIAAAALAAYAAQAAAAIAAAAIAAkAAQADAAQAAAAJAAkAAQACAAAAAAAKAAkAAQABAAAAAAAKAAoAAQAEAAAAAAAAAAEAAQAAAAIAAAADAAcAAQAFAAAAAAAEAAcAAQAFAAEAAAAFAAcAAQAFAAAAAAAGAAcAAQAFAAEAAAAHAAcAAQAFAAEAAAAIAAcAAQAFAAAAAAAJAAcAAQAFAAEAAAAKAAcAAQAFAAEAAAACAAYAAQAAAAQAAAABAAYAAQAEAAQAAAAEAAkAAQAEAAQAAAALAAkAAQABAAAAAAAFAAkAAQADAAAAAAADAAkAAQABAAAAAAADAAoAAQADAAAAAAALAAIAAQABAAAAAAAKAAIAAQAEAAQAAAAIAAIAAQAEAAQAAAAGAAIAAQAAAAQAAAAEAAIAAQABAAQAAAAFAAIAAQADAAAAAAAJAAIAAQAEAAAAAAADAAIAAQACAAAAAAAFAAQAAQADAAAAAAAEAAUAAQACAAAAAAAHAAYAAQABAAIAAAAIAAYAAQAEAAAAAAAGAAYAAQAAAAIAAAABAAQAAQAEAAEAAAAKAAUAAQADAAAAAAAIAAUAAQACAAAAAAA=")
 tile_set = SubResource("TileSet_am86q")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["platforms"]]
-visible = false
 collision_layer = 4
 collision_mask = 0
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(12, 59.96875)
+position = Vector2(8.5, 59.96875)
 shape = SubResource("RectangleShape2D_6k78o")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
@@ -78,34 +76,45 @@ position = Vector2(-8, 27.5)
 shape = SubResource("RectangleShape2D_egpny")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(92, 64)
+position = Vector2(97.375, 64)
 shape = SubResource("RectangleShape2D_s2xnm")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(69.375, 71)
-shape = SubResource("RectangleShape2D_klfaq")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(40.875, 77)
-shape = SubResource("RectangleShape2D_3c5hx")
+position = Vector2(56.5, 52)
+shape = SubResource("RectangleShape2D_v4ey6")
 
 [node name="Exit" parent="." instance=ExtResource("3_lft2e")]
 position = Vector2(103.00001, 28.999998)
 scale = Vector2(1.7800035, 4.8450313)
 
 [node name="Hurt" parent="." instance=ExtResource("4_x7q2r")]
-position = Vector2(40, 72)
-scale = Vector2(2.5200024, 1)
+position = Vector2(56, 65)
+scale = Vector2(8.040001, 1)
+
+[node name="Torch" parent="." instance=ExtResource("4_1rh1d")]
+position = Vector2(36, 36)
+
+[node name="Torch2" parent="." instance=ExtResource("4_1rh1d")]
+position = Vector2(76, 43)
 
 [node name="Instructions" type="Node2D" parent="."]
-visible = false
 position = Vector2(13, 79)
 metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="Instructions"]
-offset_right = 57.0
-offset_bottom = 18.6875
+offset_left = -9.0
+offset_top = -1.0
+offset_right = 75.0
+offset_bottom = 21.75
 theme_override_fonts/font = ExtResource("5_ciqwj")
 theme_override_font_sizes/font_size = 28
-text = "Arrow keys to move"
-metadata/_edit_lock_ = true
+text = "Press 'X' near"
+
+[node name="Label2" type="Label" parent="Instructions"]
+offset_left = 12.0
+offset_top = 7.0
+offset_right = 96.0
+offset_bottom = 29.75
+theme_override_fonts/font = ExtResource("5_ciqwj")
+theme_override_font_sizes/font_size = 28
+text = "the torch to swing"

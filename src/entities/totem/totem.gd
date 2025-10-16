@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func change_state(new_state) -> void:
-	current_state = new_state
+	super.change_state(new_state)
 	match new_state:
 		"IDLE":
 			do_idle()

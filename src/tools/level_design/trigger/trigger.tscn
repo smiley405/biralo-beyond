@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://j6vieindbhql"]
+
+[ext_resource type="Script" uid="uid://bb1f1ix4elmq8" path="res://src/tools/level_design/trigger/trigger.gd" id="1_a7ckb"]
+[ext_resource type="PackedScene" uid="uid://byuff5uavsbea" path="res://src/tools/level_design/core/label_box/label_box.tscn" id="2_7rpeg"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(8, 8)
+
+[node name="Trigger" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_a7ckb")
+tool_name = "Trigger"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.1920929e-07)
+shape = SubResource("1")
+
+[node name="LabelBox" parent="." instance=ExtResource("2_7rpeg")]
+color = Color(0.00392157, 0.788235, 0.0745098, 0.588235)
+activated_color = Color(0.0588235, 0.243137, 0, 0.588235)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

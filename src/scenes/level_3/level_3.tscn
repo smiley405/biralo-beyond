@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://uwkvf77y4dka" path="res://src/scenes/level_3/level_3_contents.tscn" id="2_r18do"]
 [ext_resource type="PackedScene" uid="uid://cwyy4e4g7cfjk" path="res://src/entities/player/player.tscn" id="3_puwxa"]
 
-[node name="Level2" type="Node2D"]
+[node name="Level3" type="Node2D"]
 script = ExtResource("1_fi0k2")
 
-[node name="Level2Contents" parent="." instance=ExtResource("2_r18do")]
+[node name="Level3Contents" parent="." instance=ExtResource("2_r18do")]
 
 [node name="Player" parent="." instance=ExtResource("3_puwxa")]
-position = Vector2(10, 1)
+position = Vector2(4, 37)
 flip_h = null

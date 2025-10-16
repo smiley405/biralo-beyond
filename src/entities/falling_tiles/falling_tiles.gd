@@ -13,7 +13,7 @@ func _ready() -> void:
 # Detects player > body:collisionShape2d, to detect area2d use area-entered or leeave
 # The signal detector node should have the mask pointing to palyer, not the other way round
 func _on_body_entered(body: Node2D) -> void:
-	if _collapsed:
+	if _collapsed or not body.is_in_group("player"):
 		return
 
 	_collapsed = true

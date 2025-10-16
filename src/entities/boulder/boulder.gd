@@ -1,0 +1,89 @@
+class_name Boulder
+extends Actor
+
+
+const TotemState: Dictionary[String, String] = {
+	"IDLE": "IDLE",
+	"ROLL": "ROLL",
+	"STOP": "STOP",
+}
+
+var _is_ready_for_stop: bool = false
+
+@onready var _left_ray_cast: RayCast2D = $LeftRayCast2D
+@onready var _right_ray_cast: RayCast2D = $RightRayCast2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	super()
+	type = "boulder"
+	default_speed = Vector2(25, 0)
+	speed = default_speed
+	change_state("STOP")
+	zero_gravity()
+
+
+func _physics_process(delta) -> void:
+	super(delta)
+	update_movement()
+
+
+func update_movement() -> void:
+	if moving:
+		velocity.x = lerp(velocity.x, get_direction() * speed.x, acceleration.x)
+	else:
+		velocity.x = lerp(velocity.x, 0.0, friction.x)
+
+
+func change_state(new_state) -> void:
+	super.change_state(new_state)
+	match new_state:
+		"IDLE":
+			do_idle()
+		"ROLL":
+			do_roll()
+		"STOP":
+			do_stop()
+
+
+func do_stop() -> void:
+	_animated_sprite.stop()
+	moving = false
+
+
+func do_idle() -> void:
+	do_stop()
+	change_state("ROLL")
+
+
+func do_roll() -> void:
+	moving = true
+	_animated_sprite.play("roll")
+
+
+func triggered_by(from: Node2D, trigger: Node2D) -> void:
+	if is_instance_of(trigger, Stop):
+		_is_ready_for_stop = true
+	if is_instance_of(from, Player):
+		reset_gravity()
+		change_state("ROLL")
+
+
+func on_landed() -> void:
+	if current_state != "IDLE":
+		change_state("IDLE")
+		if _left_ray_cast.is_colliding():
+			flip_h = false
+		if _right_ray_cast.is_colliding():
+			flip_h = true
+		if _is_ready_for_stop:
+			change_state("STOP")
+
+	reset_speed()
+	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		var player: Player = body as Player
+		player.receive_damage(1, self)

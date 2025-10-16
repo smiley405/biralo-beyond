@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu4kmakghkb8r"]
+
+[ext_resource type="Script" uid="uid://b5eha7lntq4rm" path="res://src/tools/level_design/delay/delay.gd" id="1_7pyc7"]
+[ext_resource type="PackedScene" uid="uid://byuff5uavsbea" path="res://src/tools/level_design/core/label_box/label_box.tscn" id="2_sd25n"]
+
+[node name="Delay" type="Node2D"]
+script = ExtResource("1_7pyc7")
+tool_name = "Delay"
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="LabelBox" parent="." instance=ExtResource("2_sd25n")]
+color = Color(0.952941, 0.396078, 0.0901961, 0.588235)
+activated_color = Color(1, 1, 1, 1)
+
+[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]

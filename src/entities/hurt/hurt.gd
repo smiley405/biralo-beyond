@@ -5,7 +5,7 @@ extends Node2D
 var _hurt: bool = false
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if _hurt or not body.is_in_group("player"):
 		return
 
