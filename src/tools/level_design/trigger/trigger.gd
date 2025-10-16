@@ -7,10 +7,9 @@ extends NodePathLinkDrawer
 # Set the required Size
 # and select a node from the node tree as required
 #
-# To connect or use:
-# In the target node's class set -
-# ## @param: entity - is a node which trrigered it. i.e player, enemies
-# ## @param: trigger - is the node that's been triggered
+# To connect and use it from the entity's class/ target node's class: [br]
+# ## [param entity] - is a node which trrigered it. i.e player, enemies [br]
+# ## [param trigger] - is the node that's been triggered
 # func triggred_by(entity, trigger):
 # 	do_something(entity.x, entity.y)
 #

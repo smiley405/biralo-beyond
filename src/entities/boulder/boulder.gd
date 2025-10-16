@@ -60,7 +60,9 @@ func do_roll() -> void:
 	moving = true
 	_animated_sprite.play("roll")
 
-
+## This function is called internally by the tools/trigger [br]
+## [param entity] - is a node which trrigered it. i.e player, enemies [br]
+## [param trigger] - is the node that's been triggered
 func triggered_by(from: Node2D, trigger: Node2D) -> void:
 	if is_instance_of(trigger, Stop):
 		_is_ready_for_stop = true

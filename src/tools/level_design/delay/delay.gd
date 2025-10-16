@@ -12,9 +12,9 @@ extends NodePathLinkDrawer
 # - Select a node from the node tree as required
 # - Set the Delay value
 #
-# To connect and use it from the entity's class/ target node's class:
-# ## @param: entity - is a node which trrigered it. i.e player, enemies
-# ## @param: trigger - is the node that's been triggered
+# To connect and use it from the entity's class/ target node's class: [br]
+# ## [param entity] - is a node which trrigered it. i.e player, enemies [br]
+# ## [param trigger] - is the node that's been triggered
 # func triggered_by(entity, trigger):
 #	# Example
 # 	if is_instance_of(entity, Player):
@@ -26,16 +26,15 @@ extends NodePathLinkDrawer
 
 @onready var delay_timer: Timer = $DelayTimer
 
-
+## This function is called internally by the tools/trigger [br]
+## [param entity] - is a node which trrigered it. i.e player, enemies [br]
+## [param trigger] - is the node that's been triggered
 func triggered_by(entity, trigger) -> void:
-	# This function is called internally by the trigger_tool
-
 	triggered_entity = entity
 	delay_timer.start(delay)
 
 
+## Once the delay timeout is completed,
+## it calls the triggered_entity > triggered_by(..)
 func _on_DelayTimer_timeout():
-	# Once the delay timeout is completed,
-	# tt calls the triggered_entity > on_triggered_by(..)
-
 	call_targets_func("triggered_by", [triggered_entity, self])
