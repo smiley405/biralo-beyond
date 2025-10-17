@@ -13,13 +13,13 @@ const fsm: Array[String] = [
 	"IDLE",
 	"ATTACK",
 	"IDLE",
-
+	# Repeats [JUMP-IDLE] until it hits wall
 	"JUMP",
-
+	# After it hits wall
 	"IDLE",
 	"ATTACK",
 	"IDLE",
-
+	# Flies up and to the side till it hits wall then falls down
 	"FLY",
 ]
 

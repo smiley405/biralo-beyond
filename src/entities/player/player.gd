@@ -182,7 +182,7 @@ func do_love() -> void:
 
 	var love_vfx = vfx_pool.get_vfx("love")
 	if love_vfx and not love_vfx.visible:
-		love_vfx.play()
+		love_vfx.activate()
 		love_vfx.position.x = _hitbox.global_position.x
 		love_vfx.position.y = _hitbox.global_position.y - _hitbox.shape.get_rect().size.y - 4
 

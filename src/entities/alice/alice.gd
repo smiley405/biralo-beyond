@@ -20,3 +20,4 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 	_loved_cat = true
 	_animated_sprite.play("love")
+	GameState.game_won = true

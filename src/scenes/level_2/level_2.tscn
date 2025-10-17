@@ -10,5 +10,5 @@ script = ExtResource("1_72rrl")
 [node name="Level2Contents" parent="." instance=ExtResource("2_qmuid")]
 
 [node name="Player" parent="." instance=ExtResource("3_eamvj")]
-position = Vector2(10, 1)
+position = Vector2(5, 5)
 flip_h = null
