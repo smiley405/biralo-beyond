@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(8, 8)
 
-[node name="Trigger" type="Area2D"]
+[node name="Trigger" type="Area2D" groups=["trigger_tool"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_a7ckb")

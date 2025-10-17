@@ -17,7 +17,7 @@ extends NodePathLinkDrawer
 # ## [param trigger] - is the node that's been triggered
 # func triggered_by(entity, trigger):
 #	# Example
-# 	if is_instance_of(entity, Player):
+# 	if entity.is_in_group("player"):
 # 		do_something()
 #
 

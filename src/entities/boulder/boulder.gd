@@ -64,9 +64,9 @@ func do_roll() -> void:
 ## [param entity] - is a node which trrigered it. i.e player, enemies [br]
 ## [param trigger] - is the node that's been triggered
 func triggered_by(from: Node2D, trigger: Node2D) -> void:
-	if is_instance_of(trigger, Stop):
+	if trigger.is_in_group("stop_tool"):
 		_is_ready_for_stop = true
-	if is_instance_of(from, Player):
+	if from.is_in_group("player"):
 		reset_gravity()
 		change_state(BoulderState.ROLL)
 

@@ -17,7 +17,7 @@ extends NodePathLinkDrawer
 # ## [param trigger] - is the node that's been triggered
 # func triggered_by(from, trigger):
 # 	# Example
-# 	if is_instance_of(trigger, Stop):
+# 	if trigger.is_in_group("stop_tool"):
 # 		do_something()
 
 
