@@ -141,7 +141,7 @@ position = Vector2(52, 36)
 position = Vector2(60, 84)
 
 [node name="Totem" parent="." instance=ExtResource("5_cvbw4")]
-position = Vector2(28, 78)
+position = Vector2(31, 78)
 delay_attack_time = 3.0
 
 [node name="Boulder" parent="." instance=ExtResource("6_7ggvx")]

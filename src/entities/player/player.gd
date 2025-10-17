@@ -6,7 +6,7 @@ const PlayerState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
 	"RUN": "RUN",
 	"FALL": "FALL",
-	"ATTACT": "ATTACK",
+	"ATTACK": "ATTACK",
 	"HURT": "HURT",
 	"JUMP": "JUMP",
 	"SWING": "SWING",
@@ -74,25 +74,23 @@ func _physics_process(delta) -> void:
 	update_inputs()
 
 	if falling and not attacking:
-		change_state("FALL")
+		change_state(PlayerState.FALL)
 
 	if attacking:
 		reset_velocity()
 		zero_gravity()
 
-	#control_camera()
-
 
 func update_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
 		if not attacking:
-			change_state("RUN")
+			change_state(PlayerState.RUN)
 	elif Input.is_action_pressed("move_left"):
 		if not attacking:
-			change_state("RUN")
+			change_state(PlayerState.RUN)
 	else:
 		if grounded and not attacking:
-			change_state("IDLE")
+			change_state(PlayerState.IDLE)
 
 	if Input.is_action_just_pressed("jump"):
 		on_jump()
@@ -124,20 +122,20 @@ func control_camera() -> void:
 		Events.emit_signal("camera_zoom_out")
 
 
-func change_state(new_state) -> void:
+func change_state(new_state: String) -> void:
 	super.change_state(new_state)
 	match new_state:
-		"IDLE":
+		PlayerState.IDLE:
 			do_idle()
-		"RUN":
+		PlayerState.RUN:
 			do_run()
-		"JUMP":
+		PlayerState.JUMP:
 			do_jump()
-		"FALL":
+		PlayerState.FALL:
 			do_fall()
-		"ATTACK":
+		PlayerState.ATTACK:
 			do_attack()
-		"SWING":
+		PlayerState.SWING:
 			do_swing()
 
 
@@ -240,14 +238,14 @@ func on_jump() -> void:
 		return
 
 	if grounded and not attacking:
-		change_state("JUMP")
+		change_state(PlayerState.JUMP)
 
 
 func on_attack() -> void:
 	if dead or attacking or _jump_attacked:
 		return
 
-	change_state("ATTACK")
+	change_state(PlayerState.ATTACK)
 
 
 func on_kill() -> void:
@@ -276,4 +274,4 @@ func _on_swing_timer_timeout() -> void:
 
 func _on_attack_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("torch"):
-		change_state("SWING")
+		change_state(PlayerState.SWING)

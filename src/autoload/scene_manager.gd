@@ -6,6 +6,7 @@ var _scenes: Array[PackedScene] = [
 	preload("res://src/scenes/level_2/level_2.tscn"),
 	preload("res://src/scenes/level_3/level_3.tscn"),
 	preload("res://src/scenes/level_4/level_4.tscn"),
+	preload("res://src/scenes/level_5/level_5.tscn"),
 ]
 
 

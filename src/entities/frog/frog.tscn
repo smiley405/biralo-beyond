@@ -1,0 +1,179 @@
+[gd_scene load_steps=20 format=3 uid="uid://c6gfcdgl646e5"]
+
+[ext_resource type="Script" uid="uid://b777vpn0gxgdt" path="res://src/entities/frog/frog.gd" id="1_uprpg"]
+[ext_resource type="Texture2D" uid="uid://bfkr1erums2cl" path="res://assets/art/frog/frog_attack,w16,h16,s4.png" id="2_xd6ms"]
+[ext_resource type="Texture2D" uid="uid://ccw2t8gf6skmt" path="res://assets/art/frog/frog_fly,w16,h16,s4.png" id="3_xd6ms"]
+[ext_resource type="Texture2D" uid="uid://dslivhndfif5u" path="res://assets/art/frog/frog_idle,w16,h16,s4.png" id="4_vub71"]
+[ext_resource type="Texture2D" uid="uid://bhifauxh6vwws" path="res://assets/art/frog/frog_jump,w16,h16,s4.png" id="5_xd6ms"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iufac"]
+atlas = ExtResource("2_xd6ms")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udlro"]
+atlas = ExtResource("2_xd6ms")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vub71"]
+atlas = ExtResource("3_xd6ms")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwr2h"]
+atlas = ExtResource("3_xd6ms")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uyfc"]
+atlas = ExtResource("4_vub71")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slbs2"]
+atlas = ExtResource("4_vub71")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3e4vy"]
+atlas = ExtResource("5_xd6ms")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qyba"]
+atlas = ExtResource("5_xd6ms")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dao75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iufac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udlro")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vub71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwr2h")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1uyfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slbs2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3e4vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qyba")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mfjg"]
+size = Vector2(7, 11)
+
+[sub_resource type="Animation" id="Animation_xd6ms"]
+resource_name = "hurt"
+length = 0.5000125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_vub71"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_iufac"]
+resource_name = "default"
+length = 0.1250125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_udlro"]
+_data = {
+&"RESET": SubResource("Animation_vub71"),
+&"default": SubResource("Animation_iufac"),
+&"hurt": SubResource("Animation_xd6ms")
+}
+
+[node name="Frog" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 20
+script = ExtResource("1_uprpg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dao75")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2.5)
+shape = SubResource("RectangleShape2D_0mfjg")
+
+[node name="LeftRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(-13, 0)
+collision_mask = 4
+
+[node name="RightRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(13, 0)
+collision_mask = 4
+
+[node name="FSMTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProjectileAttackTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_udlro")
+}
+
+[connection signal="timeout" from="FSMTimer" to="." method="_on_fsm_timer_timeout"]
+[connection signal="timeout" from="ProjectileAttackTimer" to="." method="_on_projectile_attack_timer_timeout"]

@@ -4,7 +4,7 @@ extends Actor
 
 const TotemState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
-	"ATTACT": "ATTACK",
+	"ATTACK": "ATTACK",
 }
 
 @export var delay_attack_time: float = 1.0
@@ -15,16 +15,16 @@ const TotemState: Dictionary[String, String] = {
 func _ready() -> void:
 	super()
 	type = "totem"
-	change_state("IDLE")
+	change_state(TotemState.IDLE)
 	_animated_sprite.connect("animation_finished", _on_animation_sprite_finished)
 
 
-func change_state(new_state) -> void:
+func change_state(new_state: String) -> void:
 	super.change_state(new_state)
 	match new_state:
-		"IDLE":
+		TotemState.IDLE:
 			do_idle()
-		"ATTACK":
+		TotemState.ATTACK:
 			do_attack()
 
 
@@ -64,9 +64,9 @@ func _on_animation_sprite_finished() -> void:
 
 	if anim_name == "attack":
 		reset_attack_state()
-		change_state("IDLE")
+		change_state(TotemState.IDLE)
 		add_projectile()
 
 
 func _on_switch_attack_timer_timeout() -> void:
-	change_state("ATTACK")
+	change_state(TotemState.ATTACK)

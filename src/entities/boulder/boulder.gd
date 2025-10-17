@@ -2,7 +2,7 @@ class_name Boulder
 extends Actor
 
 
-const TotemState: Dictionary[String, String] = {
+const BoulderState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
 	"ROLL": "ROLL",
 	"STOP": "STOP",
@@ -19,7 +19,7 @@ func _ready() -> void:
 	type = "boulder"
 	default_speed = Vector2(25, 0)
 	speed = default_speed
-	change_state("STOP")
+	change_state(BoulderState.STOP)
 	zero_gravity()
 
 
@@ -35,14 +35,14 @@ func update_movement() -> void:
 		velocity.x = lerp(velocity.x, 0.0, friction.x)
 
 
-func change_state(new_state) -> void:
+func change_state(new_state: String) -> void:
 	super.change_state(new_state)
 	match new_state:
-		"IDLE":
+		BoulderState.IDLE:
 			do_idle()
-		"ROLL":
+		BoulderState.ROLL:
 			do_roll()
-		"STOP":
+		BoulderState.STOP:
 			do_stop()
 
 
@@ -53,7 +53,7 @@ func do_stop() -> void:
 
 func do_idle() -> void:
 	do_stop()
-	change_state("ROLL")
+	change_state(BoulderState.ROLL)
 
 
 func do_roll() -> void:
@@ -68,18 +68,18 @@ func triggered_by(from: Node2D, trigger: Node2D) -> void:
 		_is_ready_for_stop = true
 	if is_instance_of(from, Player):
 		reset_gravity()
-		change_state("ROLL")
+		change_state(BoulderState.ROLL)
 
 
 func on_landed() -> void:
-	if current_state != "IDLE":
-		change_state("IDLE")
+	if current_state != BoulderState.IDLE:
+		change_state(BoulderState.IDLE)
 		if _left_ray_cast.is_colliding():
 			flip_h = false
 		if _right_ray_cast.is_colliding():
 			flip_h = true
 		if _is_ready_for_stop:
-			change_state("STOP")
+			change_state(BoulderState.STOP)
 
 	reset_speed()
 	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)

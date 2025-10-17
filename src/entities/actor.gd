@@ -28,6 +28,7 @@ var type: String = "actor"
 #    "JUMP": "JUMP"
 #}
 var current_state: String = "" # Dictionary enum
+var prev_state: String = current_state
 # Will be set from root level
 var vfx_pool: VfxPool
 var projectile_pool: ProjectilePool
@@ -75,6 +76,7 @@ func update_animated_sprite() -> void:
 
 
 func change_state(new_state: String) -> void:
+	prev_state = current_state
 	current_state = new_state
 
 
@@ -101,7 +103,6 @@ func receive_damage(amount: int, from: Node2D) -> void:
 
 func kill() -> void:
 	dead = true
-	print("dead ", type)
 
 
 func reset() -> void:

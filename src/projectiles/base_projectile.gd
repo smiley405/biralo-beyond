@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	if not visible:
 		return
 
-	position += direction.x * speed * delta
+	position += direction * speed * delta
 
 
 func play() -> void:

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bndvy8i1x8ep"]
+
+[ext_resource type="Script" uid="uid://8fjwtkotm8ur" path="res://src/scenes/base_level.gd" id="1_1v7lr"]
+[ext_resource type="PackedScene" uid="uid://daoc64jq1uh46" path="res://src/scenes/level_5/level_5_contents.tscn" id="2_eeqwr"]
+[ext_resource type="PackedScene" uid="uid://cwyy4e4g7cfjk" path="res://src/entities/player/player.tscn" id="3_ax625"]
+
+[node name="Level5" type="Node2D"]
+script = ExtResource("1_1v7lr")
+
+[node name="Level5Contents" parent="." instance=ExtResource("2_eeqwr")]
+
+[node name="Player" parent="." instance=ExtResource("3_ax625")]
+position = Vector2(12, 6)
+flip_h = null
