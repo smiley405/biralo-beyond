@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c6gfcdgl646e5"]
+[gd_scene load_steps=21 format=3 uid="uid://c6gfcdgl646e5"]
 
 [ext_resource type="Script" uid="uid://b777vpn0gxgdt" path="res://src/entities/frog/frog.gd" id="1_uprpg"]
 [ext_resource type="Texture2D" uid="uid://bfkr1erums2cl" path="res://assets/art/frog/frog_attack,w16,h16,s4.png" id="2_xd6ms"]
@@ -88,23 +88,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mfjg"]
 size = Vector2(7, 11)
 
-[sub_resource type="Animation" id="Animation_xd6ms"]
-resource_name = "hurt"
-length = 0.5000125
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [false, true, false, true]
-}
-
 [sub_resource type="Animation" id="Animation_vub71"]
 length = 0.001
 tracks/0/type = "value"
@@ -137,6 +120,23 @@ tracks/0/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_xd6ms"]
+resource_name = "hurt"
+length = 0.5000125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_udlro"]
 _data = {
 &"RESET": SubResource("Animation_vub71"),
@@ -144,7 +144,10 @@ _data = {
 &"hurt": SubResource("Animation_xd6ms")
 }
 
-[node name="Frog" type="CharacterBody2D" groups=["enemies"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd6ms"]
+size = Vector2(9, 4)
+
+[node name="Frog" type="CharacterBody2D" groups=["boss"]]
 collision_layer = 2
 collision_mask = 20
 script = ExtResource("1_uprpg")
@@ -175,5 +178,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_udlro")
 }
 
+[node name="SmashArea2D" type="Area2D" parent="."]
+collision_layer = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea2D"]
+position = Vector2(0.5, 6)
+shape = SubResource("RectangleShape2D_xd6ms")
+
 [connection signal="timeout" from="FSMTimer" to="." method="_on_fsm_timer_timeout"]
 [connection signal="timeout" from="ProjectileAttackTimer" to="." method="_on_projectile_attack_timer_timeout"]
+[connection signal="body_entered" from="SmashArea2D" to="." method="_on_smash_area_2d_body_entered"]

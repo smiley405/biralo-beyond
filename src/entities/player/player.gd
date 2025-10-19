@@ -264,6 +264,9 @@ func _on_KillTimer_timeout():
 
 
 func _on_attack_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("boss") and body.is_weak():
+		body.receive_damage(1, self)
+
 	if body.is_in_group("enemies"):
 		body.receive_damage(1, self)
 

@@ -82,6 +82,7 @@ func _physics_process(delta) -> void:
 
 func change_state(new_state: String) -> void:
 	super.change_state(new_state)
+	attacking = false
 	match new_state:
 		FrogState.IDLE:
 			do_idle()
@@ -190,7 +191,7 @@ func is_weak() -> bool:
 
 
 func is_smash() -> bool:
-	return visible  and jumping and falling
+	return visible and jumping and falling
 
 
 func is_facing_right_colliding() -> bool:
@@ -221,3 +222,12 @@ func _on_fsm_timer_timeout() -> void:
 
 func _on_projectile_attack_timer_timeout() -> void:
 	add_projectile(false, true)
+
+
+func _on_smash_area_2d_body_entered(body: Node2D) -> void:
+	if not is_smash():
+		return
+
+	if body.is_in_group("player"):
+		var player: Player = body as Player
+		player.receive_damage(1, self)
