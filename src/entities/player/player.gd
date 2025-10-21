@@ -30,6 +30,7 @@ func _ready() -> void:
 	_animation_player.play("default")
 
 	_animation_player.connect("animation_finished", _on_animation_player_finished)
+	_animated_sprite.connect("frame_changed", _on_animated_sprite_frame_changed)
 
 	# Store area2d collisionShape - their initial offsets
 	for shape in _attack_aread_2d.get_children():
@@ -224,11 +225,18 @@ func _locked_movement() -> bool:
 	return _loved
 
 
+func _add_run_dusts() -> void:
+	if flip_h:
+		add_vfx("walk_dusts_1", _hitbox.global_position.x + 2, _hitbox.global_position.y - 1, flip_h)
+	else:
+		add_vfx("walk_dusts_2", _hitbox.global_position.x - 2, _hitbox.global_position.y - 1, flip_h)
+
+
 func on_landed() -> void:
 	if dead:
 		return
 	reset_speed()
-	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y)
+	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1)
 	# sounds
 	# player logics here
 
@@ -257,6 +265,12 @@ func _on_animation_player_finished(anim_name: String) -> void:
 	if anim_name == "attack_logic":
 		_animation_player.play("default")
 		reset_attack_state()
+
+
+func _on_animated_sprite_frame_changed() -> void:
+	if _animated_sprite.animation == "run":
+		if _animated_sprite.frame == 2:
+			_add_run_dusts()
 
 
 func _on_KillTimer_timeout():

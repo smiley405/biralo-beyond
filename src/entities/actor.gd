@@ -80,11 +80,12 @@ func change_state(new_state: String) -> void:
 	current_state = new_state
 
 
-func add_vfx(vfx_type: String, x: float = 0.0, y: float = 0.0) -> void:
+func add_vfx(vfx_type: String, x: float = 0.0, y: float = 0.0, is_flip_h: bool = false) -> void:
 	var vfx = vfx_pool.get_vfx(vfx_type)
 
 	if vfx and not vfx.visible:
 		vfx.activate()
+		vfx.set_flip_h(is_flip_h)
 		vfx.position.x = x if x else _hitbox.global_position.x
 		vfx.position.y = y if y else _hitbox.global_position.y
 

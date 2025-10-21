@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cswscg2gndplb"
-path="res://.godot/imported/player_idle,w8,h8,s4.png-50e19422455c57f32f1fb092c55ce445.ctex"
+uid="uid://bgrxe0raafirk"
+path="res://.godot/imported/walk_dusts_type_1,w8,h8,s12.png-de7c1a4176122db3e349a226d678a4e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/player_idle,w8,h8,s4.png"
-dest_files=["res://.godot/imported/player_idle,w8,h8,s4.png-50e19422455c57f32f1fb092c55ce445.ctex"]
+source_file="res://assets/art/misc/walk_dusts_type_1,w8,h8,s12.png"
+dest_files=["res://.godot/imported/walk_dusts_type_1,w8,h8,s12.png-de7c1a4176122db3e349a226d678a4e3.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
