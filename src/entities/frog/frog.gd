@@ -231,3 +231,4 @@ func _on_smash_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		var player: Player = body as Player
 		player.receive_damage(1, self)
+		Events.camera_shake.emit()

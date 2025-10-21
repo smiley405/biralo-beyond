@@ -80,7 +80,8 @@ func on_landed() -> void:
 			flip_h = true
 		if _is_ready_for_stop:
 			change_state(BoulderState.STOP)
-
+	
+	Events.camera_shake.emit()
 	reset_speed()
 	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)
 

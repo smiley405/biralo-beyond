@@ -18,3 +18,4 @@ func _on_body_entered(body: Node2D) -> void:
 
 	_collapsed = true
 	_animated_sprite.play("fall")
+	Events.camera_shake.emit()

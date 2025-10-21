@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8isc2jnw0k3g"]
+
+[ext_resource type="Script" uid="uid://ddm6yshr21eqj" path="res://src/scenes/camera/camera.gd" id="1_dpnid"]
+
+[node name="Camera" type="Camera2D"]
+script = ExtResource("1_dpnid")
+
+[node name="ShakeTimer" type="Timer" parent="."]
+one_shot = true
