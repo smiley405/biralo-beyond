@@ -1,8 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkro1qimejyfn"]
+[gd_scene load_steps=15 format=3 uid="uid://bkro1qimejyfn"]
 
 [ext_resource type="Script" uid="uid://dgq2v6ysnj85o" path="res://src/entities/alice/alice.gd" id="1_vppt5"]
 [ext_resource type="Texture2D" uid="uid://cbmsnyi2byl1i" path="res://assets/art/misc/alice_love,w16,h16,s2.png" id="2_17vyv"]
+[ext_resource type="Texture2D" uid="uid://bnua4pr105s6w" path="res://assets/art/misc/alice_fall,w16,h16,s4.png" id="2_gn7gn"]
 [ext_resource type="Texture2D" uid="uid://celedmwl2qfym" path="res://assets/art/misc/alice_wave,w16,h16,s4.png" id="3_gn7gn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv0q6"]
+atlas = ExtResource("2_gn7gn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7grg"]
+atlas = ExtResource("2_gn7gn")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_whje7"]
 atlas = ExtResource("2_17vyv")
@@ -30,6 +39,17 @@ region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lv0q6"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv0q6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7grg")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 4.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_whje7")

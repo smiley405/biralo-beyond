@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dea3y30fjbcne" path="res://src/entities/boulder/boulder.tscn" id="6_7ggvx"]
 [ext_resource type="PackedScene" uid="uid://j6vieindbhql" path="res://src/tools/level_design/trigger/trigger.tscn" id="7_sa356"]
 [ext_resource type="PackedScene" uid="uid://bu4kmakghkb8r" path="res://src/tools/level_design/delay/delay.tscn" id="8_vtwpy"]
-[ext_resource type="PackedScene" uid="uid://b06q6wgwh7fvo" path="res://src/tools/level_design/delay/stop.tscn" id="9_pmam8"]
+[ext_resource type="PackedScene" uid="uid://b06q6wgwh7fvo" path="res://src/tools/level_design/stop/stop.tscn" id="9_pmam8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
 texture = ExtResource("1_buwmm")
