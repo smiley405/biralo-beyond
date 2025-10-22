@@ -4,6 +4,7 @@ extends Actor
 
 const FrogState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
+	"TIRED": "TIRED",
 	"ATTACK": "ATTACK",
 	"FLY": "FLY",
 	"JUMP": "JUMP",
@@ -13,7 +14,7 @@ const fsm: Array[String] = [
 	"IDLE",
 	"ATTACK",
 	"IDLE",
-	# Repeats [JUMP-IDLE] until it hits wall
+	# Repeats [JUMP-TIRED] until it hits wall
 	"JUMP",
 	# After it hits wall
 	"IDLE",
@@ -28,6 +29,8 @@ var _flying_up: bool = false
 var _flying_side: bool = false
 
 @onready var _fsm_timer: Timer = $FSMTimer
+@onready var _tired_timer: Timer = $TiredTimer
+@onready var _take_off_fly_timer: Timer = $TakeOffFlyTimer
 @onready var _projectile_attack_timer: Timer = $ProjectileAttackTimer
 @onready var _left_ray_cast: RayCast2D = $LeftRayCast2D
 @onready var _right_ray_cast: RayCast2D = $RightRayCast2D
@@ -65,7 +68,7 @@ func _physics_process(delta) -> void:
 	if grounded:
 		if jumping:
 			jumping = false
-			change_state(FrogState.IDLE)
+			change_state(FrogState.TIRED)
 
 		if _left_ray_cast.is_colliding():
 			flip_h = false
@@ -86,6 +89,8 @@ func change_state(new_state: String) -> void:
 	match new_state:
 		FrogState.IDLE:
 			do_idle()
+		FrogState.TIRED:
+			do_tired()
 		FrogState.ATTACK:
 			do_attack()
 		FrogState.JUMP:
@@ -95,7 +100,8 @@ func change_state(new_state: String) -> void:
 
 
 func update_fsm() -> void:
-	kill_timers()
+	_fsm_timer.stop()
+	_projectile_attack_timer.stop()
 	_flying_up = false
 	_flying_side = false
 	_fsm_index += 1
@@ -125,12 +131,15 @@ func add_projectile(is_side: bool = true, is_down: bool = false) -> void:
 
 func do_idle() -> void:
 	_animated_sprite.play("idle")
-
-	if prev_state == FrogState.JUMP and not is_on_wall():
-		await Utils.delay(1.0)
-		change_state(FrogState.JUMP)
-
 	_fsm_timer.start(1.0)
+
+
+func do_tired() -> void:
+	if prev_state == FrogState.JUMP and not is_on_wall():
+		_animated_sprite.play("tired")
+		_tired_timer.start()
+	else:
+		do_idle()
 
 
 func do_attack() -> void:
@@ -145,11 +154,7 @@ func do_fly() -> void:
 	_flying_up = true
 	do_jump('fly', 0, speed.y)
 	do_fly_attack()
-	await Utils.delay(1.5)
-	_flying_side = true
-	_flying_up = false
-	zero_gravity()
-	reset_velocity()
+	_take_off_fly_timer.start()
 
 
 func do_fly_attack() -> void:
@@ -184,6 +189,8 @@ func kill() -> void:
 func kill_timers() -> void:
 	_fsm_timer.stop()
 	_projectile_attack_timer.stop()
+	_take_off_fly_timer.stop()
+	_tired_timer.stop()
 
 
 func is_weak() -> bool:
@@ -215,12 +222,16 @@ func on_damage() -> void:
 		return
 	_animation_player.play("hurt")
 
+	var frame_index: int = health
+	Events.emit_signal("upate_boss_health_bar", frame_index)
+
 
 func _on_fsm_timer_timeout() -> void:
 	update_fsm()
 
 
 func _on_projectile_attack_timer_timeout() -> void:
+	_animated_sprite.play("poop")
 	add_projectile(false, true)
 
 
@@ -232,3 +243,15 @@ func _on_smash_area_2d_body_entered(body: Node2D) -> void:
 		var player: Player = body as Player
 		player.receive_damage(1, self)
 		Events.camera_shake.emit()
+
+
+func _on_tired_timer_timeout() -> void:
+	change_state(FrogState.JUMP)
+	_fsm_timer.start(1.0)
+
+
+func _on_take_off_fly_timer_timeout() -> void:
+	_flying_side = true
+	_flying_up = false
+	zero_gravity()
+	reset_velocity()

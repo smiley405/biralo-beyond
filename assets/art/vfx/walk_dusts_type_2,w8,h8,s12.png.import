@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgrxe0raafirk"
-path="res://.godot/imported/walk_dusts_type_1,w8,h8,s12.png-de7c1a4176122db3e349a226d678a4e3.ctex"
+uid="uid://cjiwio8ry1jnt"
+path="res://.godot/imported/walk_dusts_type_2,w8,h8,s12.png-1595409c121cf37f8167475c8c28a876.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/walk_dusts_type_1,w8,h8,s12.png"
-dest_files=["res://.godot/imported/walk_dusts_type_1,w8,h8,s12.png-de7c1a4176122db3e349a226d678a4e3.ctex"]
+source_file="res://assets/art/vfx/walk_dusts_type_2,w8,h8,s12.png"
+dest_files=["res://.godot/imported/walk_dusts_type_2,w8,h8,s12.png-1595409c121cf37f8167475c8c28a876.ctex"]
 
 [params]
 

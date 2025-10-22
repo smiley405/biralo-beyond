@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://c6gfcdgl646e5"]
+[gd_scene load_steps=27 format=3 uid="uid://c6gfcdgl646e5"]
 
 [ext_resource type="Script" uid="uid://b777vpn0gxgdt" path="res://src/entities/frog/frog.gd" id="1_uprpg"]
 [ext_resource type="Texture2D" uid="uid://bfkr1erums2cl" path="res://assets/art/frog/frog_attack,w16,h16,s4.png" id="2_xd6ms"]
 [ext_resource type="Texture2D" uid="uid://ccw2t8gf6skmt" path="res://assets/art/frog/frog_fly,w16,h16,s4.png" id="3_xd6ms"]
 [ext_resource type="Texture2D" uid="uid://dslivhndfif5u" path="res://assets/art/frog/frog_idle,w16,h16,s4.png" id="4_vub71"]
 [ext_resource type="Texture2D" uid="uid://bhifauxh6vwws" path="res://assets/art/frog/frog_jump,w16,h16,s4.png" id="5_xd6ms"]
+[ext_resource type="Texture2D" uid="uid://ve7tlk6mlx7n" path="res://assets/art/misc/frog_poop,w16,h16,s4.png" id="6_udlro"]
+[ext_resource type="Texture2D" uid="uid://dwjak6bc50176" path="res://assets/art/misc/frog_tired,w16,h16,s4.png" id="6_vub71"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iufac"]
 atlas = ExtResource("2_xd6ms")
@@ -36,6 +38,22 @@ region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6qyba"]
 atlas = ExtResource("5_xd6ms")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfqsd"]
+atlas = ExtResource("6_udlro")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1p38"]
+atlas = ExtResource("6_udlro")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhgbv"]
+atlas = ExtResource("6_vub71")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdcf4"]
+atlas = ExtResource("6_vub71")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dao75"]
@@ -82,6 +100,28 @@ animations = [{
 }],
 "loop": false,
 "name": &"jump",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfqsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1p38")
+}],
+"loop": true,
+"name": &"poop",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhgbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdcf4")
+}],
+"loop": true,
+"name": &"tired",
 "speed": 4.0
 }]
 
@@ -154,7 +194,7 @@ script = ExtResource("1_uprpg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dao75")
-animation = &"idle"
+animation = &"tired"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 2.5)
@@ -168,11 +208,6 @@ collision_mask = 4
 target_position = Vector2(13, 0)
 collision_mask = 4
 
-[node name="FSMTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="ProjectileAttackTimer" type="Timer" parent="."]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_udlro")
@@ -185,6 +220,20 @@ collision_layer = 128
 position = Vector2(0.5, 6)
 shape = SubResource("RectangleShape2D_xd6ms")
 
+[node name="FSMTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProjectileAttackTimer" type="Timer" parent="."]
+
+[node name="TiredTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="TakeOffFlyTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="body_entered" from="SmashArea2D" to="." method="_on_smash_area_2d_body_entered"]
 [connection signal="timeout" from="FSMTimer" to="." method="_on_fsm_timer_timeout"]
 [connection signal="timeout" from="ProjectileAttackTimer" to="." method="_on_projectile_attack_timer_timeout"]
-[connection signal="body_entered" from="SmashArea2D" to="." method="_on_smash_area_2d_body_entered"]
+[connection signal="timeout" from="TiredTimer" to="." method="_on_tired_timer_timeout"]
+[connection signal="timeout" from="TakeOffFlyTimer" to="." method="_on_take_off_fly_timer_timeout"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://daoc64jq1uh46"]
+[gd_scene load_steps=10 format=4 uid="uid://daoc64jq1uh46"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_4ctaa"]
 [ext_resource type="PackedScene" uid="uid://c6gfcdgl646e5" path="res://src/entities/frog/frog.tscn" id="2_y4n0n"]
+[ext_resource type="PackedScene" uid="uid://bxyngcafnfaxx" path="res://src/entities/health_bar/boss_health_bar/boss_health_bar.tscn" id="3_gy66y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
 texture = ExtResource("1_4ctaa")
@@ -83,3 +84,6 @@ shape = SubResource("RectangleShape2D_cvbw4")
 [node name="Frog" parent="." instance=ExtResource("2_y4n0n")]
 position = Vector2(81, 72)
 flip_h = true
+
+[node name="BossHealthBar" parent="." instance=ExtResource("3_gy66y")]
+position = Vector2(65, 4)

@@ -52,6 +52,7 @@ func kill() -> void:
 	super.kill()
 	# sound > blast
 	add_vfx("blast")
+	_switch_attack_timer.stop()
 	detach()
 
 
