@@ -104,6 +104,7 @@ func receive_damage(amount: int, from: Node2D) -> void:
 
 func kill() -> void:
 	dead = true
+	_hitbox.set_deferred("disabled", true)
 
 
 func reset() -> void:
