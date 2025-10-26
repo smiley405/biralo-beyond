@@ -39,26 +39,26 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
-	super(delta)
+	moving = false
 
 	if dead:
 		return
 
 	if _locked_movement():
-		reset_velocity()
-		zero_gravity()
-		do_idle()
+		on_lock_movement()
 		return
 
-	moving = false
+	update_inputs()
 
-	if Input.is_action_pressed("move_right"):
-		flip_h = false
-		moving = true
-	elif Input.is_action_pressed("move_left"):
-		flip_h = true
-		moving = true
+	super(delta)
 
+	update_grounded_state()
+	update_attacking_state()
+	update_falling_state()
+
+
+func update_velocity(delta: float) -> void:
+	super.update_velocity(delta)
 	if moving:
 		velocity.x = lerp(velocity.x, get_direction() * speed.x, acceleration.x)
 	else:
@@ -67,27 +67,16 @@ func _physics_process(delta) -> void:
 	if _swinging:
 		velocity.x = get_direction() * _swing_speed.x
 
-	if grounded:
-		jumping = false
-		_swinging = false
-		_attack_locked = false
-
-	if falling and not attacking:
-		change_state(PlayerState.FALL)
-
-	if attacking:
-		_attack_locked = true
-		reset_velocity()
-		zero_gravity()
-
-	update_inputs()
-
 
 func update_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
+		flip_h = false
+		moving = true
 		if not attacking:
 			change_state(PlayerState.RUN)
 	elif Input.is_action_pressed("move_left"):
+		flip_h = true
+		moving = true
 		if not attacking:
 			change_state(PlayerState.RUN)
 	else:
@@ -99,6 +88,25 @@ func update_inputs() -> void:
 
 	if Input.is_action_just_pressed("attack"):
 		on_attack()
+
+
+func update_grounded_state() -> void:
+	if grounded:
+		jumping = false
+		_swinging = false
+		_attack_locked = false
+
+
+func update_attacking_state() -> void:
+	if attacking:
+		_attack_locked = true
+		reset_velocity()
+		zero_gravity()
+
+
+func update_falling_state() -> void:
+	if falling and not attacking:
+		change_state(PlayerState.FALL)
 
 
 func update_animated_sprite() -> void:
@@ -235,6 +243,12 @@ func can_attack() -> bool:
 	if not grounded and not jumping:
 		return false
 	return true
+
+
+func on_lock_movement() -> void:
+	reset_velocity()
+	zero_gravity()
+	do_idle()
 
 
 func on_landed() -> void:
