@@ -12,11 +12,11 @@ const PlayerState: Dictionary[String, String] = {
 	"SWING": "SWING",
 }
 
-var _jump_attacked: bool = false
 var _attack_area_offsets: Array[Vector2] = []
 var _loved: bool = false
-var _is_swinging: bool = false
+var _swinging: bool = false
 var _swing_speed: Vector2 = Vector2(45, 0)
+var _attack_locked: bool = false
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 @onready var _attack_aread_2d: Area2D = $AttackArea2D
@@ -64,22 +64,23 @@ func _physics_process(delta) -> void:
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction.x)
 
-	if _is_swinging:
+	if _swinging:
 		velocity.x = get_direction() * _swing_speed.x
 
 	if grounded:
 		jumping = false
-		_jump_attacked = false
-		_is_swinging = false
-
-	update_inputs()
+		_swinging = false
+		_attack_locked = false
 
 	if falling and not attacking:
 		change_state(PlayerState.FALL)
 
 	if attacking:
+		_attack_locked = true
 		reset_velocity()
 		zero_gravity()
+
+	update_inputs()
 
 
 func update_inputs() -> void:
@@ -158,7 +159,7 @@ func do_jump(force = jump_force) -> void:
 	velocity.y -= force
 	speed = jump_speed
 
-	if not moving and not _is_swinging:
+	if not moving and not _swinging:
 		_animated_sprite.play("jump")
 
 
@@ -168,10 +169,6 @@ func do_fall() -> void:
 
 func do_attack() -> void:
 	attacking = true
-
-	if jumping and not _jump_attacked:
-		_jump_attacked = true
-
 	_animation_player.play("attack_logic")
 
 
@@ -189,19 +186,18 @@ func do_love() -> void:
 
 
 func do_swing() -> void:
-	if _is_swinging:
+	if _swinging:
 		return
 	await Utils.delay(0.2)
 	reset_attack_state()
-	_is_swinging = true
+	_swinging = true
 	do_jump(118.0)
 
 
 func reset() -> void:
 	super.reset()
-	_jump_attacked = false
 	_loved = false
-	_is_swinging = false
+	_swinging = false
 
 
 func kill() -> void:
@@ -232,6 +228,15 @@ func _add_run_dusts() -> void:
 		add_vfx("walk_dusts_2", _hitbox.global_position.x - 2, _hitbox.global_position.y - 1, flip_h)
 
 
+func can_attack() -> bool:
+	if dead or _attack_locked:
+		return false
+	# Prevent attack if character is airborne and not jumping
+	if not grounded and not jumping:
+		return false
+	return true
+
+
 func on_landed() -> void:
 	if dead:
 		return
@@ -250,9 +255,8 @@ func on_jump() -> void:
 
 
 func on_attack() -> void:
-	if dead or attacking or _jump_attacked:
+	if not can_attack():
 		return
-
 	change_state(PlayerState.ATTACK)
 
 
@@ -280,13 +284,12 @@ func _on_KillTimer_timeout():
 func _on_attack_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("boss") and body.is_weak():
 		body.receive_damage(1, self)
-
 	if body.is_in_group("enemies"):
 		body.receive_damage(1, self)
 
 
 func _on_swing_timer_timeout() -> void:
-	_is_swinging = false
+	_swinging = false
 
 
 func _on_attack_area_2d_area_entered(area: Area2D) -> void:
