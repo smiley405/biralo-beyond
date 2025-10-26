@@ -49,10 +49,35 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
-	super(delta)
-
 	if dead:
 		return
+	super(delta)
+	update_grounded_state()
+
+
+func update_grounded_state() -> void:
+	if not grounded:
+		return
+
+	if jumping:
+		jumping = false
+		change_state(FrogState.TIRED)
+
+	if _left_ray_cast.is_colliding():
+		flip_h = false
+	if _right_ray_cast.is_colliding():
+		flip_h = true
+
+	if _flying_side:
+		_flying_side = false
+		update_fsm()
+
+	reset_velocity()
+	reset_gravity()
+
+
+func update_velocity(delta: float) -> void:
+	super.update_velocity(delta)
 
 	if jumping or _flying_side:
 		velocity.x = lerp(velocity.x, get_direction() * speed.x, acceleration.x)
@@ -64,23 +89,6 @@ func _physics_process(delta) -> void:
 		if is_facing_left_colliding() or is_facing_right_colliding():
 			reset_gravity()
 			velocity.y = speed.y
-
-	if grounded:
-		if jumping:
-			jumping = false
-			change_state(FrogState.TIRED)
-
-		if _left_ray_cast.is_colliding():
-			flip_h = false
-		if _right_ray_cast.is_colliding():
-			flip_h = true
-
-		if _flying_side:
-			_flying_side = false
-			update_fsm()
-
-		reset_velocity()
-		reset_gravity()
 
 
 func change_state(new_state: String) -> void:
@@ -182,8 +190,8 @@ func kill() -> void:
 	# sound > blast
 	visible = false
 	add_vfx("blast")
-	await Utils.delay(3.0)
-	SceneManager.next_scene()
+	await Utils.delay(1)
+	Events.boss_defeated.emit()
 
 
 func kill_timers() -> void:
