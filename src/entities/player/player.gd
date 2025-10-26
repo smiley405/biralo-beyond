@@ -124,14 +124,6 @@ func update_attack_area_position() -> void:
 			i += 1
 
 
-func control_camera() -> void:
-	if is_on_floor():
-		Events.emit_signal("camera_zoom_in")
-
-	if moving:
-		Events.emit_signal("camera_zoom_out")
-
-
 func change_state(new_state: String) -> void:
 	super.change_state(new_state)
 	match new_state:
