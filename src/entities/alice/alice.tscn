@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bkro1qimejyfn"]
+[gd_scene load_steps=26 format=3 uid="uid://bkro1qimejyfn"]
 
 [ext_resource type="Script" uid="uid://dgq2v6ysnj85o" path="res://src/entities/alice/alice.gd" id="1_vppt5"]
 [ext_resource type="Texture2D" uid="uid://cbmsnyi2byl1i" path="res://assets/art/misc/alice_love,w16,h16,s2.png" id="2_17vyv"]
 [ext_resource type="Texture2D" uid="uid://bnua4pr105s6w" path="res://assets/art/misc/alice_fall,w16,h16,s4.png" id="2_gn7gn"]
 [ext_resource type="Texture2D" uid="uid://celedmwl2qfym" path="res://assets/art/misc/alice_wave,w16,h16,s4.png" id="3_gn7gn"]
+[ext_resource type="Texture2D" uid="uid://4iuojcgswlyc" path="res://assets/art/misc/alice_run,w16,h16,s10.png" id="4_whje7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lv0q6"]
 atlas = ExtResource("2_gn7gn")
@@ -20,6 +21,46 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bycod"]
 atlas = ExtResource("2_17vyv")
 region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6a3k"]
+atlas = ExtResource("4_whje7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbxh5"]
+atlas = ExtResource("4_whje7")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ao4q"]
+atlas = ExtResource("4_whje7")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilypd"]
+atlas = ExtResource("4_whje7")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o12q"]
+atlas = ExtResource("4_whje7")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffa08"]
+atlas = ExtResource("4_whje7")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct1ll"]
+atlas = ExtResource("4_whje7")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg3ij"]
+atlas = ExtResource("4_whje7")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3iaf0"]
+atlas = ExtResource("4_whje7")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kab1w"]
+atlas = ExtResource("4_whje7")
+region = Rect2(144, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_81eer"]
 atlas = ExtResource("3_gn7gn")
@@ -63,6 +104,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_y6a3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbxh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ao4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilypd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5o12q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffa08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct1ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg3ij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3iaf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kab1w")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_81eer")
 }, {
 "duration": 1.0,
@@ -82,17 +158,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17vyv"]
 size = Vector2(10, 16)
 
-[node name="Alice" type="Node2D"]
+[node name="Alice" type="Area2D" groups=["alice"]]
+collision_layer = 256
 script = ExtResource("1_vppt5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lv0q6")
 animation = &"wave"
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_17vyv")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

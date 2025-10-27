@@ -6,5 +6,6 @@ extends Node
 #signal game_over
 #signal camera_zoom_out
 #signal camera_zoom_in
+signal boss_defeated
 signal camera_shake(strength: Vector2, duration: float)
 signal upate_boss_health_bar(frame_index: int)

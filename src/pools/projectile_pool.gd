@@ -6,6 +6,10 @@ var _projectile_scenes: Dictionary[String, Dictionary] = {
 	"fire_ball": {
 		"total": 10,
 		"scene": preload("res://src/projectiles/fire_ball/fire_ball.tscn")
+	},
+	"bee": {
+		"total": 10,
+		"scene": preload("res://src/projectiles/bee/bee.tscn")
 	}
 }
 

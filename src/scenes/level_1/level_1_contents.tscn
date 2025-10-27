@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_go8s3"]
 [ext_resource type="PackedScene" uid="uid://c5rbjho3deq1f" path="res://src/entities/fire_flies/fire_flies.tscn" id="2_6f3ny"]
-[ext_resource type="PackedScene" uid="uid://1n350tewhmur" path="res://src/entities/falling_tiles/falling_tiles.tscn" id="3_4v8ts"]
+[ext_resource type="PackedScene" uid="uid://1n350tewhmur" path="res://src/entities/falling_tiles/falling_tiles_1/falling_tiles_1.tscn" id="3_4v8ts"]
 [ext_resource type="PackedScene" uid="uid://bkro1qimejyfn" path="res://src/entities/alice/alice.tscn" id="4_ntvgo"]
 [ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="5_s2xnm"]
 [ext_resource type="FontFile" uid="uid://btilrusv6gxp1" path="res://assets/fonts/tiny-5-font-2-export.fnt" id="6_0sl6x"]
@@ -82,12 +82,13 @@ shape = SubResource("RectangleShape2D_s2xnm")
 position = Vector2(32, 26)
 metadata/_edit_lock_ = true
 
-[node name="FallingTiles" parent="." instance=ExtResource("3_4v8ts")]
+[node name="FallingTiles1" parent="." instance=ExtResource("3_4v8ts")]
 position = Vector2(52, 44)
 
 [node name="Alice" parent="." instance=ExtResource("4_ntvgo")]
 z_index = 1
 position = Vector2(83, 32)
+flip_h = true
 
 [node name="Exit" parent="." instance=ExtResource("5_s2xnm")]
 position = Vector2(48, 95)

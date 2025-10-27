@@ -27,6 +27,10 @@ var _vfx_scenes: Dictionary[String, Dictionary] = {
 		"total": 3,
 		"scene": preload("res://src/vfx/walk_dusts_2/walk_dusts_2.tscn")
 	},
+	"beehive_shoot_trails": {
+		"total": 10,
+		"scene": preload("res://src/vfx/beehive_shoot_trails/beehive_shoot_trails.tscn")
+	},
 }
 
 ## Dictionary[String, Array[PackedScene]]

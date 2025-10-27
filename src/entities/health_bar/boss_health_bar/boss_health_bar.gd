@@ -1,6 +1,7 @@
 class_name BossHealthBar
 extends Node2D
 
+
 @export var fps: int = 10
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer

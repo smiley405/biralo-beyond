@@ -25,6 +25,11 @@ func reset() -> void:
 	activated = false
 
 
+func set_box_color(box_color: Color) -> void:
+	if not activated:
+		color_rect.color = box_color
+
+
 func update_display(text: String) -> void:
 	if color_rect and text_container:
 		color_rect.color = color if not activated else activated_color

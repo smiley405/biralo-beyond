@@ -12,6 +12,8 @@ var _is_ready_for_stop: bool = false
 
 @onready var _left_ray_cast: RayCast2D = $LeftRayCast2D
 @onready var _right_ray_cast: RayCast2D = $RightRayCast2D
+@onready var _area_2d: Area2D = $Area2D
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,6 +31,8 @@ func _physics_process(delta) -> void:
 
 
 func update_movement() -> void:
+	if falling:
+		return
 	if moving:
 		velocity.x = lerp(velocity.x, get_direction() * speed.x, acceleration.x)
 	else:
@@ -60,13 +64,25 @@ func do_roll() -> void:
 	moving = true
 	_animated_sprite.play("roll")
 
+
+func switch_off() -> void:
+	reset_velocity()
+	zero_gravity()
+	_area_2d.set_deferred("monitoring", false)
+	change_state(BoulderState.STOP)
+
+
 ## This function is called internally by the tools/trigger [br]
 ## [param entity] - is a node which trrigered it. i.e player, enemies [br]
 ## [param trigger] - is the node that's been triggered
 func triggered_by(from: Node2D, trigger: Node2D) -> void:
-	if trigger.is_in_group("stop_tool"):
+	if trigger.is_in_group("kill_tool"):
+		switch_off()
+		queue_free()
+	if trigger.is_in_group("stop_tool") and not _is_ready_for_stop:
 		_is_ready_for_stop = true
-	if from.is_in_group("player"):
+		switch_off()
+	if from.is_in_group("player") or from.is_in_group("alice"):
 		reset_gravity()
 		change_state(BoulderState.ROLL)
 
@@ -80,7 +96,7 @@ func on_landed() -> void:
 			flip_h = true
 		if _is_ready_for_stop:
 			change_state(BoulderState.STOP)
-	
+
 	Events.camera_shake.emit()
 	reset_speed()
 	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)

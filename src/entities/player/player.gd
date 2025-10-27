@@ -126,6 +126,7 @@ func update_attack_area_position() -> void:
 
 func change_state(new_state: String) -> void:
 	super.change_state(new_state)
+
 	match new_state:
 		PlayerState.IDLE:
 			do_idle()

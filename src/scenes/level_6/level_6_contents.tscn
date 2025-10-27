@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=4 uid="uid://53oyc8hq7yx5"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_4dk55"]
-[ext_resource type="PackedScene" uid="uid://1n350tewhmur" path="res://src/entities/falling_tiles/falling_tiles.tscn" id="3_lmy2f"]
+[ext_resource type="PackedScene" uid="uid://1n350tewhmur" path="res://src/entities/falling_tiles/falling_tiles_1/falling_tiles_1.tscn" id="3_lmy2f"]
 [ext_resource type="PackedScene" uid="uid://j6vieindbhql" path="res://src/tools/level_design/trigger/trigger.tscn" id="3_mks4j"]
 [ext_resource type="PackedScene" uid="uid://bkro1qimejyfn" path="res://src/entities/alice/alice.tscn" id="4_0aulg"]
 [ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="4_84mhc"]
@@ -80,6 +80,7 @@ shape = SubResource("RectangleShape2D_s2xnm")
 [node name="Alice" parent="." instance=ExtResource("4_0aulg")]
 z_index = 1
 position = Vector2(80, 32)
+flip_h = true
 
 [node name="FallingTiles" parent="." instance=ExtResource("3_lmy2f")]
 position = Vector2(76, 44)

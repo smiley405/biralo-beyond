@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://bsqnwinqmr4vu"]
+
+[ext_resource type="Script" uid="uid://e73oi6vvgvly" path="res://src/entities/falling_tiles/falling_tiles.gd" id="1_ddv7o"]
+[ext_resource type="Texture2D" uid="uid://bdwlcgcistlb1" path="res://assets/art/misc/falling_tiles_type_2,w24,h24,s6.png" id="2_gkks2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ihrb"]
+atlas = ExtResource("2_gkks2")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5xuw"]
+atlas = ExtResource("2_gkks2")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44mis"]
+atlas = ExtResource("2_gkks2")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6q18"]
+atlas = ExtResource("2_gkks2")
+region = Rect2(0, 72, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d14p8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ihrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5xuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44mis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6q18")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2udj"]
+size = Vector2(18, 40)
+
+[node name="FallingTiles2" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_ddv7o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_d14p8")
+animation = &"fall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_a2udj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

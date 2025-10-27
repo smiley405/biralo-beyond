@@ -4,6 +4,12 @@ extends Node2D
 # This tool draws a continuous line linking all targets.
 
 @export var tool_name: String = ""
+## Enables or disables the use of 'box_color'.
+## When false, 'box_color' is ignored and no color is applied to the box.
+@export var use_box_color: bool = false
+## The color to apply to the box when 'use_box_color' is true.
+## This value is ignored if 'use_box_color' is false.
+@export var box_color: Color
 @export var visible_in_game: bool = false
 @export var targets: Array[NodePath] = []
 
@@ -15,6 +21,8 @@ var triggered_entity = null
 func _ready() -> void:
 	if is_display_editor_hint():
 		label_box.update_display(tool_name)
+		if use_box_color:
+			label_box.set_box_color(box_color)
 	else:
 		label_box.visible = false
 
@@ -22,6 +30,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_display_editor_hint():
 		label_box.update_display(tool_name)
+		if use_box_color:
+			label_box.set_box_color((box_color))
 		queue_redraw()
 
 

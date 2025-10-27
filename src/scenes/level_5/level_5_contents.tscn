@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://daoc64jq1uh46"]
+[gd_scene load_steps=15 format=4 uid="uid://daoc64jq1uh46"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_4ctaa"]
+[ext_resource type="Script" uid="uid://brtbk56cw08ag" path="res://src/scenes/level_5/level_5_contents.gd" id="1_42okf"]
 [ext_resource type="PackedScene" uid="uid://c6gfcdgl646e5" path="res://src/entities/frog/frog.tscn" id="2_y4n0n"]
 [ext_resource type="PackedScene" uid="uid://bxyngcafnfaxx" path="res://src/entities/health_bar/boss_health_bar/boss_health_bar.tscn" id="3_gy66y"]
+[ext_resource type="Texture2D" uid="uid://sag4qhpae6kh" path="res://assets/art/misc/tile.png" id="4_5afw1"]
+[ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="6_ntdm6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
 texture = ExtResource("1_4ctaa")
@@ -43,22 +46,43 @@ tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_egpny")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6k78o"]
-size = Vector2(94.5, 13)
+size = Vector2(104.5, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egpny"]
 size = Vector2(16.5, 96.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s2xnm"]
-size = Vector2(10.25, 91)
+size = Vector2(10.25, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_42okf"]
+size = Vector2(10.25, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvbw4"]
 size = Vector2(32, 16)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_42okf"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(6, 12, 1)
+direction = Vector3(-0.5, 0, 0)
+initial_velocity_min = 9.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.29999998
+scale_max = 0.59999996
+
 [node name="Level5Contents" type="Node2D"]
+script = ExtResource("1_42okf")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAAAAQADAAIAAAACAAAAAQABAAIAAAADAAAAAQAAAAIAAAAEAAAAAQABAAIAAAAFAAAAAQAAAAIAAAAJAAAAAQABAAIAAAAKAAAAAQADAAIAAAALAAAAAQAAAAIAAAALAAEAAQACAAIAAAAKAAEAAQAAAAIAAAAJAAEAAQAEAAIAAAAIAAEAAQAAAAIAAAAHAAEAAQAAAAIAAAAGAAEAAQAAAAIAAAADAAEAAQAAAAIAAAACAAEAAQABAAIAAAAEAAEAAQAAAAIAAAAFAAEAAQABAAIAAAAAAAUAAQAAAAIAAAAAAAYAAQABAAIAAAAAAAcAAQAAAAIAAAAAAAgAAQABAAIAAAALAAgAAQACAAIAAAALAAcAAQABAAIAAAALAAYAAQAEAAIAAAAAAAEAAQAAAAIAAAALAAkAAQABAAIAAAALAAIAAQABAAIAAAALAAUAAQADAAIAAAALAAQAAQAAAAIAAAALAAMAAQAAAAIAAAALAAoAAQADAAIAAAAAAAkAAQADAAIAAAAAAAoAAQABAAIAAAAAAAIAAQABAAIAAAAAAAMAAQAEAAIAAAAAAAQAAQAAAAIAAAADAAIAAQAEAAQAAAAFAAIAAQAEAAQAAAAHAAIAAQAEAAQAAAAIAAIAAQADAAQAAAABAAoAAQABAAIAAAACAAoAAQABAAIAAAADAAoAAQAEAAMAAAAEAAoAAQAEAAMAAAAFAAoAAQAAAAIAAAAGAAoAAQACAAIAAAAHAAoAAQADAAIAAAAIAAoAAQAEAAMAAAAJAAoAAQABAAMAAAAKAAoAAQAEAAMAAAALAAsAAQAEAAQAAAAAAAsAAQAEAAQAAAABAAsAAQADAAQAAAACAAsAAQADAAAAAAAEAAsAAQACAAAAAAAKAAsAAQADAAAAAAAJAAsAAQABAAAAAAAIAAsAAQAEAAAAAAAHAAsAAQADAAAAAAAGAAsAAQABAAAAAAAFAAsAAQABAAAAAAAJAAIAAQACAAAAAAAKAAIAAQAEAAAAAAAGAAIAAQAEAAAAAAACAAIAAQAAAAAAAAAEAAIAAQACAAAAAAAHAAMAAQACAAAAAAACAAQAAQAEAAAAAAADAAQAAQAEAAAAAAADAAUAAQABAAAAAAAEAAUAAQAEAAAAAAAFAAUAAQAAAAAAAAAEAAYAAQACAAAAAAACAAYAAQAEAAAAAAAKAAQAAQAEAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAJAAYAAQABAAAAAAAJAAcAAQAEAAAAAAAIAAUAAQACAAAAAAAGAAAAAQAFAAAAAAAHAAAAAQAFAAEAAAAIAAAAAQAFAAAAAAAIAAkAAQACAAEAAAAEAAkAAQAEAAEAAAADAAkAAQACAAEAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAQADAAIAAAACAAAAAQABAAIAAAADAAAAAQAAAAIAAAAEAAAAAQABAAIAAAAFAAAAAQAAAAIAAAAJAAAAAQABAAIAAAAKAAAAAQADAAIAAAALAAAAAQAAAAIAAAALAAEAAQACAAIAAAAKAAEAAQAAAAIAAAAJAAEAAQAEAAIAAAAIAAEAAQAAAAIAAAAHAAEAAQAAAAIAAAAGAAEAAQAAAAIAAAADAAEAAQAAAAIAAAACAAEAAQABAAIAAAAEAAEAAQAAAAIAAAAFAAEAAQABAAIAAAAAAAUAAQAAAAIAAAAAAAYAAQABAAIAAAAAAAcAAQAAAAIAAAAAAAgAAQABAAIAAAALAAYAAQAEAAIAAAAAAAEAAQAAAAIAAAALAAIAAQABAAIAAAALAAUAAQADAAIAAAALAAQAAQAAAAIAAAALAAMAAQAAAAIAAAALAAoAAQADAAIAAAAAAAkAAQADAAIAAAAAAAoAAQABAAIAAAAAAAIAAQABAAIAAAAAAAMAAQAEAAIAAAAAAAQAAQAAAAIAAAADAAIAAQAEAAQAAAAFAAIAAQAEAAQAAAAHAAIAAQAEAAQAAAAIAAIAAQADAAQAAAABAAoAAQABAAIAAAACAAoAAQABAAIAAAADAAoAAQAEAAMAAAAEAAoAAQAEAAMAAAAFAAoAAQAAAAIAAAAGAAoAAQACAAIAAAAHAAoAAQADAAIAAAAIAAoAAQAEAAMAAAAJAAoAAQABAAMAAAAKAAoAAQAEAAMAAAALAAsAAQAEAAQAAAAAAAsAAQAEAAQAAAABAAsAAQADAAQAAAACAAsAAQADAAAAAAAEAAsAAQACAAAAAAAKAAsAAQADAAAAAAAJAAsAAQABAAAAAAAIAAsAAQAEAAAAAAAHAAsAAQADAAAAAAAGAAsAAQABAAAAAAAFAAsAAQABAAAAAAAJAAIAAQACAAAAAAAKAAIAAQAEAAAAAAAGAAIAAQAEAAAAAAACAAIAAQAAAAAAAAAEAAIAAQACAAAAAAAHAAMAAQACAAAAAAACAAQAAQAEAAAAAAADAAQAAQAEAAAAAAADAAUAAQABAAAAAAAEAAUAAQAEAAAAAAAFAAUAAQAAAAAAAAAEAAYAAQACAAAAAAACAAYAAQAEAAAAAAAKAAQAAQAEAAAAAAAKAAUAAQAAAAAAAAAKAAYAAQAAAAAAAAAJAAYAAQABAAAAAAAJAAcAAQAEAAAAAAAIAAUAAQACAAAAAAAGAAAAAQAFAAAAAAAHAAAAAQAFAAEAAAAIAAAAAQAFAAAAAAAIAAkAAQACAAEAAAAEAAkAAQAEAAEAAAADAAkAAQACAAEAAAA=")
 tile_set = SubResource("TileSet_am86q")
+metadata/_edit_lock_ = true
+
+[node name="BrickWallLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAALAAgAAQABAAIAAAALAAcAAQABAAIAAAALAAkAAQABAAIAAAA=")
+tile_set = SubResource("TileSet_am86q")
+metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["platforms"]]
 collision_layer = 4
@@ -66,7 +90,7 @@ collision_mask = 0
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(47.75, 86.5)
+position = Vector2(52.75, 86.5)
 shape = SubResource("RectangleShape2D_6k78o")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
@@ -74,8 +98,12 @@ position = Vector2(0, 47.75)
 shape = SubResource("RectangleShape2D_egpny")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(92.875, 52.5)
+position = Vector2(92.875, 31.5)
 shape = SubResource("RectangleShape2D_s2xnm")
+
+[node name="BrickWallHitbox" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(92.875, 60)
+shape = SubResource("RectangleShape2D_42okf")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(32, 8)
@@ -84,6 +112,24 @@ shape = SubResource("RectangleShape2D_cvbw4")
 [node name="Frog" parent="." instance=ExtResource("2_y4n0n")]
 position = Vector2(81, 72)
 flip_h = true
+metadata/_edit_lock_ = true
 
 [node name="BossHealthBar" parent="." instance=ExtResource("3_gy66y")]
 position = Vector2(65, 4)
+metadata/_edit_lock_ = true
+
+[node name="WallExplosionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(94, 68)
+emitting = false
+amount = 20
+texture = ExtResource("4_5afw1")
+lifetime = 0.8
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.3
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_42okf")
+
+[node name="Exit" parent="." instance=ExtResource("6_ntdm6")]
+position = Vector2(100, 64)
+scale = Vector2(1, 4.8)

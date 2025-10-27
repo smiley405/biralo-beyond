@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ef50qo2vj4x7"
-path="res://.godot/imported/falling_tiles,w24,h24,s6.png-addb53d4b8579cf92c4e905a77b178e9.ctex"
+uid="uid://bdwlcgcistlb1"
+path="res://.godot/imported/falling_tiles_type_2,w24,h24,s6.png-8c63aeca3216376586cd6c9334ab78af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/falling_tiles,w24,h24,s6.png"
-dest_files=["res://.godot/imported/falling_tiles,w24,h24,s6.png-addb53d4b8579cf92c4e905a77b178e9.ctex"]
+source_file="res://assets/art/misc/falling_tiles_type_2,w24,h24,s6.png"
+dest_files=["res://.godot/imported/falling_tiles_type_2,w24,h24,s6.png-8c63aeca3216376586cd6c9334ab78af.ctex"]
 
 [params]
 

@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://c7qjerp3re3tj"]
+
+[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/vfx/base_vfx.gd" id="1_k4ewi"]
+[ext_resource type="Texture2D" uid="uid://2462b30vwrp6" path="res://assets/art/vfx/beehive_shoot_trails,w16,h16,s6.png" id="2_mngdo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq7lx"]
+atlas = ExtResource("2_mngdo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eg17"]
+atlas = ExtResource("2_mngdo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oegf7"]
+atlas = ExtResource("2_mngdo")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6roo"]
+atlas = ExtResource("2_mngdo")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xgrs"]
+atlas = ExtResource("2_mngdo")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cq7lx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8eg17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oegf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6roo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xgrs")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="BeehiveShootTrails" type="Node2D"]
+script = ExtResource("1_k4ewi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")

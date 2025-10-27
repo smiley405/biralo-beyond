@@ -11,7 +11,7 @@ script = ExtResource("1_kb8fv")
 [node name="Level6Contents" parent="." instance=ExtResource("2_g77rc")]
 
 [node name="Player" parent="." instance=ExtResource("3_1hixo")]
-position = Vector2(10, 37)
+position = Vector2(5, 37)
 
 [node name="Camera" parent="." instance=ExtResource("4_e055p")]
 position = Vector2(48, 48)

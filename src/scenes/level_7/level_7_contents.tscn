@@ -1,0 +1,235 @@
+[gd_scene load_steps=23 format=4 uid="uid://5v5hr3jk7xs7"]
+
+[ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_ev26x"]
+[ext_resource type="Script" uid="uid://cbcrtghk5s51t" path="res://src/scenes/level_7/level_7_contents.gd" id="1_lfvcr"]
+[ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="2_irty5"]
+[ext_resource type="PackedScene" uid="uid://dticdkxbj0if6" path="res://src/entities/hurt/hurt.tscn" id="3_v4unm"]
+[ext_resource type="PackedScene" uid="uid://cnty6nke2mhk2" path="res://src/entities/torch/torch.tscn" id="4_ljg05"]
+[ext_resource type="PackedScene" uid="uid://dea3y30fjbcne" path="res://src/entities/boulder/boulder.tscn" id="6_nfjsa"]
+[ext_resource type="PackedScene" uid="uid://bsqnwinqmr4vu" path="res://src/entities/falling_tiles/falling_tiles_2/falling_tiles_2.tscn" id="6_r2x8k"]
+[ext_resource type="PackedScene" uid="uid://j6vieindbhql" path="res://src/tools/level_design/trigger/trigger.tscn" id="7_h5twx"]
+[ext_resource type="PackedScene" uid="uid://bu4kmakghkb8r" path="res://src/tools/level_design/delay/delay.tscn" id="8_u6rcv"]
+[ext_resource type="PackedScene" uid="uid://dqe164qwwxqu6" path="res://src/entities/beehive/beehive.tscn" id="10_0nis1"]
+[ext_resource type="PackedScene" uid="uid://d1857pgfpcxug" path="res://src/tools/level_design/method_router/method_router.tscn" id="11_gebsg"]
+[ext_resource type="PackedScene" uid="uid://bkro1qimejyfn" path="res://src/entities/alice/alice.tscn" id="11_ryi5u"]
+[ext_resource type="PackedScene" uid="uid://1n350tewhmur" path="res://src/entities/falling_tiles/falling_tiles_1/falling_tiles_1.tscn" id="12_ryi5u"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
+texture = ExtResource("1_ev26x")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+4:1/0 = 0
+3:1/0 = 0
+2:1/0 = 0
+1:1/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+4:3/0 = 0
+3:3/0 = 0
+2:3/0 = 0
+1:3/0 = 0
+0:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_am86q"]
+tile_size = Vector2i(8, 8)
+sources/1 = SubResource("TileSetAtlasSource_egpny")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6k78o"]
+size = Vector2(41.5, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egpny"]
+size = Vector2(8, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2xnm"]
+size = Vector2(20.25, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogqla"]
+size = Vector2(54, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ggvx"]
+size = Vector2(48, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sa356"]
+size = Vector2(37, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtwpy"]
+size = Vector2(9, 115)
+
+[node name="Level7Contents" type="Node2D"]
+script = ExtResource("1_lfvcr")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAALAAAAAQAAAAIAAAALAAEAAQAEAAIAAAAAAAUAAQACAAIAAAAAAAYAAQAAAAIAAAAAAAcAAQABAAIAAAAAAAgAAQAEAAIAAAALAAcAAQADAAIAAAALAAYAAQAEAAIAAAALAAIAAQAAAAIAAAALAAUAAQAAAAIAAAALAAQAAQABAAIAAAALAAMAAQADAAIAAAALAAsAAQAEAAMAAAAKAAsAAQADAAMAAAAJAAsAAQADAAMAAAAFAAsAAQADAAMAAAAEAAsAAQADAAIAAAADAAsAAQAAAAIAAAACAAsAAQADAAMAAAAAAAkAAQADAAIAAAAAAAoAAQABAAIAAAAAAAsAAQACAAIAAAAGAAcAAQADAAIAAAAHAAcAAQADAAMAAAAIAAcAAQADAAMAAAAGAAoAAQACAAAAAAAIAAoAAQADAAAAAAAGAAsAAQAFAAEAAAAHAAsAAQAFAAAAAAAIAAsAAQAFAAEAAAAFAAoAAQACAAEAAAAAAAIAAQAEAAIAAAAAAAEAAQABAAIAAAAAAAAAAQAAAAIAAAAAAAMAAQABAAIAAAAAAAQAAQAAAAIAAAAJAAcAAQADAAMAAAAKAAcAAQAEAAMAAAAEAAUAAQAEAAMAAAABAAsAAQADAAMAAAAFAAcAAQAFAAIAAAAFAAYAAQAAAAMAAAAIAAQAAQADAAAAAAAGAAQAAQACAAAAAAAEAAYAAQAEAAQAAAALAAgAAQADAAQAAAAIAAgAAQABAAQAAAAFAAgAAQAAAAQAAAACAAoAAQABAAEAAAABAAoAAQADAAEAAAAIAAYAAQADAAEAAAAGAAYAAQACAAEAAAAKAAYAAQACAAEAAAAEAAQAAQADAAEAAAAJAAoAAQAAAAEAAAALAAoAAQADAAEAAAAJAAgAAQAEAAAAAAAKAAgAAQABAAAAAAAHAAgAAQABAAAAAAAGAAgAAQAEAAAAAAAEAAcAAQAAAAAAAAAEAAgAAQACAAAAAAALAAkAAQACAAAAAAACAAcAAQAAAAAAAAABAAgAAQAEAAAAAAACAAgAAQAAAAAAAAAKAAIAAQADAAAAAAAKAAMAAQADAAAAAAAJAAIAAQADAAAAAAAEAAEAAQADAAAAAAAFAAEAAQABAAIAAAAFAAIAAQAAAAQAAAAEAAIAAQAEAAAAAAAGAAEAAQABAAIAAAADAAAAAQABAAAAAAABAAEAAQAAAAAAAAABAAAAAQAEAAAAAAACAAEAAQAEAAAAAAAKAAEAAQAAAAAAAAAHAAAAAQAEAAAAAAAIAAEAAQAEAAAAAAAHAAIAAQAAAAAAAAAHAAUAAQAEAAAAAAAHAAkAAQAEAAAAAAAFAAkAAQAAAAAAAAAFAAAAAQABAAIAAAAGAAAAAQABAAIAAAAGAAIAAQADAAQAAAADAAgAAQADAAAAAAACAAUAAQAEAAAAAAADAAUAAQAEAAAAAAADAAYAAQAEAAAAAAADAAcAAQAEAAAAAAA=")
+tile_set = SubResource("TileSet_am86q")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["platforms"]]
+collision_layer = 4
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="FallingTilesGround" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(19.25, 44)
+shape = SubResource("RectangleShape2D_6k78o")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 54.5)
+shape = SubResource("RectangleShape2D_egpny")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(97.875, 28)
+shape = SubResource("RectangleShape2D_s2xnm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(67, 60)
+shape = SubResource("RectangleShape2D_ogqla")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(25, 93)
+shape = SubResource("RectangleShape2D_7ggvx")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(89.5, 92)
+shape = SubResource("RectangleShape2D_sa356")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(3.5, 46.5)
+shape = SubResource("RectangleShape2D_vtwpy")
+
+[node name="Exit" parent="." instance=ExtResource("2_irty5")]
+position = Vector2(101.00001, 75.99999)
+scale = Vector2(1.3000035, 2.8050265)
+
+[node name="Hurt" parent="." instance=ExtResource("3_v4unm")]
+position = Vector2(58.999996, 97)
+scale = Vector2(3.4399986, 1)
+
+[node name="Torch" parent="." instance=ExtResource("4_ljg05")]
+position = Vector2(60, 36)
+
+[node name="Torch2" parent="." instance=ExtResource("4_ljg05")]
+position = Vector2(60, 84)
+
+[node name="FallingTiles2" parent="." instance=ExtResource("6_r2x8k")]
+position = Vector2(20, 44)
+
+[node name="FallingTiles1" parent="." instance=ExtResource("12_ryi5u")]
+position = Vector2(61, 92)
+collision_mask = 0
+
+[node name="Boulder" parent="." instance=ExtResource("6_nfjsa")]
+position = Vector2(24, -7)
+collision_layer = 512
+
+[node name="Alice" parent="." instance=ExtResource("11_ryi5u")]
+position = Vector2(14, 80)
+collision_mask = 0
+
+[node name="Beehive" parent="." instance=ExtResource("10_0nis1")]
+position = Vector2(84, 68)
+flip_h = true
+
+[node name="Tools" type="Node2D" parent="."]
+visible = false
+
+[node name="Trigger" parent="Tools" instance=ExtResource("7_h5twx")]
+position = Vector2(62, 48)
+scale = Vector2(3.3200002, 2.0000033)
+collision_layer = 64
+collision_mask = 1
+targets = Array[NodePath]([NodePath("../Delay")])
+
+[node name="Delay" parent="Tools" instance=ExtResource("8_u6rcv")]
+position = Vector2(43, -7)
+delay = 0.1
+targets = Array[NodePath]([NodePath("../../Boulder")])
+
+[node name="Trigger2" parent="Tools" groups=["stop_tool"] instance=ExtResource("7_h5twx")]
+position = Vector2(90, 52)
+scale = Vector2(1, 0.9999962)
+collision_layer = 64
+collision_mask = 512
+tool_name = "Stop"
+use_box_color = true
+box_color = Color(0.72156864, 0.1764706, 0.38431373, 0.7058824)
+targets = Array[NodePath]([NodePath("../../Boulder")])
+
+[node name="Trigger3" parent="Tools" instance=ExtResource("7_h5twx")]
+position = Vector2(15, 35)
+scale = Vector2(3.8730214, 1.0058727)
+collision_layer = 64
+collision_mask = 512
+targets = Array[NodePath]([NodePath("../Delay2")])
+
+[node name="Delay2" parent="Tools" instance=ExtResource("8_u6rcv")]
+position = Vector2(-13, 38)
+delay = 0.1
+targets = Array[NodePath]([NodePath("../../FallingTiles2")])
+
+[node name="MethodRouter" parent="Tools" instance=ExtResource("11_gebsg")]
+position = Vector2(-11, 15)
+method_to_call = "disable_ground_falling_tiles"
+targets = Array[NodePath]([NodePath("../..")])
+
+[node name="Trigger4" parent="Tools" instance=ExtResource("7_h5twx")]
+position = Vector2(26, 29)
+scale = Vector2(1, 3.16)
+collision_layer = 64
+collision_mask = 1
+tool_name = "Method Trigger"
+use_box_color = true
+box_color = Color(0.67846817, 0.5498576, 0.33628234, 0.53333336)
+targets = Array[NodePath]([NodePath("../MethodRouter")])
+
+[node name="Trigger5" parent="Tools" instance=ExtResource("7_h5twx")]
+position = Vector2(77, 15)
+scale = Vector2(2.0799975, 1)
+collision_layer = 64
+collision_mask = 1
+tool_name = "Method Trigger"
+use_box_color = true
+box_color = Color(0.85882354, 0.68235296, 0.6039216, 0.64705884)
+targets = Array[NodePath]([NodePath("../MethodRouter2")])
+
+[node name="Trigger6" parent="Tools" instance=ExtResource("7_h5twx")]
+position = Vector2(68, 83)
+collision_layer = 64
+collision_mask = 256
+targets = Array[NodePath]([NodePath("../Delay3")])
+
+[node name="Delay3" parent="Tools" instance=ExtResource("8_u6rcv")]
+position = Vector2(86, 123)
+delay = 0.1
+targets = Array[NodePath]([NodePath("../../FallingTiles1")])
+
+[node name="Trigger7" parent="Tools" groups=["kill_tool"] instance=ExtResource("7_h5twx")]
+position = Vector2(63.000004, 106)
+scale = Vector2(5.4800014, 1)
+collision_layer = 64
+collision_mask = 512
+tool_name = "Kill"
+use_box_color = true
+box_color = Color(0.5803922, 0.2627451, 0.3019608, 0.7529412)
+targets = Array[NodePath]([NodePath("../../Boulder")])
+
+[node name="MethodRouter2" parent="Tools" instance=ExtResource("11_gebsg")]
+position = Vector2(19, 60)
+method_to_call = "run_and_vanish"
+targets = Array[NodePath]([NodePath("../../Alice")])

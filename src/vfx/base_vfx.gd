@@ -22,6 +22,7 @@ func activate() -> void:
 func deactivate() -> void:
 	visible = false
 	set_flip_h(false)
+	_animated_sprite.stop()
 
 
 func set_flip_h(flip_h: bool) -> void:

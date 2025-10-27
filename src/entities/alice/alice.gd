@@ -1,7 +1,10 @@
 class_name Alice
-extends Node2D
+extends Area2D
 
 
+@export var flip_h: bool = false
+
+var type: String = "Alice"
 var _loved_cat: bool = false
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -9,13 +12,23 @@ var _loved_cat: bool = false
 
 func _ready() -> void:
 	_animated_sprite.play("wave")
+	_animated_sprite.flip_h = flip_h
 
 
 func _do_fall() -> void:
 	_animated_sprite.play("fall")
-	var _tween = create_tween()
-	var target_y = position.y + 96.0
+	var _tween: Tween = create_tween()
+	var target_y: float = position.y + 96.0
 	_tween.tween_property(self, "position:y", target_y, 1.0).set_delay(0.2)
+
+
+func run_and_vanish() -> void:
+	var _tween: Tween = create_tween()
+	var target_x: float = 100.0
+	_animated_sprite.play("run")
+
+	_tween.tween_property(self, "position:x", target_x, 3.0).set_delay(0.1)
+	_tween.finished.connect(_on_tween_run_finished)
 
 
 ## This function is called internally by the tools/trigger [br]
@@ -26,7 +39,11 @@ func triggered_by(from: Node2D, trigger: Node2D) -> void:
 		_do_fall()
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_tween_run_finished() -> void:
+	queue_free()
+
+
+func _on_body_entered(body: Node2D) -> void:
 	if _loved_cat or not body.is_in_group("player"):
 		return
 

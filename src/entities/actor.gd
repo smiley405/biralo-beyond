@@ -2,6 +2,10 @@ class_name Actor
 extends CharacterBody2D
 
 
+@export var flip_h: bool = false:
+	set = set_flip_h,
+	get = get_flip_h
+
 var health: int = 1
 var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
 var default_speed: Vector2 = Vector2(45, 0)
@@ -36,10 +40,6 @@ var projectile_pool: ProjectilePool
 var alpha: float = 1.0:
 	set = set_alpha,
 	get = get_alpha
-
-@export var flip_h: bool = false:
-	set = set_flip_h,
-	get = get_flip_h
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _hitbox: CollisionShape2D = $CollisionShape2D

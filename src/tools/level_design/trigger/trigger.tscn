@@ -20,4 +20,5 @@ shape = SubResource("1")
 color = Color(0.00392157, 0.788235, 0.0745098, 0.588235)
 activated_color = Color(0.0588235, 0.243137, 0, 0.588235)
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

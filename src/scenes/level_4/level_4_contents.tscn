@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dexr3cuorclu1"]
+[gd_scene load_steps=20 format=4 uid="uid://dexr3cuorclu1"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_buwmm"]
 [ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="2_unr3q"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dea3y30fjbcne" path="res://src/entities/boulder/boulder.tscn" id="6_7ggvx"]
 [ext_resource type="PackedScene" uid="uid://j6vieindbhql" path="res://src/tools/level_design/trigger/trigger.tscn" id="7_sa356"]
 [ext_resource type="PackedScene" uid="uid://bu4kmakghkb8r" path="res://src/tools/level_design/delay/delay.tscn" id="8_vtwpy"]
-[ext_resource type="PackedScene" uid="uid://b06q6wgwh7fvo" path="res://src/tools/level_design/stop/stop.tscn" id="9_pmam8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
 texture = ExtResource("1_buwmm")
@@ -145,7 +144,8 @@ position = Vector2(31, 78)
 delay_attack_time = 3.0
 
 [node name="Boulder" parent="." instance=ExtResource("6_7ggvx")]
-position = Vector2(57, -7)
+position = Vector2(49, -8)
+collision_layer = 512
 flip_h = true
 
 [node name="Tools" type="Node2D" parent="."]
@@ -157,18 +157,15 @@ collision_layer = 64
 collision_mask = 1
 targets = Array[NodePath]([NodePath("../Delay")])
 
-[node name="Trigger2" parent="Tools" instance=ExtResource("7_sa356")]
-position = Vector2(58, 96)
+[node name="Trigger2" parent="Tools" groups=["stop_tool"] instance=ExtResource("7_sa356")]
+position = Vector2(58, 101)
 scale = Vector2(1, 1.0799999)
 collision_layer = 64
-collision_mask = 2
-targets = Array[NodePath]([NodePath("../Stop")])
+collision_mask = 512
+tool_name = "Stop"
+targets = Array[NodePath]([NodePath("../../Boulder")])
 
 [node name="Delay" parent="Tools" instance=ExtResource("8_vtwpy")]
 position = Vector2(20, 2)
 delay = 0.8
-targets = Array[NodePath]([NodePath("../../Boulder")])
-
-[node name="Stop" parent="Tools" instance=ExtResource("9_pmam8")]
-position = Vector2(53, 73)
 targets = Array[NodePath]([NodePath("../../Boulder")])

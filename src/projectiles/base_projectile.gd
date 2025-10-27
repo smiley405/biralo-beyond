@@ -2,6 +2,8 @@ class_name BaseProjectile
 extends Node2D
 
 
+@export var flip_h: bool = false
+
 var type: String = ""
 # Will be set from root level
 var vfx_pool:VfxPool
@@ -23,6 +25,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	position += direction * speed * delta
+	_animated_sprite.flip_h = flip_h
 
 
 func play() -> void:
@@ -42,6 +45,7 @@ func activate(start_position: Vector2, shoot_direction: Vector2) -> void:
 func deactivate() -> void:
 	visible = false
 	_hitbox.disabled = true
+	_animated_sprite.stop()
 
 
 func kill() -> void:
