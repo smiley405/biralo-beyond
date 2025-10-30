@@ -15,6 +15,7 @@ const QueenBeeState: Dictionary[String, String] = {
 	"SHOOT_BEE": "SHOOT_BEE",
 }
 
+## Finite State Machine list
 const fsm: Array[String] = [
 	QueenBeeState.IDLE,
 	QueenBeeState.IDLE,
@@ -74,7 +75,7 @@ func _ready() -> void:
 	acceleration = Vector2(0.3, 0.3)
 	jump_force = 130.0
 	_animation_player.play("default")
-	update_fsm()
+	advance_fsm()
 	_animated_sprite.connect("animation_finished", _on_animated_sprite_complete)
 	_animated_sprite.connect("frame_changed", _on_animated_sprite_frame_changed)
 
@@ -115,17 +116,17 @@ func update_velocity(delta: float) -> void:
 	if _flying_down:
 		velocity.y = speed.y/2
 		if grounded:
-			update_fsm()
+			advance_fsm()
 
 	if _flying_left and current_state == QueenBeeState.FLY_LEFT_TO_END:
 		if is_facing_left_colliding():
 			flip_h = false
-			update_fsm()
+			advance_fsm()
 
 	if _flying_right and current_state == QueenBeeState.FLY_RIGHT_TO_END:
 		if is_facing_right_colliding():
 			flip_h = true
-			update_fsm()
+			advance_fsm()
 
 
 func change_state(new_state: String) -> void:
@@ -156,7 +157,7 @@ func change_state(new_state: String) -> void:
 			do_summon_beehives()
 
 
-func update_fsm() -> void:
+func advance_fsm() -> void:
 	_fsm_timer.stop()
 	_fsm_index += 1
 
@@ -209,17 +210,17 @@ func do_idle() -> void:
 	_fsm_timer.start(1.0)
 
 
-func do_fly_left(is_update_fsm: bool = true) -> void:
+func do_fly_left(is_advance_fsm: bool = true) -> void:
 	_flying_left = true
 	_animated_sprite.play("idle")
-	if is_update_fsm:
+	if is_advance_fsm:
 		_fsm_timer.start(0.8)
 
 
-func do_fly_right(is_update_fsm: bool = true) -> void:
+func do_fly_right(is_advance_fsm: bool = true) -> void:
 	_flying_right = true
 	_animated_sprite.play("idle")
-	if is_update_fsm:
+	if is_advance_fsm:
 		_fsm_timer.start(0.8)
 
 
@@ -317,11 +318,11 @@ func _on_animated_sprite_complete() -> void:
 	if _animated_sprite.animation == "beehives_summoned":
 		Events.emit_signal("beehives_summon_finished")
 		Events.camera_shake.emit()
-		update_fsm()
+		advance_fsm()
 	if _animated_sprite.animation == "shoot_bee":
-		update_fsm()
+		advance_fsm()
 	if _animated_sprite.animation == "flying_kiss":
-		update_fsm()
+		advance_fsm()
 
 
 func _on_animated_sprite_frame_changed() -> void:
@@ -334,4 +335,4 @@ func _on_animated_sprite_frame_changed() -> void:
 
 
 func _on_fsm_timer_timeout() -> void:
-	update_fsm()
+	advance_fsm()

@@ -218,7 +218,7 @@ script = ExtResource("1_uprpg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dao75")
-animation = &"tired"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 2.5)
@@ -247,17 +247,13 @@ shape = SubResource("RectangleShape2D_xd6ms")
 [node name="FSMTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="ProjectileAttackTimer" type="Timer" parent="."]
-
-[node name="TiredTimer" type="Timer" parent="."]
+[node name="FallingProjectileTriggerTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="TakeOffFlyTimer" type="Timer" parent="."]
-wait_time = 1.5
+[node name="TiredStateTimer" type="Timer" parent="."]
 one_shot = true
 
 [connection signal="body_entered" from="SmashArea2D" to="." method="_on_smash_area_2d_body_entered"]
 [connection signal="timeout" from="FSMTimer" to="." method="_on_fsm_timer_timeout"]
-[connection signal="timeout" from="ProjectileAttackTimer" to="." method="_on_projectile_attack_timer_timeout"]
-[connection signal="timeout" from="TiredTimer" to="." method="_on_tired_timer_timeout"]
-[connection signal="timeout" from="TakeOffFlyTimer" to="." method="_on_take_off_fly_timer_timeout"]
+[connection signal="timeout" from="FallingProjectileTriggerTimer" to="." method="_on_falling_projectile_trigger_timer_timeout"]
+[connection signal="timeout" from="TiredStateTimer" to="." method="_on_tired_state_timer_timeout"]

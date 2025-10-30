@@ -5,33 +5,39 @@ extends Actor
 const FrogState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
 	"TIRED": "TIRED",
-	"ATTACK": "ATTACK",
-	"FLY": "FLY",
+	"SHOOT_ON_GROUND": "SHOOT_ON_GROUND",
+	"FLY_UP_SHOOT": "FLY_UP_SHOOT",
+	"FLY_DOWN": "FLY_DOWN",
+	"FLY_RIGHT_SHOOT": "FLY_RIGHT_SHOOT",
 	"JUMP": "JUMP",
 }
 
+## Finite State Machine list
 const fsm: Array[String] = [
 	FrogState.IDLE,
-	FrogState.ATTACK,
 	FrogState.IDLE,
-	# Repeats [JUMP-TIRED] until it hits wall
+	FrogState.SHOOT_ON_GROUND,
+	FrogState.IDLE,
+	## Repeats [JUMP-TIRED] until it hits wall
 	FrogState.JUMP,
-	# After it hits wall
+	## After it hits wall
 	FrogState.IDLE,
-	FrogState.ATTACK,
+	FrogState.SHOOT_ON_GROUND,
 	FrogState.IDLE,
-	# Flies up and to the side till it hits wall then falls down
-	FrogState.FLY,
+	## Flies up and to the side till it hits wall than falls down
+	FrogState.FLY_UP_SHOOT,
+	FrogState.FLY_RIGHT_SHOOT,
+	FrogState.FLY_DOWN,
 ]
 
 var _fsm_index: int = -1
 var _flying_up: bool = false
-var _flying_side: bool = false
+var _flying_down: bool = false
+var _flying_right: bool = false
 
 @onready var _fsm_timer: Timer = $FSMTimer
-@onready var _tired_timer: Timer = $TiredTimer
-@onready var _take_off_fly_timer: Timer = $TakeOffFlyTimer
-@onready var _projectile_attack_timer: Timer = $ProjectileAttackTimer
+@onready var _tired_state_timer: Timer = $TiredStateTimer
+@onready var _falling_projectile_trigger_timer: Timer = $FallingProjectileTriggerTimer
 @onready var _left_ray_cast: RayCast2D = $LeftRayCast2D
 @onready var _right_ray_cast: RayCast2D = $RightRayCast2D
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
@@ -42,10 +48,10 @@ func _ready() -> void:
 	super()
 	type = "frog"
 	health = 10
-	speed.y = 30.0
+	speed.y = 90.0
 	jump_force = 130.0
 	_animation_player.play("default")
-	update_fsm()
+	advance_fsm()
 
 
 func _physics_process(delta) -> void:
@@ -63,14 +69,10 @@ func update_grounded_state() -> void:
 		jumping = false
 		change_state(FrogState.TIRED)
 
-	if _left_ray_cast.is_colliding():
+	if is_facing_left_colliding():
 		flip_h = false
-	if _right_ray_cast.is_colliding():
+	if is_facing_right_colliding():
 		flip_h = true
-
-	if _flying_side:
-		_flying_side = false
-		update_fsm()
 
 	reset_velocity()
 	reset_gravity()
@@ -79,39 +81,52 @@ func update_grounded_state() -> void:
 func update_velocity(delta: float) -> void:
 	super.update_velocity(delta)
 
-	if jumping or _flying_side:
+	if jumping or _flying_right:
 		velocity.x = lerp(velocity.x, get_direction() * speed.x, acceleration.x)
 
 	if _flying_up:
+		grounded = false
+		zero_gravity()
 		velocity.x = 0
+		velocity.y = lerp(velocity.x, -1 * speed.y, acceleration.x)
 
-	if _flying_side:
-		if is_facing_left_colliding() or is_facing_right_colliding():
-			reset_gravity()
-			velocity.y = speed.y
+	if _flying_down:
+		velocity.y = speed.y/2
+		if grounded:
+			advance_fsm()
+
+	if _flying_right:
+		grounded = false
+		velocity.y = 0
+		if is_facing_right_colliding():
+			flip_h = true
+			advance_fsm()
 
 
 func change_state(new_state: String) -> void:
 	super.change_state(new_state)
+	reset_flying_states()
 	attacking = false
 	match new_state:
 		FrogState.IDLE:
 			do_idle()
 		FrogState.TIRED:
 			do_tired()
-		FrogState.ATTACK:
-			do_attack()
+		FrogState.SHOOT_ON_GROUND:
+			do_shoot_on_ground()
 		FrogState.JUMP:
 			do_jump()
-		FrogState.FLY:
-			do_fly()
+		FrogState.FLY_UP_SHOOT:
+			do_fly_up_shoot()
+		FrogState.FLY_DOWN:
+			do_fly_down()
+		FrogState.FLY_RIGHT_SHOOT:
+			do_fly_right_shoot()
 
 
-func update_fsm() -> void:
+func advance_fsm() -> void:
 	_fsm_timer.stop()
-	_projectile_attack_timer.stop()
-	_flying_up = false
-	_flying_side = false
+	_falling_projectile_trigger_timer.stop()
 	_fsm_index += 1
 
 	if _fsm_index > fsm.size() - 1:
@@ -121,19 +136,26 @@ func update_fsm() -> void:
 	change_state(next_state)
 
 
-func add_projectile(is_side: bool = true, is_down: bool = false) -> void:
+func add_ground_projectile() -> void:
 	var projectile = projectile_pool.get_projectile("fire_ball")
 	var projectile_speed: float = 60.0
 
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y)
 		var shoot_direction: Vector2 = Vector2.LEFT if flip_h else Vector2.RIGHT
-		if is_down:
-			shoot_direction = Vector2.DOWN
-			projectile.speed = Vector2(0, projectile_speed)
-		else:
-			projectile.speed = Vector2(projectile_speed, 0)
+		projectile.speed = Vector2(projectile_speed, 0)
+		projectile.activate(start_position, shoot_direction)
 
+
+func add_falling_projectile() -> void:
+	var projectile = projectile_pool.get_projectile("fire_ball")
+	var projectile_speed: float = 60.0
+
+	if projectile and not projectile.visible:
+		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y)
+		var shoot_direction: Vector2 = Vector2.LEFT if flip_h else Vector2.RIGHT
+		shoot_direction = Vector2.DOWN
+		projectile.speed = Vector2(0, projectile_speed)
 		projectile.activate(start_position, shoot_direction)
 
 
@@ -143,45 +165,64 @@ func do_idle() -> void:
 
 
 func do_tired() -> void:
-	if prev_state == FrogState.JUMP and not is_on_wall():
-		_animated_sprite.play("tired")
-		_tired_timer.start()
-	else:
-		do_idle()
+	if prev_state == FrogState.JUMP:
+		if is_on_wall() and grounded:
+			do_idle()
+		else:
+			_animated_sprite.play("tired")
+			_tired_state_timer.start()
 
 
-func do_attack() -> void:
+func do_shoot_on_ground() -> void:
 	attacking = true
-	_fsm_index += 1
 	_animated_sprite.play("attack")
-	add_projectile()
+	add_ground_projectile()
 	_fsm_timer.start(0.5)
 
 
-func do_fly() -> void:
+func do_shoot_on_fly() -> void:
+	attacking = true
+	_animated_sprite.play("poop")
+	_falling_projectile_trigger_timer.start(0.4)
+
+
+func do_fly_right_shoot() -> void:
+	do_shoot_on_fly()
+	_flying_right = true
+	_animated_sprite.play("fly")
+
+
+func do_fly_up_shoot() -> void:
+	do_shoot_on_fly()
 	_flying_up = true
-	do_jump('fly', 0, speed.y)
-	do_fly_attack()
-	_take_off_fly_timer.start()
+	_animated_sprite.play("fly")
+	_fsm_timer.start(1.5)
 
 
-func do_fly_attack() -> void:
-	_projectile_attack_timer.start(0.5)
+func do_fly_down() -> void:
+	_flying_down = true
+	_animated_sprite.play("fly")
+	reset_gravity()
 
 
-func do_jump(anim_name: String = "jump", grav: float = jump_gravity, force: float = jump_force) -> void:
+func do_jump() -> void:
 	jumping = true
 	grounded = false
-	gravity = grav
-	velocity.y -= force
-	_animated_sprite.play(anim_name)
+	gravity = jump_gravity
+	velocity.y -= jump_force
+	_animated_sprite.play("jump")
 
 
 func reset() -> void:
 	super.reset()
-	_flying_side = false
-	_flying_up = false
+	reset_flying_states()
 	_fsm_index = -1
+
+
+func reset_flying_states() -> void:
+	_flying_right = false
+	_flying_up = false
+	_flying_down = false
 
 
 func kill() -> void:
@@ -196,9 +237,8 @@ func kill() -> void:
 
 func kill_timers() -> void:
 	_fsm_timer.stop()
-	_projectile_attack_timer.stop()
-	_take_off_fly_timer.stop()
-	_tired_timer.stop()
+	_falling_projectile_trigger_timer.stop()
+	_tired_state_timer.stop()
 
 
 func is_weak() -> bool:
@@ -235,12 +275,7 @@ func on_damage() -> void:
 
 
 func _on_fsm_timer_timeout() -> void:
-	update_fsm()
-
-
-func _on_projectile_attack_timer_timeout() -> void:
-	_animated_sprite.play("poop")
-	add_projectile(false, true)
+	advance_fsm()
 
 
 func _on_smash_area_2d_body_entered(body: Node2D) -> void:
@@ -253,13 +288,11 @@ func _on_smash_area_2d_body_entered(body: Node2D) -> void:
 		Events.camera_shake.emit()
 
 
-func _on_tired_timer_timeout() -> void:
+func _on_tired_state_timer_timeout() -> void:
 	change_state(FrogState.JUMP)
 	_fsm_timer.start(1.0)
 
 
-func _on_take_off_fly_timer_timeout() -> void:
-	_flying_side = true
-	_flying_up = false
-	zero_gravity()
-	reset_velocity()
+func _on_falling_projectile_trigger_timer_timeout() -> void:
+	do_shoot_on_fly()
+	add_falling_projectile()
