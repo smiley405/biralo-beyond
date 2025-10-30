@@ -10,11 +10,11 @@ func _ready() -> void:
 	Events.boss_defeated.connect(_on_boss_defeated)
 
 
-func _start() -> void:
+func _blast_wall() -> void:
 	_wall_explosion_particles.emitting = true
 	_brick_wall_layer.visible = false
 	_brick_wall_hitbox.set_deferred("disabled", true)
 
 
 func _on_boss_defeated() -> void:
-	_start()
+	_blast_wall()

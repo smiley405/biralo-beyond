@@ -115,8 +115,7 @@ flip_h = true
 metadata/_edit_lock_ = true
 
 [node name="BossHealthBar" parent="." instance=ExtResource("3_gy66y")]
-position = Vector2(65, 4)
-metadata/_edit_lock_ = true
+position = Vector2(48, 92)
 
 [node name="WallExplosionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(94, 68)

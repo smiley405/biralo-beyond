@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpa5mbfq76whb"]
+
+[ext_resource type="Script" uid="uid://btcan381pf53p" path="res://src/projectiles/falling_beehive/falling_beehive.gd" id="1_yjemd"]
+[ext_resource type="Texture2D" uid="uid://but5boxkwti52" path="res://assets/art/misc/beehive_idle,w8,h8,s3.png" id="2_pk3x7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yq6k"]
+atlas = ExtResource("2_pk3x7")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0yhk"]
+atlas = ExtResource("2_pk3x7")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohays"]
+atlas = ExtResource("2_pk3x7")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yq6k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0yhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohays")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r07uy"]
+size = Vector2(4, 4)
+
+[node name="FallingBeehive" type="Area2D" groups=["falling_beehives"]]
+collision_layer = 32
+collision_mask = 21
+script = ExtResource("1_yjemd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")
+frame_progress = 0.010843611
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r07uy")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

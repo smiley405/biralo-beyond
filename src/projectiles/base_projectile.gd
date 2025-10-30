@@ -59,6 +59,5 @@ func _on_body_entered(body: Node2D) -> void:
 		if not player.dead:
 			player.receive_damage(1, self)
 			kill()
-
 	if body.is_in_group("platforms"):
 		kill()

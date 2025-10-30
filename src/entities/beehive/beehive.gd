@@ -3,6 +3,9 @@ extends Area2D
 
 
 @export var flip_h: bool = false
+@export var is_idle: bool = false
+@export var start_frame_index: int = 0
+@export var animation_speed_scale: float = 1.0
 
 var type: String = "Beehive"
 # Will be set from root level
@@ -20,9 +23,15 @@ var _attacking: bool = false
 func _ready() -> void:
 	_animated_sprite.play("idle")
 	_animated_sprite.flip_h = flip_h
+	_animated_sprite.set_frame_and_progress(start_frame_index, true)
+
+	if animation_speed_scale:
+		_animated_sprite.speed_scale = animation_speed_scale
+	if not is_idle:
+		_attack_timer.start()
+
 	_animated_sprite.connect("animation_finished", _on_animated_sprite_finished)
 	_animated_sprite.connect("frame_changed", _on_animated_sprite_frame_changed)
-	_attack_timer.start()
 
 
 func _do_attack() -> void:
@@ -30,6 +39,7 @@ func _do_attack() -> void:
 		return
 	_attacking = true
 	_animated_sprite.play("shoot")
+	_reset_animation_speed_scale()
 
 
 func _activate() -> void:
@@ -65,6 +75,10 @@ func add_vfx(vfx_type: String, vfx_position: Vector2) -> void:
 		vfx.set_flip_h(flip_h)
 		vfx.position.x = vfx_position.x
 		vfx.position.y = vfx_position.y
+
+
+func _reset_animation_speed_scale() -> void:
+	_animated_sprite.speed_scale = 1.0
 
 
 ## This function is called internally by the tools/trigger [br]

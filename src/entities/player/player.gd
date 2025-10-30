@@ -224,9 +224,9 @@ func _locked_movement() -> bool:
 
 func _add_run_dusts() -> void:
 	if flip_h:
-		add_vfx("walk_dusts_1", _hitbox.global_position.x + 2, _hitbox.global_position.y - 1, flip_h)
+		add_vfx("walk_dusts_1", Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y - 1), flip_h)
 	else:
-		add_vfx("walk_dusts_2", _hitbox.global_position.x - 2, _hitbox.global_position.y - 1, flip_h)
+		add_vfx("walk_dusts_2", Vector2(_hitbox.global_position.x - 2, _hitbox.global_position.y - 1), flip_h)
 
 
 func can_attack() -> bool:
@@ -248,7 +248,7 @@ func on_landed() -> void:
 	if dead:
 		return
 	reset_speed()
-	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1)
+	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1))
 	# sounds
 	# player logics here
 

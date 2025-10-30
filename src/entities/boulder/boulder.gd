@@ -99,7 +99,7 @@ func on_landed() -> void:
 
 	Events.camera_shake.emit()
 	reset_speed()
-	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)
+	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

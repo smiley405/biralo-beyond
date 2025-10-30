@@ -43,7 +43,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 6.0
+"speed": 8.0
 }]
 
 [node name="BeehiveShootTrails" type="Node2D"]
@@ -51,3 +51,5 @@ script = ExtResource("1_k4ewi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lhwbd")
+frame = 4
+frame_progress = 1.0

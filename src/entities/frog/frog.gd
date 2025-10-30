@@ -11,17 +11,17 @@ const FrogState: Dictionary[String, String] = {
 }
 
 const fsm: Array[String] = [
-	"IDLE",
-	"ATTACK",
-	"IDLE",
+	FrogState.IDLE,
+	FrogState.ATTACK,
+	FrogState.IDLE,
 	# Repeats [JUMP-TIRED] until it hits wall
-	"JUMP",
+	FrogState.JUMP,
 	# After it hits wall
-	"IDLE",
-	"ATTACK",
-	"IDLE",
+	FrogState.IDLE,
+	FrogState.ATTACK,
+	FrogState.IDLE,
 	# Flies up and to the side till it hits wall then falls down
-	"FLY",
+	FrogState.FLY,
 ]
 
 var _fsm_index: int = -1
@@ -220,7 +220,7 @@ func is_facing_left_colliding() -> bool:
 func on_landed() -> void:
 	if dead:
 		return
-	add_vfx("impact_dusts", 0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8)
+	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
 	# sounds
 	# player logics here
 
@@ -231,7 +231,7 @@ func on_damage() -> void:
 	_animation_player.play("hurt")
 
 	var frame_index: int = health
-	Events.emit_signal("upate_boss_health_bar", frame_index)
+	Events.emit_signal("update_boss_health_bar", frame_index)
 
 
 func _on_fsm_timer_timeout() -> void:

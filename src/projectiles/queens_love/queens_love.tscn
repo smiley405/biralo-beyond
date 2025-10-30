@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://qnj8ots7lx48"]
+
+[ext_resource type="Script" uid="uid://c3uiykgxrwoiw" path="res://src/projectiles/queens_love/queens_love.gd" id="1_3njhj"]
+[ext_resource type="Texture2D" uid="uid://bpj4dld427fff" path="res://assets/art/projectiles/queens_love,w8,h8,s4.png" id="2_mssyg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8f67"]
+atlas = ExtResource("2_mssyg")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de372"]
+atlas = ExtResource("2_mssyg")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8f67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de372")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r07uy"]
+size = Vector2(4, 4)
+
+[node name="QueensLove" type="Area2D"]
+collision_layer = 32
+collision_mask = 21
+script = ExtResource("1_3njhj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r07uy")
+metadata/_edit_lock_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

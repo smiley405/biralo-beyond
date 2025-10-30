@@ -84,7 +84,7 @@ shape = SubResource("RectangleShape2D_klfaq")
 
 [node name="Totem" parent="." instance=ExtResource("2_3c5hx")]
 position = Vector2(82, 54)
-delay_attack_time = 3.0
+delay_attack_time = 2.0
 flip_h = true
 
 [node name="Exit" parent="." instance=ExtResource("5_1ohsj")]

@@ -10,7 +10,15 @@ var _projectile_scenes: Dictionary[String, Dictionary] = {
 	"bee": {
 		"total": 10,
 		"scene": preload("res://src/projectiles/bee/bee.tscn")
-	}
+	},
+	"queens_love": {
+		"total": 10,
+		"scene": preload("res://src/projectiles/queens_love/queens_love.tscn")
+	},
+	"falling_beehive": {
+		"total": 10,
+		"scene": preload("res://src/projectiles/falling_beehive/falling_beehive.tscn")
+	},
 }
 
 ## Dictionary[String, Array[PackedScene]]
