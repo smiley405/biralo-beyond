@@ -12,6 +12,12 @@ const PlayerState: Dictionary[String, String] = {
 	"SWING": "SWING",
 }
 
+
+# allow a player to jump even when slightly off the edge of a platform
+# like in Wile E. Coyote cartoon clips
+var coyote_time: float = 0.15 # seconds
+var coyote_timer: float = 0.0
+
 var _attack_area_offsets: Array[Vector2] = []
 var _loved: bool = false
 var _swinging: bool = false
@@ -38,9 +44,8 @@ func _ready() -> void:
 			_attack_area_offsets.append(Vector2(shape.position.x, shape.position.y))
 
 
-func _physics_process(delta) -> void:
+func _physics_process(delta: float) -> void:
 	moving = false
-
 	if dead:
 		return
 
@@ -55,6 +60,14 @@ func _physics_process(delta) -> void:
 	update_grounded_state()
 	update_attacking_state()
 	update_falling_state()
+	update_coyote_timer(delta)
+
+
+func update_coyote_timer(delta: float) -> void:
+	if grounded:
+		coyote_timer = coyote_time
+	else:
+		coyote_timer -= delta
 
 
 func update_velocity(delta: float) -> void:
@@ -157,8 +170,12 @@ func do_jump(force = jump_force) -> void:
 	jumping = true
 	grounded = false
 	gravity = jump_gravity
-	velocity.y -= force
+	# Instead of subtracting ( velocity.y -= force), set the velocity directly
+	# This ensures the jump is always the same strength, no matter if you're on the ground or slightly falling during coyote time.
+	velocity.y = -force
 	speed = jump_speed
+	# reset after jumping
+	coyote_timer = 0.0
 
 	if not moving and not _swinging:
 		_animated_sprite.play("jump")
@@ -199,6 +216,7 @@ func reset() -> void:
 	super.reset()
 	_loved = false
 	_swinging = false
+	coyote_timer = 0.0
 
 
 func kill() -> void:
@@ -257,7 +275,7 @@ func on_jump() -> void:
 	if jumping:
 		return
 
-	if grounded and not attacking:
+	if grounded or coyote_timer > 0.0 and not attacking:
 		change_state(PlayerState.JUMP)
 
 

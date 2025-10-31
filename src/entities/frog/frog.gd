@@ -209,7 +209,7 @@ func do_jump() -> void:
 	jumping = true
 	grounded = false
 	gravity = jump_gravity
-	velocity.y -= jump_force
+	velocity.y = -jump_force
 	_animated_sprite.play("jump")
 
 
