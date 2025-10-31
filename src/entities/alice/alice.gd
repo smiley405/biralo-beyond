@@ -109,7 +109,7 @@ func do_idle() -> void:
 
 func do_love_cat() -> void:
 	speed = Vector2.ZERO
-	_animated_sprite.play("wave")
+	_animated_sprite.play("love")
 
 
 func do_fall() -> void:
@@ -194,6 +194,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_loved_cat = true
 	change_state(AliceState.LOVE_CAT)
 	GameState.game_won = true
+	Events.emit_signal("game_finished")
 
 
 func _on_run_timer_timeout() -> void:
