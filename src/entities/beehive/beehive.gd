@@ -12,7 +12,6 @@ var type: String = "Beehive"
 var vfx_pool: VfxPool
 var projectile_pool: ProjectilePool
 
-var _activated: bool = false
 var _attacking: bool = false
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -28,10 +27,13 @@ func _ready() -> void:
 	if animation_speed_scale:
 		_animated_sprite.speed_scale = animation_speed_scale
 	if not is_idle:
-		_attack_timer.start()
-
+		attack()
 	_animated_sprite.connect("animation_finished", _on_animated_sprite_finished)
 	_animated_sprite.connect("frame_changed", _on_animated_sprite_frame_changed)
+
+
+func attack() -> void:
+	_attack_timer.start()
 
 
 func _do_attack() -> void:
@@ -40,10 +42,6 @@ func _do_attack() -> void:
 	_attacking = true
 	_animated_sprite.play("shoot")
 	_reset_animation_speed_scale()
-
-
-func _activate() -> void:
-	_activated = true
 
 
 func add_projectile() -> void:
@@ -66,7 +64,6 @@ func add_projectile() -> void:
 		add_vfx("beehive_shoot_trails", vfx_start_position)
 
 
-
 func add_vfx(vfx_type: String, vfx_position: Vector2) -> void:
 	var vfx = vfx_pool.get_vfx(vfx_type)
 
@@ -79,16 +76,6 @@ func add_vfx(vfx_type: String, vfx_position: Vector2) -> void:
 
 func _reset_animation_speed_scale() -> void:
 	_animated_sprite.speed_scale = 1.0
-
-
-## This function is called internally by the tools/trigger [br]
-## [param entity] - is a node which trrigered it. i.e player, enemies [br]
-## [param trigger] - is the node that's been triggered
-func triggered_by(from: Node2D, trigger: Node2D) -> void:
-	if _activated:
-		return
-	if from.is_in_group("player"):
-		_activate()
 
 
 func _on_animated_sprite_frame_changed() -> void:

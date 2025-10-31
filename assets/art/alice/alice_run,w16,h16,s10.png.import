@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4iuojcgswlyc"
-path="res://.godot/imported/alice_run,w16,h16,s10.png-5d6a0d716d669c81461b3e6b74576bb1.ctex"
+path="res://.godot/imported/alice_run,w16,h16,s10.png-5ee9c310a016bc69c0bcc6d663bf5838.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/alice_run,w16,h16,s10.png"
-dest_files=["res://.godot/imported/alice_run,w16,h16,s10.png-5d6a0d716d669c81461b3e6b74576bb1.ctex"]
+source_file="res://assets/art/alice/alice_run,w16,h16,s10.png"
+dest_files=["res://.godot/imported/alice_run,w16,h16,s10.png-5ee9c310a016bc69c0bcc6d663bf5838.ctex"]
 
 [params]
 

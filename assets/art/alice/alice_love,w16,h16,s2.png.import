@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnua4pr105s6w"
-path="res://.godot/imported/alice_fall,w16,h16,s4.png-b20580f027b6f1871005b6cf5f75431e.ctex"
+uid="uid://cbmsnyi2byl1i"
+path="res://.godot/imported/alice_love,w16,h16,s2.png-06ae41b7b1d2d432e51b107e04763fba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/alice_fall,w16,h16,s4.png"
-dest_files=["res://.godot/imported/alice_fall,w16,h16,s4.png-b20580f027b6f1871005b6cf5f75431e.ctex"]
+source_file="res://assets/art/alice/alice_love,w16,h16,s2.png"
+dest_files=["res://.godot/imported/alice_love,w16,h16,s2.png-06ae41b7b1d2d432e51b107e04763fba.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://celedmwl2qfym"
-path="res://.godot/imported/alice_wave,w16,h16,s4.png-774c6246ce98f874680dd9ea16aaf76d.ctex"
+uid="uid://dpefiqt0qlcyk"
+path="res://.godot/imported/alice_cliff_hang_start,w16,h16,s2.png-bffded65049ba8fb69432d650f77d7d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/alice_wave,w16,h16,s4.png"
-dest_files=["res://.godot/imported/alice_wave,w16,h16,s4.png-774c6246ce98f874680dd9ea16aaf76d.ctex"]
+source_file="res://assets/art/alice/alice_cliff_hang_start,w16,h16,s2.png"
+dest_files=["res://.godot/imported/alice_cliff_hang_start,w16,h16,s2.png-bffded65049ba8fb69432d650f77d7d0.ctex"]
 
 [params]
 
