@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwjak6bc50176"
-path="res://.godot/imported/frog_tired,w16,h16,s4.png-cb3dd73fda80f022b5c95f51ec366351.ctex"
+path="res://.godot/imported/frog_tired,w16,h16,s4.png-4d0cac8e19eceebf184c94a412414282.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/misc/frog_tired,w16,h16,s4.png"
-dest_files=["res://.godot/imported/frog_tired,w16,h16,s4.png-cb3dd73fda80f022b5c95f51ec366351.ctex"]
+source_file="res://assets/art/frog/frog_tired,w16,h16,s4.png"
+dest_files=["res://.godot/imported/frog_tired,w16,h16,s4.png-4d0cac8e19eceebf184c94a412414282.ctex"]
 
 [params]
 

@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://ccw2t8gf6skmt" path="res://assets/art/frog/frog_fly,w16,h16,s4.png" id="3_xd6ms"]
 [ext_resource type="Texture2D" uid="uid://dslivhndfif5u" path="res://assets/art/frog/frog_idle,w16,h16,s4.png" id="4_vub71"]
 [ext_resource type="Texture2D" uid="uid://bhifauxh6vwws" path="res://assets/art/frog/frog_jump,w16,h16,s4.png" id="5_xd6ms"]
-[ext_resource type="Texture2D" uid="uid://ve7tlk6mlx7n" path="res://assets/art/misc/frog_poop,w16,h16,s4.png" id="6_udlro"]
-[ext_resource type="Texture2D" uid="uid://dwjak6bc50176" path="res://assets/art/misc/frog_tired,w16,h16,s4.png" id="6_vub71"]
+[ext_resource type="Texture2D" uid="uid://ve7tlk6mlx7n" path="res://assets/art/frog/frog_poop,w16,h16,s4.png" id="6_udlro"]
+[ext_resource type="Texture2D" uid="uid://dwjak6bc50176" path="res://assets/art/frog/frog_tired,w16,h16,s4.png" id="6_vub71"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iufac"]
 atlas = ExtResource("2_xd6ms")
