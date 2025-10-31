@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cwyy4e4g7cfjk"]
+[gd_scene load_steps=33 format=3 uid="uid://cwyy4e4g7cfjk"]
 
 [ext_resource type="Script" uid="uid://d4ls02x2mu0fc" path="res://src/entities/player/player.gd" id="1_4m8ck"]
 [ext_resource type="Texture2D" uid="uid://cd7dv0aa4lvk1" path="res://assets/art/player/player_attack,w48,h48,s10.png" id="2_0mfjg"]
@@ -299,7 +299,13 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oih67"]
-size = Vector2(12, 6)
+size = Vector2(3, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eb65w"]
+size = Vector2(6, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4f0qm"]
+size = Vector2(5, 1.25)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 4
@@ -308,7 +314,8 @@ script = ExtResource("1_4m8ck")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_dao75")
-animation = &"idle"
+animation = &"attack"
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0mfjg")
@@ -325,8 +332,16 @@ collision_mask = 10
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
-position = Vector2(10, -1)
+position = Vector2(14.5, -1)
 shape = SubResource("RectangleShape2D_oih67")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackArea2D"]
+position = Vector2(10, -0.5)
+shape = SubResource("RectangleShape2D_eb65w")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="AttackArea2D"]
+position = Vector2(4.5, 0.625)
+shape = SubResource("RectangleShape2D_4f0qm")
 
 [node name="SwingTimer" type="Timer" parent="."]
 
