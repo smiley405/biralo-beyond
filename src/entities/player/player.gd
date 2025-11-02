@@ -13,6 +13,9 @@ const PlayerState: Dictionary[String, String] = {
 }
 
 
+var jump_enabled: bool = true
+var attack_enabled: bool = true
+
 # allow a player to jump even when slightly off the edge of a platform
 # like in Wile E. Coyote cartoon clips
 var coyote_time: float = 0.15 # seconds
@@ -96,10 +99,10 @@ func update_inputs() -> void:
 		if grounded and not attacking:
 			change_state(PlayerState.IDLE)
 
-	if Input.is_action_just_pressed("jump"):
+	if jump_enabled && Input.is_action_just_pressed("jump"):
 		on_jump()
 
-	if Input.is_action_just_pressed("attack"):
+	if attack_enabled && Input.is_action_just_pressed("attack"):
 		on_attack()
 
 
