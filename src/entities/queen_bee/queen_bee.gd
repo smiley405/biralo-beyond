@@ -85,6 +85,7 @@ var _flying_right: bool = false
 @onready var _left_ray_cast: RayCast2D = $LeftRayCast2D
 @onready var _right_ray_cast: RayCast2D = $RightRayCast2D
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
+@onready var _spawn_bees_particles: Node2D = $SpawnBeesGPUParticles2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -225,7 +226,7 @@ func add_queens_love_projectile(directions: Array[Vector2], speeds: Array[Vector
 func add_bee_projectile_forward() -> void:
 	var shoot_directions: Array[Vector2] = [Vector2(1, -1), Vector2(1, 0)]
 	var shoot_speeds: Array[Vector2] = [Vector2(40, 5), Vector2(40, 0)]
-	add_bee_projectile(shoot_directions, shoot_speeds, false)
+	add_bee_projectile(shoot_directions, shoot_speeds)
 
 
 func add_bee_projectile_downward(down_type: int = 1) -> void:
@@ -237,7 +238,7 @@ func add_bee_projectile_downward(down_type: int = 1) -> void:
 	if down_type == 2:
 		shoot_speeds.clear()
 		shoot_speeds = [Vector2(40, 70), Vector2(40, 50)]
-	add_bee_projectile(shoot_directions, shoot_speeds, false)
+	add_bee_projectile(shoot_directions, shoot_speeds)
 
 
 func add_bee_projectile(shoot_directions: Array[Vector2], shoot_speeds: Array[Vector2], is_add_vfx: bool = true) -> void:
@@ -246,16 +247,17 @@ func add_bee_projectile(shoot_directions: Array[Vector2], shoot_speeds: Array[Ve
 
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y + 2)
-		var vfx_start_position: Vector2 = Vector2(_hitbox.global_position.x + 6, _hitbox.global_position.y + 1)
+		var vfx_start_position: Vector2 = Vector2(_hitbox.position.x + 2, _hitbox.position.y + 5)
 		if flip_h:
 			start_position.x = _hitbox.global_position.x - 2
-			vfx_start_position.x = _hitbox.global_position.x - 6
+			vfx_start_position.x = _hitbox.position.x - 2
 		var shoot_direction = shoot_directions.pick_random()
 		shoot_direction.x = get_direction()
 		projectile.speed = shoot_speeds.pick_random()
 		projectile.activate(start_position, shoot_direction)
 		if is_add_vfx:
-			add_vfx("beehive_shoot_trails", vfx_start_position, flip_h)
+			_spawn_bees_particles.position = vfx_start_position
+			_spawn_bees_particles.emitting = true
 		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 

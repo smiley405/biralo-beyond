@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dhbpnjlrxwjmq"]
+[gd_scene load_steps=43 format=3 uid="uid://dhbpnjlrxwjmq"]
 
 [ext_resource type="Script" uid="uid://dy7duf8vyyxjc" path="res://src/entities/queen_bee/queen_bee.gd" id="1_cferq"]
 [ext_resource type="Texture2D" uid="uid://bnqisn2xaawjk" path="res://assets/art/queen_bee/queen_bee_idle,w16,h16,s8.png" id="2_fsohy"]
@@ -327,6 +327,20 @@ _data = {
 &"hurt": SubResource("Animation_xd6ms")
 }
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r7kru"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2, 2, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 9.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 2.0
+color = Color(1, 0.8039216, 0.45882353, 1)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+
 [node name="QueenBee" type="CharacterBody2D" groups=["boss"]]
 collision_layer = 2
 collision_mask = 20
@@ -356,5 +370,15 @@ libraries = {
 
 [node name="FSMTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SpawnBeesGPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.6
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.3
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_r7kru")
 
 [connection signal="timeout" from="FSMTimer" to="." method="_on_fsm_timer_timeout"]
