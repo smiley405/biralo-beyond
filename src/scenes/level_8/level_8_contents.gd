@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _add_falling_beehive_projectile(pos: Vector2) -> void:
 	var projectile = projectile_pool.get_projectile("falling_beehive")
-	var projectile_speed: float = 40.0
+	var projectile_speed: float = 55.0
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(pos.x, pos.y)
 		var shoot_direction = Vector2.DOWN
@@ -53,7 +53,7 @@ func _rain_beenhives() -> void:
 		_add_falling_beehive_projectile(global_pos)
 
 
-func _spawn_beenhives() -> void:
+func _show_beehives() -> void:
 	var _tween: Tween = create_tween()
 	_tween.tween_property(_beehives, "modulate:a", 1, 0.5)
 
@@ -66,7 +66,7 @@ func _on_beehives_summon_started() -> void:
 
 
 func _on_beehives_summon_finished() -> void:
-	_spawn_beenhives()
+	_show_beehives()
 
 
 func _on_boss_defeated() -> void:
