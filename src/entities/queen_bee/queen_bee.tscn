@@ -245,7 +245,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mfjg"]
-size = Vector2(7, 11)
+size = Vector2(7, 14)
 
 [sub_resource type="Animation" id="Animation_vub71"]
 length = 0.001
@@ -338,7 +338,7 @@ sprite_frames = SubResource("SpriteFrames_dao75")
 animation = &"beehives_summoned"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 2.5)
+position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_0mfjg")
 
 [node name="LeftRayCast2D" type="RayCast2D" parent="."]

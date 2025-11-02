@@ -176,6 +176,7 @@ func do_jump(force = jump_force) -> void:
 	speed = jump_speed
 	# reset after jumping
 	coyote_timer = 0.0
+	AudioManager.play_sfx(AudioManifest.SFX.JUMP)
 
 	if not moving and not _swinging:
 		_animated_sprite.play("jump")
@@ -188,6 +189,7 @@ func do_fall() -> void:
 func do_attack() -> void:
 	attacking = true
 	_animation_player.play("attack_logic")
+	AudioManager.play_sfx(AudioManifest.SFX.TAIL_WHIP)
 
 
 func do_love() -> void:
@@ -224,6 +226,7 @@ func kill() -> void:
 	# sound > blast
 	visible = false
 	add_vfx("blast")
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 	await Utils.delay(1.0)
 	on_kill()
 
@@ -241,6 +244,8 @@ func _locked_movement() -> bool:
 
 
 func _add_run_dusts() -> void:
+	AudioManager.play_sfx(AudioManifest.SFX.TOUCH_GROUND)
+	
 	if flip_h:
 		add_vfx("walk_dusts_1", Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y - 1), flip_h)
 	else:
@@ -267,8 +272,7 @@ func on_landed() -> void:
 		return
 	reset_speed()
 	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1))
-	# sounds
-	# player logics here
+	AudioManager.play_sfx(AudioManifest.SFX.TOUCH_GROUND)
 
 
 func on_jump() -> void:
@@ -300,6 +304,7 @@ func _on_animated_sprite_frame_changed() -> void:
 	if _animated_sprite.animation == "run":
 		if _animated_sprite.frame == 2:
 			_add_run_dusts()
+			
 
 
 func _on_KillTimer_timeout():

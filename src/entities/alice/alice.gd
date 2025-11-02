@@ -110,6 +110,7 @@ func do_idle() -> void:
 func do_love_cat() -> void:
 	speed = Vector2.ZERO
 	_animated_sprite.play("love")
+	AudioManager.play_sfx(AudioManifest.SFX.POWER_UP_2)
 
 
 func do_fall() -> void:

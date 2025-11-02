@@ -31,11 +31,14 @@ func _blast_wall() -> void:
 	_wall_explosion_particles.emitting = true
 	_brick_wall_layer.visible = false
 	_brick_wall_hitbox.set_deferred("disabled", true)
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE_2)
 
 
 func _rain_beenhives() -> void:
 	var delays: Array[float] = [0.2, 0]
 	var i: int = 0
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE_2)
+
 	for beehive: Beehive in _beehives.get_children():
 		var global_pos = beehive.global_position
 		var delay: float = delays[0] if i % 2 == 0 else delays[1]

@@ -15,6 +15,7 @@ func _ready() -> void:
 func collapse() -> void:
 	_collapsed = true
 	_animated_sprite.play("fall")
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE_2)
 	Events.camera_shake.emit()
 
 

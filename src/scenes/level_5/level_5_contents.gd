@@ -14,6 +14,7 @@ func _blast_wall() -> void:
 	_wall_explosion_particles.emitting = true
 	_brick_wall_layer.visible = false
 	_brick_wall_hitbox.set_deferred("disabled", true)
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE_2)
 
 
 func _on_boss_defeated() -> void:

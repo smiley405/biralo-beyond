@@ -15,7 +15,6 @@ const FrogState: Dictionary[String, String] = {
 ## Finite State Machine list
 const fsm: Array[String] = [
 	FrogState.IDLE,
-	FrogState.IDLE,
 	FrogState.SHOOT_ON_GROUND,
 	FrogState.IDLE,
 	## Repeats [JUMP-TIRED] until it hits wall
@@ -145,6 +144,7 @@ func add_ground_projectile() -> void:
 		var shoot_direction: Vector2 = Vector2.LEFT if flip_h else Vector2.RIGHT
 		projectile.speed = Vector2(projectile_speed, 0)
 		projectile.activate(start_position, shoot_direction)
+		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 
 func add_falling_projectile() -> void:
@@ -157,6 +157,7 @@ func add_falling_projectile() -> void:
 		shoot_direction = Vector2.DOWN
 		projectile.speed = Vector2(0, projectile_speed)
 		projectile.activate(start_position, shoot_direction)
+		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 
 func do_idle() -> void:
@@ -211,6 +212,7 @@ func do_jump() -> void:
 	gravity = jump_gravity
 	velocity.y = -jump_force
 	_animated_sprite.play("jump")
+	AudioManager.play_sfx(AudioManifest.SFX.JUMP)
 
 
 func reset() -> void:
@@ -231,6 +233,7 @@ func kill() -> void:
 	# sound > blast
 	visible = false
 	add_vfx("blast")
+	AudioManager.play_sfx(AudioManifest.SFX.BOOM)
 	await Utils.delay(1)
 	Events.boss_defeated.emit()
 
@@ -261,6 +264,7 @@ func on_landed() -> void:
 	if dead:
 		return
 	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
+	AudioManager.play_sfx(AudioManifest.SFX.BOOM_2)
 	# sounds
 	# player logics here
 

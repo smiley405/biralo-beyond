@@ -36,6 +36,7 @@ func add_projectile() -> void:
 		var shoot_direction: Vector2 = Vector2.LEFT if flip_h else Vector2.RIGHT
 		projectile.speed = Vector2(40, 0)
 		projectile.activate(start_position, shoot_direction)
+		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 
 func do_idle() -> void:
@@ -54,6 +55,7 @@ func kill() -> void:
 	add_vfx("blast")
 	_switch_attack_timer.stop()
 	detach()
+	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 
 
 func reset_attack_state() -> void:

@@ -20,6 +20,8 @@ func set_scene(scene_index: int) -> void:
 	GameState.scene_index = scene_index
 	# call_deferred() waits until it's safe to make changes
 	get_tree().call_deferred("change_scene_to_packed", scene)
+	await Utils.delay(0.1)
+	Events.emit_signal("scene_changed")
 
 
 func reload_scene() -> void:

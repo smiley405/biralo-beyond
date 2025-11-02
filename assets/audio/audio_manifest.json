@@ -1,0 +1,26 @@
+{
+	"jump": {
+		"path": "res://audio/jump.wav",
+		"bus": "SFX",
+		"volume": 1.0,
+		"loop": false
+	  },
+	"coin": {
+		"path": "res://audio/coin.wav",
+		"bus": "SFX",
+		"volume": 0.8,
+		"loop": false
+	  },
+	"hit": {
+		"path": "res://audio/hit.wav",
+		"bus": "SFX",
+		"volume": 1.0,
+		"loop": false
+	  },
+	"level_music": {
+		"path": "res://music/level1.ogg",
+		"bus": "Music",
+		"volume": 0.6,
+		"loop": true
+	  }
+}

@@ -8,7 +8,7 @@ var _projectile_scenes: Dictionary[String, Dictionary] = {
 		"scene": preload("res://src/projectiles/fire_ball/fire_ball.tscn")
 	},
 	"bee": {
-		"total": 10,
+		"total": 12,
 		"scene": preload("res://src/projectiles/bee/bee.tscn")
 	},
 	"queens_love": {

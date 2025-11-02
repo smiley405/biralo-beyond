@@ -4,7 +4,10 @@ extends Actor
 
 const QueenBeeState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
-	"FLYING_KISS": "FLYING_KISS",
+	"FLYING_KISS_FORWARD": "FLYING_KISS_FORWARD",
+	"FLYING_KISS_DOWN_1": "FLYING_KISS_DOWN_1",
+	"FLYING_KISS_DOWN_2": "FLYING_KISS_DOWN_2",
+	"FLYING_KISS_DOWN_3": "FLYING_KISS_DOWN_3",
 	"FLY_UP": "FLY_UP",
 	"FLY_DOWN": "FLY_DOWN",
 	"FLY_LEFT": "FLY_LEFT",
@@ -12,15 +15,18 @@ const QueenBeeState: Dictionary[String, String] = {
 	"FLY_RIGHT": "FLY_RIGHT",
 	"FLY_RIGHT_TO_END": "FLY_RIGHT_TO_END",
 	"BEEHIVES_SUMMONED": "BEEHIVES_SUMMONED",
-	"SHOOT_BEE": "SHOOT_BEE",
+	"SHOOT_BEE_FORWARD": "SHOOT_BEE_FORWARD",
+	"SHOOT_BEE_DOWN_1": "SHOOT_BEE_DOWN_1",
+	"SHOOT_BEE_DOWN_2": "SHOOT_BEE_DOWN_2",
+	"SHOOT_BEE_DOWN_3": "SHOOT_BEE_DOWN_3",
 }
 
 ## Finite State Machine list
 const fsm: Array[String] = [
 	QueenBeeState.IDLE,
+	QueenBeeState.FLYING_KISS_FORWARD,
 	QueenBeeState.IDLE,
-	QueenBeeState.FLYING_KISS,
-	QueenBeeState.IDLE,
+	QueenBeeState.FLYING_KISS_FORWARD,
 	QueenBeeState.IDLE,
 
 	QueenBeeState.FLY_LEFT,
@@ -33,13 +39,22 @@ const fsm: Array[String] = [
 
 	QueenBeeState.FLY_LEFT_TO_END,
 	QueenBeeState.IDLE,
+	QueenBeeState.SHOOT_BEE_DOWN_1,
+	QueenBeeState.SHOOT_BEE_DOWN_1,
+	QueenBeeState.SHOOT_BEE_DOWN_2,
+	QueenBeeState.SHOOT_BEE_DOWN_2,
+	QueenBeeState.SHOOT_BEE_DOWN_3,
+	QueenBeeState.SHOOT_BEE_DOWN_3,
+	QueenBeeState.SHOOT_BEE_DOWN_2,
+	QueenBeeState.SHOOT_BEE_DOWN_1,
+	QueenBeeState.IDLE,
 	QueenBeeState.FLY_DOWN,
 	QueenBeeState.IDLE,
 
-	QueenBeeState.SHOOT_BEE,
+	QueenBeeState.SHOOT_BEE_FORWARD,
 	QueenBeeState.IDLE,
-	QueenBeeState.SHOOT_BEE,
-	QueenBeeState.IDLE,
+	QueenBeeState.SHOOT_BEE_FORWARD,
+	QueenBeeState.SHOOT_BEE_FORWARD,
 
 	QueenBeeState.FLY_RIGHT,
 	QueenBeeState.IDLE,
@@ -50,6 +65,12 @@ const fsm: Array[String] = [
 	QueenBeeState.IDLE,
 
 	QueenBeeState.FLY_RIGHT_TO_END,
+	QueenBeeState.IDLE,
+	QueenBeeState.FLYING_KISS_DOWN_1,
+	QueenBeeState.IDLE,
+	QueenBeeState.FLYING_KISS_DOWN_2,
+	QueenBeeState.IDLE,
+	QueenBeeState.FLYING_KISS_DOWN_3,
 	QueenBeeState.IDLE,
 	QueenBeeState.FLY_DOWN,
 ]
@@ -137,7 +158,7 @@ func change_state(new_state: String) -> void:
 	match new_state:
 		QueenBeeState.IDLE:
 			do_idle()
-		QueenBeeState.FLYING_KISS:
+		QueenBeeState.FLYING_KISS_FORWARD, QueenBeeState.FLYING_KISS_DOWN_1, QueenBeeState.FLYING_KISS_DOWN_2, QueenBeeState.FLYING_KISS_DOWN_3:
 			do_flying_kiss()
 		QueenBeeState.FLY_LEFT:
 			do_fly_left()
@@ -151,7 +172,7 @@ func change_state(new_state: String) -> void:
 			do_fly_up()
 		QueenBeeState.FLY_DOWN:
 			do_fly_down()
-		QueenBeeState.SHOOT_BEE:
+		QueenBeeState.SHOOT_BEE_FORWARD, QueenBeeState.SHOOT_BEE_DOWN_1, QueenBeeState.SHOOT_BEE_DOWN_2, QueenBeeState.SHOOT_BEE_DOWN_3:
 			do_shoot_bee()
 		QueenBeeState.BEEHIVES_SUMMONED:
 			do_summon_beehives()
@@ -167,12 +188,27 @@ func advance_fsm() -> void:
 	var next_state: String = fsm[_fsm_index]
 	change_state(next_state)
 
-
-func add_queens_love_projectile() -> void:
+func add_queens_love_projectile_forward() -> void:
 	var directions: Array[Vector2] = [Vector2(1, -1), Vector2(1, 1), Vector2(1, 1)]
-	var speeds: Array[Vector2] = [Vector2(40, 12), Vector2(40, 3), Vector2(40, 10)]
-	var i: int = 0
+	var speeds: Array[Vector2] = [Vector2(40, 12), Vector2(40, 5), Vector2(40, 20)]
+	add_queens_love_projectile(directions, speeds)
 
+
+func add_queens_love_projectile_downward(down_type: int = 1) -> void:
+	var directions: Array[Vector2] = [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+	var speeds: Array[Vector2] = [Vector2(40, 50), Vector2(40, 40), Vector2(40, 15)]
+	if down_type == 3:
+		speeds.clear()
+		speeds = [Vector2(20, 150), Vector2(10, 250), Vector2(10, 100)]
+	if down_type == 2:
+		speeds.clear()
+		speeds = [Vector2(40, 80), Vector2(40, 60), Vector2(40, 70)]
+	add_queens_love_projectile(directions, speeds)
+
+
+func add_queens_love_projectile(directions: Array[Vector2], speeds: Array[Vector2]) -> void:
+	var i: int = 0
+	
 	for dir in directions:
 		var projectile = projectile_pool.get_projectile("queens_love")
 		if projectile and not projectile.visible:
@@ -182,16 +218,34 @@ func add_queens_love_projectile() -> void:
 			projectile.speed =  speeds[i]
 			projectile.activate(start_position, shoot_direction)
 		i += 1
+	
+	AudioManager.play_sfx(AudioManifest.SFX.FLYING_KISS)
 
 
-func add_bee_projectile() -> void:
+func add_bee_projectile_forward() -> void:
 	var shoot_directions: Array[Vector2] = [Vector2(1, -1), Vector2(1, 0)]
 	var shoot_speeds: Array[Vector2] = [Vector2(40, 5), Vector2(40, 0)]
+	add_bee_projectile(shoot_directions, shoot_speeds, false)
+
+
+func add_bee_projectile_downward(down_type: int = 1) -> void:
+	var shoot_directions: Array[Vector2] = [Vector2(1, 1)]
+	var shoot_speeds: Array[Vector2] = [Vector2(40, 30), Vector2(40, 20)]
+	if down_type == 3:
+		shoot_speeds.clear()
+		shoot_speeds = [Vector2(20, 150), Vector2(10, 250)]
+	if down_type == 2:
+		shoot_speeds.clear()
+		shoot_speeds = [Vector2(40, 70), Vector2(40, 50)]
+	add_bee_projectile(shoot_directions, shoot_speeds, false)
+
+
+func add_bee_projectile(shoot_directions: Array[Vector2], shoot_speeds: Array[Vector2], is_add_vfx: bool = true) -> void:
 	var projectile = projectile_pool.get_projectile("bee")
 	projectile.flip_h = flip_h
 
 	if projectile and not projectile.visible:
-		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y + 2)
+		var start_position: Vector2 = Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y + 2)
 		var vfx_start_position: Vector2 = Vector2(_hitbox.global_position.x + 6, _hitbox.global_position.y + 1)
 		if flip_h:
 			start_position.x = _hitbox.global_position.x - 2
@@ -200,7 +254,9 @@ func add_bee_projectile() -> void:
 		shoot_direction.x = get_direction()
 		projectile.speed = shoot_speeds.pick_random()
 		projectile.activate(start_position, shoot_direction)
-		add_vfx("beehive_shoot_trails", vfx_start_position, flip_h)
+		if is_add_vfx:
+			add_vfx("beehive_shoot_trails", vfx_start_position, flip_h)
+		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 
 func do_idle() -> void:
@@ -251,8 +307,16 @@ func do_summon_beehives() -> void:
 
 
 func do_shoot_bee() -> void:
+	attacking = true
 	_animated_sprite.play("shoot_bee")
-	add_bee_projectile()
+	if current_state == QueenBeeState.SHOOT_BEE_DOWN_1:
+		add_bee_projectile_downward()
+	elif current_state == QueenBeeState.SHOOT_BEE_DOWN_2:
+		add_bee_projectile_downward(2)
+	elif current_state == QueenBeeState.SHOOT_BEE_DOWN_3:
+		add_bee_projectile_downward(3)
+	else:
+		add_bee_projectile_forward()
 
 
 func reset() -> void:
@@ -274,6 +338,7 @@ func kill() -> void:
 	# sound > blast
 	visible = false
 	add_vfx("blast")
+	AudioManager.play_sfx(AudioManifest.SFX.BOOM)
 	await Utils.delay(1)
 	Events.boss_defeated.emit()
 
@@ -331,7 +396,14 @@ func _on_animated_sprite_frame_changed() -> void:
 			Events.camera_shake.emit()
 	if _animated_sprite.animation == "flying_kiss":
 		if _animated_sprite.frame == 3:
-			add_queens_love_projectile()
+			if current_state == QueenBeeState.FLYING_KISS_DOWN_1:
+				add_queens_love_projectile_downward()
+			elif current_state == QueenBeeState.FLYING_KISS_DOWN_2:
+				add_queens_love_projectile_downward(2)
+			elif current_state == QueenBeeState.FLYING_KISS_DOWN_3:
+				add_queens_love_projectile_downward(3)
+			else:
+				add_queens_love_projectile_forward()
 
 
 func _on_fsm_timer_timeout() -> void:

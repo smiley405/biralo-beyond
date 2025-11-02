@@ -1,5 +1,53 @@
 extends Node
 
 
+var _base_music_playing: bool = false
+var _boss_music_playing: bool = false
+var _boss_music_id: int = -1
+
+
 func _ready():
 	SceneManager.reload_scene()
+	Events.scene_changed.connect(_on_scene_changed)
+	#Events.game_finished.connect(_on_game_finished)
+	Events.boss_defeated.connect(_on_boss_defeated)
+
+
+func update_music(scene_index: int) -> void:
+	match scene_index:
+		4, 7:
+			if _boss_music_playing:
+				return
+			AudioManager.stop_all()
+			await Utils.delay(1.3)
+			_boss_music_id = AudioManager.play_music(AudioManifest.MUSIC.BOSS_BATTLE)
+			_boss_music_playing = true
+			_base_music_playing = false
+		9:
+			_on_game_finished()
+		_:
+			if _base_music_playing:
+				return
+			AudioManager.stop_all()
+			_boss_music_id = -1
+			await Utils.delay(0.3)
+			AudioManager.play_music(AudioManifest.MUSIC.BASE_GAME)
+			_base_music_playing = true
+			_boss_music_playing = false
+
+
+func _on_scene_changed() -> void:
+	update_music(GameState.scene_index)
+
+
+func _on_game_finished() -> void:
+	_base_music_playing = false
+	_boss_music_playing = false
+	AudioManager.stop_all()
+	await Utils.delay(0.1)
+	AudioManager.play_music(AudioManifest.MUSIC.END_STAGE, 0.6)
+
+
+func _on_boss_defeated() -> void:
+	await Utils.delay(0.1)
+	AudioManager.stop(_boss_music_id)

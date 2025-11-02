@@ -141,7 +141,7 @@ position = Vector2(60, 84)
 
 [node name="Totem" parent="." instance=ExtResource("5_cvbw4")]
 position = Vector2(31, 78)
-delay_attack_time = 3.0
+delay_attack_time = 2.0
 
 [node name="Boulder" parent="." instance=ExtResource("6_7ggvx")]
 position = Vector2(49, -8)
@@ -153,14 +153,12 @@ flip_h = true
 [node name="Trigger" parent="Tools" instance=ExtResource("7_sa356")]
 position = Vector2(59, 36.000004)
 scale = Vector2(1, 4.080001)
-collision_layer = 64
 collision_mask = 1
 targets = Array[NodePath]([NodePath("../Delay")])
 
 [node name="Trigger2" parent="Tools" groups=["stop_tool"] instance=ExtResource("7_sa356")]
 position = Vector2(58, 101)
 scale = Vector2(1, 1.0799999)
-collision_layer = 64
 collision_mask = 512
 tool_name = "Stop"
 targets = Array[NodePath]([NodePath("../../Boulder")])

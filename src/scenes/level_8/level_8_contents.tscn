@@ -102,22 +102,15 @@ is_idle = true
 start_frame_index = 2
 
 [node name="Beehive4" parent="Beehives" instance=ExtResource("3_07dgp")]
-position = Vector2(60, 20)
+position = Vector2(63, 20)
 flip_h = true
 is_idle = true
 animation_speed_scale = 1.2
 
 [node name="Beehive5" parent="Beehives" instance=ExtResource("3_07dgp")]
-position = Vector2(68, 20)
+position = Vector2(83, 20)
 is_idle = true
 start_frame_index = 2
-
-[node name="Beehive6" parent="Beehives" instance=ExtResource("3_07dgp")]
-position = Vector2(84, 20)
-flip_h = true
-is_idle = true
-start_frame_index = 1
-animation_speed_scale = 0.9
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["platforms"]]
 collision_layer = 4

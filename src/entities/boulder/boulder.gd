@@ -70,6 +70,7 @@ func switch_off() -> void:
 	zero_gravity()
 	_area_2d.set_deferred("monitoring", false)
 	change_state(BoulderState.STOP)
+	AudioManager.play_sfx(AudioManifest.SFX.BOOM_2)
 
 
 ## This function is called internally by the tools/trigger [br]
@@ -100,6 +101,7 @@ func on_landed() -> void:
 	Events.camera_shake.emit()
 	reset_speed()
 	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
+	AudioManager.play_sfx(AudioManifest.SFX.BOOM_2)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

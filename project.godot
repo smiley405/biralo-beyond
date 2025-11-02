@@ -25,6 +25,7 @@ GameState="*res://src/autoload/game_state.gd"
 Global="*res://src/autoload/global.gd"
 SceneManager="*res://src/autoload/scene_manager.gd"
 Utils="*res://src/autoload/utils.gd"
+AudioManager="*res://src/autoload/audio_manager.gd"
 
 [debug]
 
@@ -38,6 +39,10 @@ window/size/viewport_height=96
 window/size/window_width_override=960
 window/size/window_height_override=960
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
 
 [input]
 
