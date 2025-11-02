@@ -17,7 +17,11 @@ const fsm: Array[String] = [
 	FrogState.IDLE,
 	FrogState.SHOOT_ON_GROUND,
 	FrogState.IDLE,
-	## Repeats [JUMP-TIRED] until it hits wall
+
+	FrogState.JUMP,
+	FrogState.TIRED,
+	FrogState.JUMP,
+	FrogState.TIRED,
 	FrogState.JUMP,
 	## After it hits wall
 	FrogState.IDLE,
@@ -42,7 +46,6 @@ var _flying_right: bool = false
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
 	type = "frog"
@@ -50,6 +53,10 @@ func _ready() -> void:
 	speed.y = 90.0
 	jump_force = 130.0
 	_animation_player.play("default")
+
+
+func _init_after_ready() -> void:
+	super()
 	advance_fsm()
 
 
@@ -66,7 +73,8 @@ func update_grounded_state() -> void:
 
 	if jumping:
 		jumping = false
-		change_state(FrogState.TIRED)
+		advance_fsm()
+		#change_state(FrogState.TIRED)
 
 	if is_facing_left_colliding():
 		flip_h = false
@@ -166,12 +174,8 @@ func do_idle() -> void:
 
 
 func do_tired() -> void:
-	if prev_state == FrogState.JUMP:
-		if is_on_wall() and grounded:
-			do_idle()
-		else:
-			_animated_sprite.play("tired")
-			_tired_state_timer.start()
+	_animated_sprite.play("tired")
+	_tired_state_timer.start()
 
 
 func do_shoot_on_ground() -> void:
@@ -293,8 +297,7 @@ func _on_smash_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_tired_state_timer_timeout() -> void:
-	change_state(FrogState.JUMP)
-	_fsm_timer.start(1.0)
+	advance_fsm()
 
 
 func _on_falling_projectile_trigger_timer_timeout() -> void:

@@ -49,6 +49,12 @@ var alpha: float = 1.0:
 func _ready() -> void:
 	add_to_group("vfx_targets")
 	add_to_group("projectile_targets")
+	call_deferred("_init_after_ready")
+
+
+## Safe to access all children and start logic
+func _init_after_ready() -> void:
+	pass
 
 
 func _physics_process(delta) -> void:

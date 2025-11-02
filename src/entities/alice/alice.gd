@@ -189,13 +189,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if _loved_cat or not body.is_in_group("player"):
 		return
 
-	var player: Player = body as Player
-	player.do_love()
+	if current_state == AliceState.WAVE:
+		var player: Player = body as Player
+		player.do_love()
 
-	_loved_cat = true
-	change_state(AliceState.LOVE_CAT)
-	GameState.game_won = true
-	Events.emit_signal("game_finished")
+		_loved_cat = true
+		change_state(AliceState.LOVE_CAT)
+		GameState.game_won = true
+		Events.emit_signal("game_finished")
 
 
 func _on_run_timer_timeout() -> void:

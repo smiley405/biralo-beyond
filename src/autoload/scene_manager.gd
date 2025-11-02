@@ -18,9 +18,16 @@ var _scenes: Array[PackedScene] = [
 func set_scene(scene_index: int) -> void:
 	var scene: PackedScene = _scenes[scene_index]
 	GameState.scene_index = scene_index
+	_change_scene_deferred(scene)
+
+
+func _change_scene_deferred(scene: PackedScene) -> void:
 	# call_deferred() waits until it's safe to make changes
-	get_tree().call_deferred("change_scene_to_packed", scene)
-	await Utils.delay(0.1)
+	call_deferred("_change_scene", scene)
+
+
+func _change_scene(scene: PackedScene) -> void:
+	get_tree().change_scene_to_packed(scene)
 	Events.emit_signal("scene_changed")
 
 

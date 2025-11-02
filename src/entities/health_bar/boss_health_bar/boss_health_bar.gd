@@ -9,8 +9,11 @@ extends Node2D
 
 func _ready() -> void:
 	_animation_player.play("start")
+	call_deferred("_init_after_ready")
+
+
+func _init_after_ready() -> void:
 	Events.update_boss_health_bar.connect(_on_update_boss_health_bar)
-	await Utils.delay(0.1)
 	AudioManager.play_sfx(AudioManifest.SFX.POWER_UP_FULL)
 
 

@@ -315,7 +315,6 @@ script = ExtResource("1_4m8ck")
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_dao75")
 animation = &"attack"
-frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0mfjg")

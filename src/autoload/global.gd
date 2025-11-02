@@ -7,6 +7,10 @@ var _boss_music_id: int = -1
 
 
 func _ready():
+	call_deferred("_init_after_ready")
+
+
+func _init_after_ready() -> void:
 	SceneManager.reload_scene()
 	Events.scene_changed.connect(_on_scene_changed)
 	#Events.game_finished.connect(_on_game_finished)
