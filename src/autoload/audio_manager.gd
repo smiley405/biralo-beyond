@@ -2,7 +2,6 @@ extends Node
 
 
 var _audio_cache: Dictionary = {}
-var _audio_cache_looped: Dictionary = {}
 var _player_pool: Array[AudioStreamPlayer] = []
 
 
@@ -13,16 +12,16 @@ func _ready():
 
 ## Example: play_sfx(AudioManifest.SFX.JUMP) - this is for type safety.
 ## Returns current AudioStreamPlayer > id: int
-func play_sfx(sound_data: Dictionary, volume: float = 1.0, loop: bool = false) -> int:
+func play_sfx(sound_data: Dictionary, volume: float = 1.0) -> int:
 	var sound_name: String = Utils.get_object_key(sound_data, AudioManifest.SFX)
-	return _play(sound_name, volume, loop, "SFX")
+	return _play(sound_name, volume, "SFX")
 
 
 ## Example: play_music(AudioManifest.MUSIC.BOSS) - this is for type safety.
 ## Returns current AudioStreamPlayer > id: int
-func play_music(sound_data: Dictionary, volume: float = 1.0, loop: bool = true) -> int:
+func play_music(sound_data: Dictionary, volume: float = 1.0) -> int:
 	var sound_name: String = Utils.get_object_key(sound_data, AudioManifest.MUSIC)
-	return _play(sound_name, volume, loop, "Music")
+	return _play(sound_name, volume, "Music")
 
 
 ## Pass current AudioStreamPlayer > id: int
@@ -38,12 +37,12 @@ func stop_all():
 			player.stop()
 
 
-func _play(sound_name: String, volume: float = 1.0, loop: bool = false, bus_name: String = "Master") -> int:
+func _play(sound_name: String, volume: float = 1.0, bus_name: String = "Master") -> int:
 	var player = _get_available_player()
 	if not player:
 		return -1
 
-	var stream = _audio_cache_looped.get(sound_name) if loop else _audio_cache.get(sound_name)
+	var stream = _audio_cache.get(sound_name)
 
 	if not stream:
 		return -1
@@ -66,7 +65,6 @@ func _preload_all_audio():
 	_preload_audio_manifest(AudioManifest.SFX)
 	_preload_audio_manifest(AudioManifest.MUSIC)
 	_prepare_audio(_audio_cache)
-	_prepare_audio(_audio_cache_looped)
 
 
 ## Prepares all preloaded audio streams by silently playing and stopping them once.
@@ -80,31 +78,27 @@ func _prepare_audio(cache: Dictionary):
 		player.stop()
 
 
-func _preload_audio_stream(key: String, path: String):
+func _preload_audio_stream(key: String, path: String, loop: bool):
 	if not _audio_cache.has(key):
 		var stream: AudioStream = ResourceLoader.load(path)
-		if stream:
-			# In web builds, reusing the same stream object across multiple players can cause issues.
-			# So on load, register stream on both _audio_cache and _audio_cache_looped
+		if not stream:
+			return
 
-			# for non-loop
-			_audio_cache[key] = stream
+		if loop:
+			if stream is AudioStreamWAV:
+				stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+			elif stream is AudioStreamOggVorbis:
+				stream.loop = true
 
-			# for loop
-			# duplicate the stream so loop settings don't affect the cache
-			var looped_stream = stream.duplicate()
-			if looped_stream is AudioStreamWAV:
-				looped_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			elif looped_stream is AudioStreamOggVorbis:
-				looped_stream.loop = true
-			_audio_cache_looped[key] = looped_stream
+		_audio_cache[key] = stream
 
 
 func _preload_audio_manifest(manifest: Dictionary):
 	for key in manifest.keys():
 		var path = manifest[key].get("path", "")
+		var loop = manifest[key].get("loop", false)
 		if path != "":
-			_preload_audio_stream(key, path)
+			_preload_audio_stream(key, path, loop)
 
 
 func _get_available_player() -> AudioStreamPlayer:
