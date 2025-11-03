@@ -161,7 +161,7 @@ offset_right = 50.0
 offset_bottom = 13.0
 theme_override_fonts/font = ExtResource("6_4rupl")
 theme_override_font_sizes/font_size = 16
-text = "'R' to Restart"
+text = "'X' to Restart"
 
 [node name="author" type="Label" parent="Texts"]
 modulate = Color(1, 1, 1, 0.23529412)
