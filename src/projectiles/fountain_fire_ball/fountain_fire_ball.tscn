@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1onw6ukgedsh"]
+
+[ext_resource type="Script" uid="uid://b8spcg7lrtymy" path="res://src/projectiles/fountain_fire_ball/fountain_fire_ball.gd" id="1_stmf0"]
+[ext_resource type="Texture2D" uid="uid://yapmkaypxt2u" path="res://assets/art/projectiles/power_fire_ball,w8,h8,s12.png" id="2_w63aq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1m2lj"]
+atlas = ExtResource("2_w63aq")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrga5"]
+atlas = ExtResource("2_w63aq")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mii0t"]
+atlas = ExtResource("2_w63aq")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1m2lj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrga5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mii0t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r07uy"]
+size = Vector2(4, 4)
+
+[node name="FountainFireBall" type="Area2D"]
+collision_layer = 32
+collision_mask = 5
+script = ExtResource("1_stmf0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r07uy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -7,6 +7,10 @@ const PROJECTILE_MAP: Dictionary[String, Dictionary] = {
 		"total": 10,
 		"scene": preload("res://src/projectiles/fire_ball/fire_ball.tscn")
 	},
+	"FOUNTAIN_FIRE_BALL": {
+		"total": 10,
+		"scene": preload("res://src/projectiles/fountain_fire_ball/fountain_fire_ball.tscn")
+	},
 	"BEE": {
 		"total": 12,
 		"scene": preload("res://src/projectiles/bee/bee.tscn")

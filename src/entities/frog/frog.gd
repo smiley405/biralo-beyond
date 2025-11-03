@@ -6,6 +6,7 @@ const FrogState: Dictionary[String, String] = {
 	"IDLE": "IDLE",
 	"TIRED": "TIRED",
 	"SHOOT_ON_GROUND": "SHOOT_ON_GROUND",
+	"SHOOT_FOUNTAIN": "SHOOT_FOUNTAIN",
 	"FLY_UP_SHOOT": "FLY_UP_SHOOT",
 	"FLY_DOWN": "FLY_DOWN",
 	"FLY_RIGHT_SHOOT": "FLY_RIGHT_SHOOT",
@@ -19,6 +20,8 @@ const fsm: Array[String] = [
 	FrogState.IDLE,
 
 	FrogState.JUMP,
+	FrogState.TIRED,
+	FrogState.SHOOT_FOUNTAIN,
 	FrogState.TIRED,
 	FrogState.JUMP,
 	FrogState.TIRED,
@@ -121,6 +124,8 @@ func change_state(new_state: String) -> void:
 			do_tired()
 		FrogState.SHOOT_ON_GROUND:
 			do_shoot_on_ground()
+		FrogState.SHOOT_FOUNTAIN:
+			do_shoot_fountain()
 		FrogState.JUMP:
 			do_jump()
 		FrogState.FLY_UP_SHOOT:
@@ -168,6 +173,30 @@ func add_falling_projectile() -> void:
 		AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
 
 
+func add_single_fountain_projectile(speed_x: float) -> void:
+	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FOUNTAIN_FIRE_BALL)
+
+	if projectile and not projectile.visible:
+		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y - 3)
+		projectile.activate(start_position, Vector2.ZERO)
+		# only available for fountain_fire_ball projectile
+		projectile.launch(speed_x)
+
+
+func add_fountain_projectiles() -> void:
+	var directions: Array[Vector2] = [
+		Vector2(0, 0),
+		Vector2(15, 0),
+		Vector2(30, 0),
+		Vector2(-15, 0),
+		Vector2(-30, 0),
+	]
+	for dir in directions:
+		add_single_fountain_projectile(dir.x)
+
+	AudioManager.play_sfx(AudioManifest.SFX.SHOOT)
+
+
 func do_idle() -> void:
 	_animated_sprite.play("idle")
 	_fsm_timer.start(1.0)
@@ -183,6 +212,13 @@ func do_shoot_on_ground() -> void:
 	_animated_sprite.play("attack")
 	add_ground_projectile()
 	_fsm_timer.start(0.5)
+
+
+func do_shoot_fountain() -> void:
+	attacking = true
+	_animated_sprite.play("shoot_fountain")
+	add_fountain_projectiles()
+	_fsm_timer.start(0.8)
 
 
 func do_shoot_on_fly() -> void:

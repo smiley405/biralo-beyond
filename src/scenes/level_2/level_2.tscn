@@ -11,4 +11,3 @@ script = ExtResource("1_72rrl")
 
 [node name="Player" parent="." instance=ExtResource("3_eamvj")]
 position = Vector2(5, 5)
-flip_h = null

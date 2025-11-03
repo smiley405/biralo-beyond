@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://c6gfcdgl646e5"]
+[gd_scene load_steps=30 format=3 uid="uid://c6gfcdgl646e5"]
 
 [ext_resource type="Script" uid="uid://b777vpn0gxgdt" path="res://src/entities/frog/frog.gd" id="1_uprpg"]
 [ext_resource type="Texture2D" uid="uid://bfkr1erums2cl" path="res://assets/art/frog/frog_attack,w16,h16,s4.png" id="2_xd6ms"]
 [ext_resource type="Texture2D" uid="uid://ccw2t8gf6skmt" path="res://assets/art/frog/frog_fly,w16,h16,s4.png" id="3_xd6ms"]
+[ext_resource type="Texture2D" uid="uid://bc2vv8eymg32i" path="res://assets/art/frog/frog_fountain_attack,w16,h16,s4.png" id="4_udlro"]
 [ext_resource type="Texture2D" uid="uid://dslivhndfif5u" path="res://assets/art/frog/frog_idle,w16,h16,s4.png" id="4_vub71"]
 [ext_resource type="Texture2D" uid="uid://bhifauxh6vwws" path="res://assets/art/frog/frog_jump,w16,h16,s4.png" id="5_xd6ms"]
 [ext_resource type="Texture2D" uid="uid://ve7tlk6mlx7n" path="res://assets/art/frog/frog_poop,w16,h16,s4.png" id="6_udlro"]
@@ -46,6 +47,14 @@ region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1p38"]
 atlas = ExtResource("6_udlro")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4mqf"]
+atlas = ExtResource("4_udlro")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq3k4"]
+atlas = ExtResource("4_udlro")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hhgbv"]
@@ -111,6 +120,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"poop",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4mqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq3k4")
+}],
+"loop": true,
+"name": &"shoot_fountain",
 "speed": 4.0
 }, {
 "frames": [{
@@ -218,7 +238,7 @@ script = ExtResource("1_uprpg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dao75")
-animation = &"idle"
+animation = &"shoot_fountain"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 2.5)
