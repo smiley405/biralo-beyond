@@ -2,57 +2,15 @@ class_name VfxPool
 extends Node
 
 
-var _vfx_scenes: Dictionary[String, Dictionary] = {
-	"love": {
-		"total": 1,
-		"scene": preload("res://src/vfx/love/love_vfx.tscn")
-	},
-	"impact_dusts": {
-		"total": 3,
-		"scene": preload("res://src/vfx/impact_dusts/imapct_dusts.tscn")
-	},
-	"fire_ball_impact": {
-		"total": 10,
-		"scene": preload("res://src/vfx/fire_ball_impact/fire_ball_impact.tscn")
-	},
-	"blast": {
-		"total": 8,
-		"scene": preload("res://src/vfx/blast/blast.tscn")
-	},
-	"green_blast": {
-		"total": 8,
-		"scene": preload("res://src/vfx/green_blast/green_blast.tscn")
-	},
-	"honey_blast": {
-		"total": 8,
-		"scene": preload("res://src/vfx/honey_blast/honey_blast.tscn")
-	},
-	"flesh_blast": {
-		"total": 8,
-		"scene": preload("res://src/vfx/flesh_blast/flesh_blast.tscn")
-	},
-	"walk_dusts_1": {
-		"total": 3,
-		"scene": preload("res://src/vfx/walk_dusts_1/walk_dusts_1.tscn")
-	},
-	"walk_dusts_2": {
-		"total": 3,
-		"scene": preload("res://src/vfx/walk_dusts_2/walk_dusts_2.tscn")
-	},
-	"beehive_shoot_trails": {
-		"total": 10,
-		"scene": preload("res://src/vfx/beehive_shoot_trails/beehive_shoot_trails.tscn")
-	},
-}
-
 ## Dictionary[String, Array[PackedScene]]
 var _pool: Dictionary[String, Array] = {}
 
 
 func _ready() -> void:
-	for key in _vfx_scenes:
+	var entries: Dictionary[String, Dictionary] = VFXManifest.VFX_MAP
+	for key in entries:
 		_pool[key] = []
-		var data: Dictionary = _vfx_scenes[key] as Dictionary
+		var data: Dictionary = entries[key] as Dictionary
 		var total: int = data.total as int
 		var scene: PackedScene = data.scene as PackedScene
 
@@ -65,8 +23,10 @@ func _ready() -> void:
 			_pool[key].append(vfx)
 
 
-func get_vfx(type: String) -> BaseVfx:
-	for vfx in _pool[type]:
+## Example: get_vfx(VFXManifest.VFX_MAP.BLAST) - this is for type safety
+func get_vfx(vfx_data: Dictionary) -> BaseVfx:
+	var vfx_name: String = Utils.get_object_key(vfx_data, VFXManifest.VFX_MAP)
+	for vfx in _pool[vfx_name]:
 		var _vfx: BaseVfx = vfx as BaseVfx
 		if not vfx.visible:
 			return vfx

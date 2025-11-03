@@ -45,7 +45,7 @@ func _do_attack() -> void:
 
 
 func add_projectile() -> void:
-	var projectile = projectile_pool.get_projectile("bee")
+	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.BEE)
 	var projectile_speed: float = 40.0
 	projectile.flip_h = flip_h
 
@@ -61,11 +61,11 @@ func add_projectile() -> void:
 		projectile.speed = Vector2(projectile_speed, 0)
 		projectile.activate(start_position, shoot_direction)
 
-		add_vfx("beehive_shoot_trails", vfx_start_position)
+		add_vfx(VFXManifest.VFX_MAP.BEEHIVE_SHOOT_TRAILS, vfx_start_position)
 
 
-func add_vfx(vfx_type: String, vfx_position: Vector2) -> void:
-	var vfx = vfx_pool.get_vfx(vfx_type)
+func add_vfx(vfx_data: Dictionary, vfx_position: Vector2) -> void:
+	var vfx = vfx_pool.get_vfx(vfx_data)
 
 	if vfx and not vfx.visible:
 		vfx.activate()
@@ -93,7 +93,7 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	add_vfx("honey_blast", _hitbox.global_position)
+	add_vfx(VFXManifest.VFX_MAP.HONEY_BLAST, _hitbox.global_position)
 	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 	_attack_timer.stop()
 	queue_free()

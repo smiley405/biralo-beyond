@@ -10,16 +10,21 @@ func _ready():
 	_prepare_audio()
 
 
+## Example: play_sfx(AudioManifest.SFX.JUMP) - this is for type safety.
+## Returns current AudioStreamPlayer > id: int
 func play_sfx(sound_data: Dictionary, volume: float = 1.0, loop: bool = false) -> int:
 	var sound_name: String = Utils.get_object_key(sound_data, AudioManifest.SFX)
 	return _play(sound_name, volume, loop, "SFX")
 
 
+## Example: play_music(AudioManifest.MUSIC.BOSS) - this is for type safety.
+## Returns current AudioStreamPlayer > id: int
 func play_music(sound_data: Dictionary, volume: float = 1.0, loop: bool = true) -> int:
 	var sound_name: String = Utils.get_object_key(sound_data, AudioManifest.MUSIC)
 	return _play(sound_name, volume, loop, "Music")
 
 
+## Pass current AudioStreamPlayer > id: int
 func stop(id: int) -> void:
 	var player: AudioStreamPlayer = _player_pool[id]
 	if player.playing:

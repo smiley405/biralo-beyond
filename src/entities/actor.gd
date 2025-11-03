@@ -86,8 +86,8 @@ func change_state(new_state: String) -> void:
 	current_state = new_state
 
 
-func add_vfx(vfx_type: String, pos: Vector2 = Vector2(0.0, 0.0), is_flip_h: bool = false) -> void:
-	var vfx = vfx_pool.get_vfx(vfx_type)
+func add_vfx(vfx_data: Dictionary, pos: Vector2 = Vector2(0.0, 0.0), is_flip_h: bool = false) -> void:
+	var vfx = vfx_pool.get_vfx(vfx_data)
 
 	if vfx and not vfx.visible:
 		vfx.activate()

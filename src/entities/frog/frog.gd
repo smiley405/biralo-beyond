@@ -144,7 +144,7 @@ func advance_fsm() -> void:
 
 
 func add_ground_projectile() -> void:
-	var projectile = projectile_pool.get_projectile("fire_ball")
+	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
 	var projectile_speed: float = 60.0
 
 	if projectile and not projectile.visible:
@@ -156,7 +156,7 @@ func add_ground_projectile() -> void:
 
 
 func add_falling_projectile() -> void:
-	var projectile = projectile_pool.get_projectile("fire_ball")
+	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
 	var projectile_speed: float = 60.0
 
 	if projectile and not projectile.visible:
@@ -235,7 +235,7 @@ func kill() -> void:
 	super.kill()
 	kill_timers()
 	visible = false
-	add_vfx("green_blast")
+	add_vfx(VFXManifest.VFX_MAP.HONEY_BLAST)
 	AudioManager.play_sfx(AudioManifest.SFX.BOOM)
 	await Utils.delay(1)
 	Events.boss_defeated.emit()
@@ -266,7 +266,7 @@ func is_facing_left_colliding() -> bool:
 func on_landed() -> void:
 	if dead:
 		return
-	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
+	add_vfx(VFXManifest.VFX_MAP.IMPACT_DUSTS, Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
 	AudioManager.play_sfx(AudioManifest.SFX.BOOM_2)
 	# sounds
 	# player logics here

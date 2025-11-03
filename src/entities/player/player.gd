@@ -201,7 +201,7 @@ func do_love() -> void:
 	_loved = true
 	GameState.game_won = true
 
-	var love_vfx = vfx_pool.get_vfx("love")
+	var love_vfx = vfx_pool.get_vfx(VFXManifest.VFX_MAP.LOVE)
 	if love_vfx and not love_vfx.visible:
 		love_vfx.activate()
 		love_vfx.position.x = _hitbox.global_position.x
@@ -227,7 +227,7 @@ func reset() -> void:
 func kill() -> void:
 	super.kill()
 	visible = false
-	add_vfx("flesh_blast")
+	add_vfx(VFXManifest.VFX_MAP.FLESH_BLAST)
 	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 	await Utils.delay(1.0)
 	on_kill()
@@ -249,9 +249,9 @@ func _add_run_dusts() -> void:
 	AudioManager.play_sfx(AudioManifest.SFX.TOUCH_GROUND)
 	
 	if flip_h:
-		add_vfx("walk_dusts_1", Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y - 1), flip_h)
+		add_vfx(VFXManifest.VFX_MAP.WALK_DUSTS_1, Vector2(_hitbox.global_position.x + 2, _hitbox.global_position.y - 1), flip_h)
 	else:
-		add_vfx("walk_dusts_2", Vector2(_hitbox.global_position.x - 2, _hitbox.global_position.y - 1), flip_h)
+		add_vfx(VFXManifest.VFX_MAP.WALK_DUSTS_2, Vector2(_hitbox.global_position.x - 2, _hitbox.global_position.y - 1), flip_h)
 
 
 func can_attack() -> bool:
@@ -273,7 +273,7 @@ func on_landed() -> void:
 	if dead:
 		return
 	reset_speed()
-	add_vfx("impact_dusts", Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1))
+	add_vfx(VFXManifest.VFX_MAP.IMPACT_DUSTS, Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y + 1))
 	AudioManager.play_sfx(AudioManifest.SFX.TOUCH_GROUND)
 
 

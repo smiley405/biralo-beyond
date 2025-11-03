@@ -8,7 +8,7 @@ func kill() -> void:
 
 
 func add_vfx() -> void:
-	var vfx = vfx_pool.get_vfx("fire_ball_impact")
+	var vfx = vfx_pool.get_vfx(VFXManifest.VFX_MAP.FIRE_BALL_IMPACT)
 
 	if vfx and not vfx.visible:
 		vfx.activate()

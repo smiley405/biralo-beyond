@@ -2,33 +2,16 @@ class_name ProjectilePool
 extends Node
 
 
-var _projectile_scenes: Dictionary[String, Dictionary] = {
-	"fire_ball": {
-		"total": 10,
-		"scene": preload("res://src/projectiles/fire_ball/fire_ball.tscn")
-	},
-	"bee": {
-		"total": 12,
-		"scene": preload("res://src/projectiles/bee/bee.tscn")
-	},
-	"queens_love": {
-		"total": 10,
-		"scene": preload("res://src/projectiles/queens_love/queens_love.tscn")
-	},
-	"falling_beehive": {
-		"total": 10,
-		"scene": preload("res://src/projectiles/falling_beehive/falling_beehive.tscn")
-	},
-}
-
 ## Dictionary[String, Array[PackedScene]]
 var _pool: Dictionary[String, Array] = {}
 
 
 func _ready() -> void:
-	for key in _projectile_scenes:
+	var entries:  Dictionary[String, Dictionary] = ProjectileManifest.PROJECTILE_MAP
+
+	for key in entries:
 		_pool[key] = []
-		var data: Dictionary = _projectile_scenes[key] as Dictionary
+		var data: Dictionary = entries[key] as Dictionary
 		var total: int = data.total as int
 		var scene: PackedScene = data.scene as PackedScene
 
@@ -41,8 +24,10 @@ func _ready() -> void:
 			_pool[key].append(projectile)
 
 
-func get_projectile(type: String) -> BaseProjectile:
-	for projectile in _pool[type]:
+## Example: get_projectile(ProjectileManifest.PROJECTILE_MAP.FIREBALL) - this is for type safety
+func get_projectile(projectile_data: Dictionary) -> BaseProjectile:
+	var projectile_name: String = Utils.get_object_key(projectile_data, ProjectileManifest.PROJECTILE_MAP)
+	for projectile in _pool[projectile_name]:
 		var _projectile: BaseProjectile = projectile as BaseProjectile
 		if not _projectile.visible:
 			return _projectile

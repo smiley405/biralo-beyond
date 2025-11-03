@@ -18,7 +18,7 @@ func _ready() -> void:
 
 
 func _add_falling_beehive_projectile(pos: Vector2) -> void:
-	var projectile = projectile_pool.get_projectile("falling_beehive")
+	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FALLING_BEEHIVE)
 	var projectile_speed: float = 55.0
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(pos.x, pos.y)
