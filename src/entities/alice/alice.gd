@@ -13,6 +13,7 @@ const AliceState: Dictionary[String, String] = {
 	"RUN": "RUN",
 	"FALL": "FALL",
 	"KILL": "KILL",
+	"SCREAM": "SCREAM",
 	"LOVE_CAT": "LOVE_CAT",
 	"CLIFF_HANG_START": "CLIFF_HANG_START",
 	"CLIFF_HANG_END": "CLIFF_HANG_END",
@@ -70,6 +71,8 @@ func change_state(new_state: String) -> void:
 			do_love_cat()
 		AliceState.FALL:
 			do_fall()
+		AliceState.SCREAM:
+			do_scream()
 		AliceState.KILL:
 			do_kill()
 		AliceState.CLIFF_HANG_START:
@@ -127,6 +130,10 @@ func do_jump() -> void:
 	direction = Vector2.UP
 	_animated_sprite.play("jump")
 	_jump_timer.start(jump_duration)
+
+
+func do_scream() -> void:
+	_animated_sprite.play("scream")
 
 
 func do_kill() -> void:

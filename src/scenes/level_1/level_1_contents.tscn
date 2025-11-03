@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://dhajo3j21gugd"]
+[gd_scene load_steps=14 format=4 uid="uid://dhajo3j21gugd"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_go8s3"]
 [ext_resource type="PackedScene" uid="uid://c5rbjho3deq1f" path="res://src/entities/fire_flies/fire_flies.tscn" id="2_6f3ny"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bkro1qimejyfn" path="res://src/entities/alice/alice.tscn" id="4_ntvgo"]
 [ext_resource type="PackedScene" uid="uid://c7yiwo1rgerjt" path="res://src/entities/exit/exit.tscn" id="5_s2xnm"]
 [ext_resource type="FontFile" uid="uid://btilrusv6gxp1" path="res://assets/fonts/tiny-5-font-2-export.fnt" id="6_0sl6x"]
+[ext_resource type="PackedScene" uid="uid://d1857pgfpcxug" path="res://src/tools/level_design/method_router/method_router.tscn" id="7_plbl6"]
+[ext_resource type="PackedScene" uid="uid://j6vieindbhql" path="res://src/tools/level_design/trigger/trigger.tscn" id="8_mgj3y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpny"]
 texture = ExtResource("1_go8s3")
@@ -104,3 +106,17 @@ theme_override_fonts/font = ExtResource("6_0sl6x")
 theme_override_font_sizes/font_size = 28
 text = "Arrow keys to move"
 metadata/_edit_lock_ = true
+
+[node name="Tools" type="Node2D" parent="."]
+
+[node name="MethodRouter" parent="Tools" instance=ExtResource("7_plbl6")]
+position = Vector2(44, 5)
+method_to_call = "do_scream"
+targets = Array[NodePath]([NodePath("../../Alice")])
+
+[node name="Trigger" parent="Tools" instance=ExtResource("8_mgj3y")]
+position = Vector2(47, 27.999996)
+scale = Vector2(1, 3.44)
+collision_mask = 1
+tool_name = "Method Trigger"
+targets = Array[NodePath]([NodePath("../MethodRouter")])

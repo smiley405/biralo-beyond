@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bkro1qimejyfn"]
+[gd_scene load_steps=43 format=3 uid="uid://bkro1qimejyfn"]
 
 [ext_resource type="Script" uid="uid://dgq2v6ysnj85o" path="res://src/entities/alice/alice.gd" id="1_vppt5"]
 [ext_resource type="Texture2D" uid="uid://2t5u0jnao0yq" path="res://assets/art/alice/alice_cliff_hang_end,w32,h32,s8.png" id="2_2h2j8"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://4iuojcgswlyc" path="res://assets/art/alice/alice_run,w16,h16,s10.png" id="4_whje7"]
 [ext_resource type="Texture2D" uid="uid://djilvxglebr3g" path="res://assets/art/alice/alice_jump,w16,h16,s4.png" id="5_2h2j8"]
 [ext_resource type="Texture2D" uid="uid://pdxavxuden6s" path="res://assets/art/alice/alice_idle,w16,h16,s2.png" id="5_rdr7h"]
+[ext_resource type="Texture2D" uid="uid://bodbwsvt0t5y6" path="res://assets/art/alice/alice_scream,w16,h16,s4.png" id="9_5eiuq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fe07n"]
 atlas = ExtResource("2_2h2j8")
@@ -105,6 +106,14 @@ region = Rect2(128, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kab1w"]
 atlas = ExtResource("4_whje7")
 region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djraq"]
+atlas = ExtResource("9_5eiuq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5od7j"]
+atlas = ExtResource("9_5eiuq")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_81eer"]
 atlas = ExtResource("3_gn7gn")
@@ -233,6 +242,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_djraq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5od7j")
+}],
+"loop": true,
+"name": &"scream",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_81eer")
 }, {
 "duration": 1.0,
@@ -258,7 +278,7 @@ script = ExtResource("1_vppt5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lv0q6")
-animation = &"idle"
+animation = &"scream"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_17vyv")
