@@ -19,6 +19,18 @@ var _vfx_scenes: Dictionary[String, Dictionary] = {
 		"total": 8,
 		"scene": preload("res://src/vfx/blast/blast.tscn")
 	},
+	"green_blast": {
+		"total": 8,
+		"scene": preload("res://src/vfx/green_blast/green_blast.tscn")
+	},
+	"honey_blast": {
+		"total": 8,
+		"scene": preload("res://src/vfx/honey_blast/honey_blast.tscn")
+	},
+	"flesh_blast": {
+		"total": 8,
+		"scene": preload("res://src/vfx/flesh_blast/flesh_blast.tscn")
+	},
 	"walk_dusts_1": {
 		"total": 3,
 		"scene": preload("res://src/vfx/walk_dusts_1/walk_dusts_1.tscn")

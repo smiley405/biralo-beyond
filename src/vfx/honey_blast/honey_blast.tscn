@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://c23kg1jebdxce"]
+
+[ext_resource type="Script" uid="uid://dh2nx5hso7ahu" path="res://src/vfx/base_vfx.gd" id="1_k3yo3"]
+[ext_resource type="Texture2D" uid="uid://2uxpobo6so6" path="res://assets/art/vfx/honey_blast,w16,h16,s12.png" id="2_ug68g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejpo6"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbxks"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c1tv"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q60up"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oba1u"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbab8"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36q78"]
+atlas = ExtResource("2_ug68g")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhwbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejpo6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbxks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7c1tv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q60up")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oba1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbab8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36q78")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="HoneyBlast" type="Node2D"]
+script = ExtResource("1_k3yo3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lhwbd")

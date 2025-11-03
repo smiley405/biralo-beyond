@@ -93,7 +93,7 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	add_vfx("blast", _hitbox.global_position)
+	add_vfx("honey_blast", _hitbox.global_position)
 	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 	_attack_timer.stop()
 	queue_free()

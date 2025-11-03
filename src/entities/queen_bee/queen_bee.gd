@@ -337,9 +337,8 @@ func reset_flying_states() -> void:
 func kill() -> void:
 	super.kill()
 	kill_timers()
-	# sound > blast
 	visible = false
-	add_vfx("blast")
+	add_vfx("honey_blast")
 	AudioManager.play_sfx(AudioManifest.SFX.BOOM)
 	await Utils.delay(1)
 	Events.boss_defeated.emit()

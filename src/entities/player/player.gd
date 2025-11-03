@@ -226,9 +226,8 @@ func reset() -> void:
 
 func kill() -> void:
 	super.kill()
-	# sound > blast
 	visible = false
-	add_vfx("blast")
+	add_vfx("flesh_blast")
 	AudioManager.play_sfx(AudioManifest.SFX.EXPLODE)
 	await Utils.delay(1.0)
 	on_kill()
