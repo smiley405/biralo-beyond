@@ -1,13 +1,14 @@
 extends Node
 
+
 var _audio_cache: Dictionary = {}
+var _audio_cache_looped: Dictionary = {}
 var _player_pool: Array[AudioStreamPlayer] = []
 
 
 func _ready():
 	_init_pool(10)
 	_preload_all_audio()
-	_prepare_audio()
 
 
 ## Example: play_sfx(AudioManifest.SFX.JUMP) - this is for type safety.
@@ -37,6 +38,23 @@ func stop_all():
 			player.stop()
 
 
+func _play(sound_name: String, volume: float = 1.0, loop: bool = false, bus_name: String = "Master") -> int:
+	var player = _get_available_player()
+	if not player:
+		return -1
+
+	var stream = _audio_cache_looped.get(sound_name) if loop else _audio_cache.get(sound_name)
+
+	if not stream:
+		return -1
+
+	player.stream = stream
+	player.bus = bus_name
+	player.volume_db = linear_to_db(volume)
+	player.play()
+	return _player_pool.find(player)
+
+
 func _init_pool(size: int) -> void:
 	for i in size:
 		var player = AudioStreamPlayer.new()
@@ -44,39 +62,19 @@ func _init_pool(size: int) -> void:
 		_player_pool.append(player)
 
 
-func _play(sound_name: String, volume: float = 1.0, loop: bool = false, bus_name: String = "Master") -> int:
-	var player = _get_available_player()
-	if player and _audio_cache.has(sound_name):
-		var stream: AudioStream = _audio_cache[sound_name]
-		# In web builds, reusing the same stream object across multiple players can cause issues.
-		# Try duplicating the stream. i.e Use a fresh instance of the stream
-		var new_stream: AudioStream = stream.duplicate()
-		player.stream = new_stream
-		player.bus = bus_name
-		player.volume_db = linear_to_db(volume)
-		# Set loop on the stream, not the player
-		if new_stream is AudioStreamWAV:
-			new_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD if loop else AudioStreamWAV.LOOP_DISABLED
-		elif new_stream is AudioStreamOggVorbis:
-			new_stream.loop = loop
-		player.play()
-		# return id
-		return _player_pool.find(player)
-	return -1
-
-
 func _preload_all_audio():
 	_preload_audio_manifest(AudioManifest.SFX)
 	_preload_audio_manifest(AudioManifest.MUSIC)
+	_prepare_audio(_audio_cache)
+	_prepare_audio(_audio_cache_looped)
 
 
 ## Prepares all preloaded audio streams by silently playing and stopping them once.
 ## This reduces lag during first-time playback, especially in web builds.
-func _prepare_audio():
-	for key in _audio_cache.keys():
+func _prepare_audio(cache: Dictionary):
+	for key in cache.keys():
 		var player: AudioStreamPlayer = _get_available_player()
-		player.stream = _audio_cache[key]
-		# Silent
+		player.stream = cache[key]
 		player.volume_db = -80
 		player.play()
 		player.stop()
@@ -84,9 +82,22 @@ func _prepare_audio():
 
 func _preload_audio_stream(key: String, path: String):
 	if not _audio_cache.has(key):
-		var stream: Resource = ResourceLoader.load(path)
+		var stream: AudioStream = ResourceLoader.load(path)
 		if stream:
+			# In web builds, reusing the same stream object across multiple players can cause issues.
+			# So on load, register stream on both _audio_cache and _audio_cache_looped
+
+			# for non-loop
 			_audio_cache[key] = stream
+
+			# for loop
+			# duplicate the stream so loop settings don't affect the cache
+			var looped_stream = stream.duplicate()
+			if looped_stream is AudioStreamWAV:
+				looped_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+			elif looped_stream is AudioStreamOggVorbis:
+				looped_stream.loop = true
+			_audio_cache_looped[key] = looped_stream
 
 
 func _preload_audio_manifest(manifest: Dictionary):
