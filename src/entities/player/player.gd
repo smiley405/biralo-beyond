@@ -278,7 +278,7 @@ func on_landed() -> void:
 
 
 func on_jump() -> void:
-	if jumping:
+	if jumping or _attack_locked:
 		return
 
 	if grounded or coyote_timer > 0.0 and not attacking:
