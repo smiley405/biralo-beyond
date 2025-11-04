@@ -211,7 +211,7 @@ func add_queens_love_projectile(directions: Array[Vector2], speeds: Array[Vector
 	var i: int = 0
 	
 	for dir in directions:
-		var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.QUEENS_LOVE)
+		var projectile: QueensLove = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.QUEENS_LOVE)
 		if projectile and not projectile.visible:
 			var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y - 6)
 			var shoot_direction: Vector2 = dir
@@ -242,7 +242,7 @@ func add_bee_projectile_downward(down_type: int = 1) -> void:
 
 
 func add_bee_projectile(shoot_directions: Array[Vector2], shoot_speeds: Array[Vector2], is_add_vfx: bool = true) -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.BEE)
+	var projectile: Bee = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.BEE)
 	projectile.flip_h = flip_h
 
 	if projectile and not projectile.visible:
@@ -362,12 +362,6 @@ func is_facing_right_colliding() -> bool:
 
 func is_facing_left_colliding() -> bool:
 	return flip_h and _left_ray_cast.is_colliding() and is_on_wall()
-
-
-func on_landed() -> void:
-	if dead:
-		return
-	# player logics here
 
 
 func on_damage() -> void:

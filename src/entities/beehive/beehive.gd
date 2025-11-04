@@ -45,7 +45,7 @@ func _do_attack() -> void:
 
 
 func add_projectile() -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.BEE)
+	var projectile: Bee = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.BEE)
 	var projectile_speed: float = 40.0
 	projectile.flip_h = flip_h
 
@@ -65,7 +65,7 @@ func add_projectile() -> void:
 
 
 func add_vfx(vfx_data: Dictionary, vfx_position: Vector2) -> void:
-	var vfx = vfx_pool.get_vfx(vfx_data)
+	var vfx: BaseVfx = vfx_pool.get_vfx(vfx_data)
 
 	if vfx and not vfx.visible:
 		vfx.activate()

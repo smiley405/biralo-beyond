@@ -29,7 +29,7 @@ func change_state(new_state: String) -> void:
 
 
 func add_projectile() -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
+	var projectile: FireBall = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
 
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y + 5)

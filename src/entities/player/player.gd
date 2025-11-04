@@ -201,7 +201,7 @@ func do_love() -> void:
 	_loved = true
 	GameState.game_won = true
 
-	var love_vfx = vfx_pool.get_vfx(VFXManifest.VFX_MAP.LOVE)
+	var love_vfx: BaseVfx = vfx_pool.get_vfx(VFXManifest.VFX_MAP.LOVE)
 	if love_vfx and not love_vfx.visible:
 		love_vfx.activate()
 		love_vfx.position.x = _hitbox.global_position.x

@@ -149,7 +149,7 @@ func advance_fsm() -> void:
 
 
 func add_ground_projectile() -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
+	var projectile: FireBall= projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
 	var projectile_speed: float = 60.0
 
 	if projectile and not projectile.visible:
@@ -161,7 +161,7 @@ func add_ground_projectile() -> void:
 
 
 func add_falling_projectile() -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
+	var projectile: FireBall = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FIRE_BALL)
 	var projectile_speed: float = 60.0
 
 	if projectile and not projectile.visible:
@@ -174,7 +174,7 @@ func add_falling_projectile() -> void:
 
 
 func add_single_fountain_projectile(speed_x: float) -> void:
-	var projectile = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FOUNTAIN_FIRE_BALL)
+	var projectile: FountainFireBall = projectile_pool.get_projectile(ProjectileManifest.PROJECTILE_MAP.FOUNTAIN_FIRE_BALL)
 
 	if projectile and not projectile.visible:
 		var start_position: Vector2 = Vector2(_hitbox.global_position.x, _hitbox.global_position.y - 3)
@@ -304,8 +304,6 @@ func on_landed() -> void:
 		return
 	add_vfx(VFXManifest.VFX_MAP.IMPACT_DUSTS, Vector2(0.0, _hitbox.global_position.y - _hitbox.shape.get_rect().size.y/8))
 	AudioManager.play_sfx(AudioManifest.SFX.BOOM_2)
-	# sounds
-	# player logics here
 
 
 func on_damage() -> void:
