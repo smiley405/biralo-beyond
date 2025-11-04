@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg3wapn7mg216"]
+
+[ext_resource type="Shader" uid="uid://b6c8k6wuscxnw" path="res://src/shaders/crt.gdshader" id="1_05pli"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fdxp8"]
+shader = ExtResource("1_05pli")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.250000011875
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.400000019
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.250000011875
+shader_parameter/brightness_boost = 1.50000002375
+shader_parameter/low_quality = false
+
+[node name="Screen" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_fdxp8")
+offset_right = 96.0
+offset_bottom = 96.0
