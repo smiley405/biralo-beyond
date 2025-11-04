@@ -17,3 +17,4 @@ script = ExtResource("1_6a6cu")
 position = Vector2(48, 48)
 
 [node name="Screen" parent="." instance=ExtResource("5_tax2h")]
+touch_controls_enabled = false

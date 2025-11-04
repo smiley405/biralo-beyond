@@ -99,12 +99,13 @@ scale = Vector2(12.380004, 0.64503086)
 position = Vector2(13, 79)
 
 [node name="Label" type="Label" parent="Instructions"]
-offset_right = 57.0
-offset_bottom = 18.6875
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 60.0
+offset_bottom = 19.25
 theme_override_fonts/font = ExtResource("6_0sl6x")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 20
 text = "Arrow keys to move"
-metadata/_edit_lock_ = true
 
 [node name="Tools" type="Node2D" parent="."]
 

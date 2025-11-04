@@ -102,19 +102,10 @@ position = Vector2(13, 79)
 metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="Instructions"]
-offset_left = -9.0
-offset_top = -1.0
-offset_right = 75.0
-offset_bottom = 21.75
+offset_left = -6.0
+offset_top = 8.0
+offset_right = 76.0
+offset_bottom = 24.25
 theme_override_fonts/font = ExtResource("5_ciqwj")
-theme_override_font_sizes/font_size = 28
-text = "Press 'X' near"
-
-[node name="Label2" type="Label" parent="Instructions"]
-offset_left = 12.0
-offset_top = 7.0
-offset_right = 96.0
-offset_bottom = 29.75
-theme_override_fonts/font = ExtResource("5_ciqwj")
-theme_override_font_sizes/font_size = 28
-text = "the torch to swing"
+theme_override_font_sizes/font_size = 20
+text = "Press 'X' near the torch to swing"

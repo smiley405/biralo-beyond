@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://drrmabtlmje5u"]
+
+[ext_resource type="Texture2D" uid="uid://ddw3fyiqu3534" path="res://assets/art/buttons/button_left_normal.png" id="1_xxl4w"]
+[ext_resource type="Texture2D" uid="uid://d1w6meb052b5j" path="res://assets/art/buttons/button_left_pressed.png" id="2_rnnlo"]
+[ext_resource type="Texture2D" uid="uid://bipi82xlgcfsq" path="res://assets/art/buttons/button_right_normal.png" id="3_ubo4k"]
+[ext_resource type="Texture2D" uid="uid://cofeqrao4jjs7" path="res://assets/art/buttons/button_right_pressed.png" id="4_sfcad"]
+[ext_resource type="Texture2D" uid="uid://4bpa8vd08g2j" path="res://assets/art/buttons/button_z_normal.png" id="5_n4ka7"]
+[ext_resource type="Texture2D" uid="uid://vulb0qfdviaa" path="res://assets/art/buttons/button_z_pressed.png" id="6_ghycx"]
+[ext_resource type="Texture2D" uid="uid://b4mrqplpd4sb5" path="res://assets/art/buttons/button_x_normal.png" id="7_3p2cr"]
+[ext_resource type="Texture2D" uid="uid://c5shwywipkolh" path="res://assets/art/buttons/button_x_pressed.png" id="8_kt3hs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pks5h"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6jcm"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62flm"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fubtq"]
+size = Vector2(32, 32)
+
+[node name="TouchControls" type="CanvasLayer"]
+
+[node name="RightButton" type="TouchScreenButton" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(17, 82)
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("3_ubo4k")
+texture_pressed = ExtResource("4_sfcad")
+shape = SubResource("RectangleShape2D_pks5h")
+action = "move_right"
+visibility_mode = 1
+
+[node name="LeftButton" type="TouchScreenButton" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(2, 82)
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("1_xxl4w")
+texture_pressed = ExtResource("2_rnnlo")
+shape = SubResource("RectangleShape2D_j6jcm")
+action = "move_left"
+visibility_mode = 1
+
+[node name="ButtonZ" type="TouchScreenButton" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(81, 82)
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("5_n4ka7")
+texture_pressed = ExtResource("6_ghycx")
+shape = SubResource("RectangleShape2D_62flm")
+action = "jump"
+visibility_mode = 1
+
+[node name="ButtonX" type="TouchScreenButton" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(66, 82)
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("7_3p2cr")
+texture_pressed = ExtResource("8_kt3hs")
+shape = SubResource("RectangleShape2D_fubtq")
+action = "attack"
+visibility_mode = 1

@@ -99,20 +99,10 @@ scale = Vector2(2.5200024, 1)
 position = Vector2(17, 79)
 
 [node name="Label" type="Label" parent="Instructions"]
-offset_left = 11.0
-offset_right = 68.0
-offset_bottom = 22.75
+offset_left = -3.0
+offset_top = 9.0
+offset_right = 65.0
+offset_bottom = 25.25
 theme_override_fonts/font = ExtResource("6_h8i5d")
-theme_override_font_sizes/font_size = 28
-text = "'Z' to Jump"
-metadata/_edit_lock_ = true
-
-[node name="Label2" type="Label" parent="Instructions"]
-offset_left = 11.0
-offset_top = 7.0
-offset_right = 68.0
-offset_bottom = 29.75
-theme_override_fonts/font = ExtResource("6_h8i5d")
-theme_override_font_sizes/font_size = 28
-text = "'X' to Attack"
-metadata/_edit_lock_ = true
+theme_override_font_sizes/font_size = 20
+text = "'Z' to Jump and 'X' to attack"

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg3wapn7mg216"]
+[gd_scene load_steps=5 format=3 uid="uid://bg3wapn7mg216"]
 
 [ext_resource type="Shader" uid="uid://b6c8k6wuscxnw" path="res://src/shaders/crt.gdshader" id="1_05pli"]
+[ext_resource type="PackedScene" uid="uid://drrmabtlmje5u" path="res://src/scenes/ui/touch_controls/touch_controls.tscn" id="1_fdxp8"]
+[ext_resource type="Script" uid="uid://cdh1ivijwdieu" path="res://src/scenes/screen/screen.gd" id="1_udw6j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdxp8"]
 shader = ExtResource("1_05pli")
@@ -14,6 +16,10 @@ shader_parameter/brightness_boost = 1.50000002375
 shader_parameter/low_quality = false
 
 [node name="Screen" type="CanvasLayer"]
+script = ExtResource("1_udw6j")
+
+[node name="TouchControls" parent="." instance=ExtResource("1_fdxp8")]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_fdxp8")
