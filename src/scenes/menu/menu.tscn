@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://33jdo0pct0ia"]
+
+[ext_resource type="Script" uid="uid://dwnabfxx4nm1i" path="res://src/scenes/menu/menu.gd" id="1_6a6cu"]
+[ext_resource type="PackedScene" uid="uid://bw078cvibida0" path="res://src/scenes/menu/menu_contents.tscn" id="2_m7lae"]
+[ext_resource type="PackedScene" uid="uid://c5nd0m11otk4p" path="res://src/scenes/transition/transition.tscn" id="3_5mdiq"]
+[ext_resource type="PackedScene" uid="uid://c8isc2jnw0k3g" path="res://src/scenes/camera/camera.tscn" id="4_ap671"]
+[ext_resource type="PackedScene" uid="uid://bg3wapn7mg216" path="res://src/scenes/screen/screen.tscn" id="5_tax2h"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_6a6cu")
+
+[node name="MenuContents" parent="." instance=ExtResource("2_m7lae")]
+
+[node name="Transition" parent="." instance=ExtResource("3_5mdiq")]
+
+[node name="Camera" parent="." instance=ExtResource("4_ap671")]
+position = Vector2(48, 48)
+
+[node name="Screen" parent="." instance=ExtResource("5_tax2h")]

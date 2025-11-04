@@ -12,8 +12,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if GameState.game_won:
 		if Input.is_action_just_pressed("attack"):
-			SceneManager.set_scene(0)
 			GameState.reset_all()
+			SceneManager.set_scene(1)
 
 
 func _on_game_finished() -> void:

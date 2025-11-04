@@ -1,6 +1,7 @@
 extends Node
 
 
+# Change this scene_index to switch to different scene
 var scene_index: int = 0
 var game_won: bool = false
 var checkpoint: Vector2 = Vector2.ZERO
@@ -14,4 +15,4 @@ func reset():
 func reset_all():
 	reset()
 	checkpoint = Vector2.ZERO
-	scene_index = 1
+	scene_index = 0

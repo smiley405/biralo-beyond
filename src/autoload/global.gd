@@ -13,13 +13,12 @@ func _ready():
 func _init_after_ready() -> void:
 	SceneManager.reload_scene()
 	Events.scene_changed.connect(_on_scene_changed)
-	#Events.game_finished.connect(_on_game_finished)
 	Events.boss_defeated.connect(_on_boss_defeated)
 
 
 func update_music(scene_index: int) -> void:
 	match scene_index:
-		4, 7:
+		5, 8:
 			if _boss_music_playing:
 				return
 			AudioManager.stop_all()
@@ -27,8 +26,10 @@ func update_music(scene_index: int) -> void:
 			_boss_music_id = AudioManager.play_music(AudioManifest.MUSIC.BOSS_BATTLE)
 			_boss_music_playing = true
 			_base_music_playing = false
-		9:
+		10:
 			_on_game_finished()
+		0:
+			_reset_music_state()
 		_:
 			if _base_music_playing:
 				return
@@ -40,14 +41,18 @@ func update_music(scene_index: int) -> void:
 			_boss_music_playing = false
 
 
+func _reset_music_state() -> void:
+	_base_music_playing = false
+	_boss_music_playing = false
+	AudioManager.stop_all()
+
+
 func _on_scene_changed() -> void:
 	update_music(GameState.scene_index)
 
 
 func _on_game_finished() -> void:
-	_base_music_playing = false
-	_boss_music_playing = false
-	AudioManager.stop_all()
+	_reset_music_state()
 	await Utils.delay(0.1)
 	AudioManager.play_music(AudioManifest.MUSIC.END_STAGE, 0.6)
 
