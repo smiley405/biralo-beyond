@@ -349,7 +349,7 @@ func kill_timers() -> void:
 
 
 func is_weak() -> bool:
-	return visible and not attacking and gravity
+	return visible and not attacking
 
 
 func is_smash() -> bool:
