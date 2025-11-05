@@ -60,3 +60,4 @@ func _on_game_finished() -> void:
 func _on_boss_defeated() -> void:
 	await Utils.delay(0.1)
 	AudioManager.stop(_boss_music_id)
+	_boss_music_playing = false
