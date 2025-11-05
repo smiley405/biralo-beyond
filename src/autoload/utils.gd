@@ -1,5 +1,7 @@
 extends Node
 
+var GAME_VERSION: String = ProjectSettings.get("application/config/version")
+
 
 func delay(seconds: float):
 	# use it like this await delay(2.0)

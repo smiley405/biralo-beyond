@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://bw078cvibida0"]
+[gd_scene load_steps=8 format=4 uid="uid://bw078cvibida0"]
 
 [ext_resource type="Texture2D" uid="uid://mw7d0mehrdxf" path="res://assets/art/tiles/tiles,w8,h8.png" id="1_2tuke"]
+[ext_resource type="Script" uid="uid://dr6hg14fo5l70" path="res://src/scenes/menu/menu_contents.gd" id="1_ru7ul"]
 [ext_resource type="PackedScene" uid="uid://c5rbjho3deq1f" path="res://src/entities/fire_flies/fire_flies.tscn" id="2_a0byu"]
 [ext_resource type="PackedScene" uid="uid://cnty6nke2mhk2" path="res://src/entities/torch/torch.tscn" id="3_1u4qs"]
 [ext_resource type="FontFile" uid="uid://btilrusv6gxp1" path="res://assets/fonts/tiny-5-font-2-export.fnt" id="6_kcu1c"]
@@ -44,6 +45,7 @@ tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_egpny")
 
 [node name="MenuContents" type="Node2D"]
+script = ExtResource("1_ru7ul")
 
 [node name="Contents" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0.39215687)
@@ -72,3 +74,13 @@ offset_bottom = -19.75
 theme_override_fonts/font = ExtResource("6_kcu1c")
 theme_override_font_sizes/font_size = 20
 text = "Click anywhere to start"
+
+[node name="VersionLabel" type="Label" parent="Instructions"]
+offset_left = 61.0
+offset_top = 10.0
+offset_right = 87.0
+offset_bottom = 26.25
+theme_override_colors/font_color = Color(1, 1, 1, 0.39215687)
+theme_override_fonts/font = ExtResource("6_kcu1c")
+theme_override_font_sizes/font_size = 16
+text = "version_text"
