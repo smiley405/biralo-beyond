@@ -14,9 +14,8 @@ config/name="biralo-beyond"
 config/version="v1.0.0"
 run/main_scene="uid://4n32ij87q1bc"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-boot_splash/show_image=false
-boot_splash/fullsize=false
 boot_splash/use_filter=false
+boot_splash/image="uid://cjf4glrrtb8fi"
 config/icon="res://icon.svg"
 
 [autoload]
