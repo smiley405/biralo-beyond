@@ -15,6 +15,9 @@ Rebuilt from the ground up in **Godot 4.5x**, this version squashes bugs, sharpe
 I had an absolute blast crafting this beast and I hope you’ll have just as much fun surviving it.
 
 ---
+
+[Play on Newgrounds](https://www.newgrounds.com/portal/view/1005140)
+
 The original jam version is available here: [https://github.com/smiley405/biralo](https://github.com/smiley405/biralo)
 
 ## 🛠️ Tools Used
