@@ -24,9 +24,9 @@ size = Vector2(32, 32)
 [node name="TouchControls" type="CanvasLayer"]
 
 [node name="RightButton" type="TouchScreenButton" parent="."]
-modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(17, 82)
-scale = Vector2(0.4, 0.4)
+modulate = Color(1, 1, 1, 0.50980395)
+position = Vector2(18, 79)
+scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("3_ubo4k")
 texture_pressed = ExtResource("4_sfcad")
 shape = SubResource("RectangleShape2D_pks5h")
@@ -34,9 +34,9 @@ action = "move_right"
 visibility_mode = 1
 
 [node name="LeftButton" type="TouchScreenButton" parent="."]
-modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(2, 82)
-scale = Vector2(0.4, 0.4)
+modulate = Color(1, 1, 1, 0.50980395)
+position = Vector2(1, 79)
+scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("1_xxl4w")
 texture_pressed = ExtResource("2_rnnlo")
 shape = SubResource("RectangleShape2D_j6jcm")
@@ -44,9 +44,9 @@ action = "move_left"
 visibility_mode = 1
 
 [node name="ButtonZ" type="TouchScreenButton" parent="."]
-modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(81, 82)
-scale = Vector2(0.4, 0.4)
+modulate = Color(1, 1, 1, 0.50980395)
+position = Vector2(79, 79)
+scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("5_n4ka7")
 texture_pressed = ExtResource("6_ghycx")
 shape = SubResource("RectangleShape2D_62flm")
@@ -54,9 +54,9 @@ action = "jump"
 visibility_mode = 1
 
 [node name="ButtonX" type="TouchScreenButton" parent="."]
-modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(66, 82)
-scale = Vector2(0.4, 0.4)
+modulate = Color(1, 1, 1, 0.50980395)
+position = Vector2(62, 79)
+scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("7_3p2cr")
 texture_pressed = ExtResource("8_kt3hs")
 shape = SubResource("RectangleShape2D_fubtq")
